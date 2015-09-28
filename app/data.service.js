@@ -1,49 +1,6 @@
 angular.module('cp').factory('dataService', 
 function($http,$q, $log, $timeout){
-  var treeData =
-         {
-          Name: "root",
-          Id:1,
-          Children:[
-            {
-              Name: "Flat 1",
-              Id:2,
-              Children:[
-                {
-                  Name: "Jan",
-                  Id:4,
-                  Children:[
-                  {
-                      Name: "socity charges",
-                      Id:41,
-                      Children:[
-
-                      ]
-                    }
-                  ]
-                }
-                ,
-                {
-                  Name: "Feb",
-                  Id:5,
-                  Children:[
-
-                  ]
-                }
-              ]
-            },
-            {
-              Name: "Flat 2",
-              Id:3,
-              Children:[
-                {
-
-                }
-              ]
-            }
-          ]
-        };
-        
+  
   return {
     apiPrefix : config.apiBaseURL,  
     
@@ -55,20 +12,22 @@ function($http,$q, $log, $timeout){
       
       return $http.get(apiPrefix + "/User");
     },
-    
+    /**
+    Register yourself
+    */
     register : function( registerModel){
-      var url = config.apiBaseUrl + "/register";
+      var url = config.apiBaseUrl + "/v1/user";
       $log.debug(url);
       return $http.post(url, registerModel);
     },
     
-    verifyPin : function( data){
-      var url = config.apiBaseUrl + "/pin/verify";
+    authenticate : function( data){
+      var url = config.apiBaseUrl + "/v1/authenticate";
       return $http.post(url, data);
     },
     
     resendPin : function( data){
-      var url = config.apiBaseUrl + "/pin/resend";
+      var url = config.apiBaseUrl + "/v1/pin/resend";
       return $http.post(url, data);
     },
     getChildren  :function(id){

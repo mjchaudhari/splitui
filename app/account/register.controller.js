@@ -22,7 +22,7 @@ angular.module("cp")
         
         storageService.add('user',model);
         storageService.add('status',"REQUESTED");
-    $location.path("/verifypin");
+        $location.path("/authenticate");
       },
       function (e){
         $scope.addAlert(e.message,"danger");

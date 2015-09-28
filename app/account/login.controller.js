@@ -19,10 +19,10 @@ angular.module("cp")
   $scope.verify = function(){
     var model = {
         UserName: $scope.authModel.userName
-      , Pin: $scope.authModel.password
+      , Secret: $scope.authModel.password
     };
     
-    dataService.verifyPin(model).then(
+    dataService.authenticate(model).then(
       function(d){
         toaster.pop('success', 'Authentiaction successful', 'You can start browsing the application now.');
         $log.info(d.data);

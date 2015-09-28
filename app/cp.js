@@ -1,9 +1,10 @@
 /// <reference path="../typings/angularjs/angular.d.ts"/>
 // Code goes here
  var app = angular.module('cp', ['ui.router',
- 'ui.bootstrap', 'toaster','ngStorage', 'ui.layout','angularBootstrapNavTree', 'ivh.treeview', 'ezDirectives']);
+ 'ui.bootstrap', 'toaster','ngStorage', 'ui.layout','ezDirectives']);
  
- app.config([ "$httpProvider","$urlRouterProvider", '$stateProvider', 'ivhTreeviewOptionsProvider', function($httpProvider, $urlRouterProvider, $stateProvider, ivhTreeviewOptionsProvider){
+ app.config([ "$httpProvider","$urlRouterProvider", '$stateProvider',
+ function($httpProvider, $urlRouterProvider, $stateProvider){
    
    $httpProvider.interceptors.push('httpInterceptor');
    
@@ -12,8 +13,9 @@
    $stateProvider
       .state("home", {url:"/", templateUrl : "/views/intro.html"})      
       .state("intro", {url:"/intro", templateUrl : "/views/intro.html"})
-      // .state("intro.login",{url:"/login", template:"<h1> This Is login form view</h1>"})
+      //Account
       .state("login",{url:"/login", templateUrl:"/views/account/login.html"}) 
+      .state("register",{url:"/register", templateUrl:"/views/account/register.html"}) 
       
       .state('help',{url:"/help", templateUrl: '/views/help.html'})
       //Assets routes
