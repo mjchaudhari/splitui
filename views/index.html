@@ -1,0 +1,26 @@
+<div ng-controller="indexCtrl">
+    <div>
+      <div class="navbar navbar-default">
+          <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+              </button>
+              <div>
+                <a class="navbar-brand" href="javascript:void(0)">:Collaborate</a>  
+              </div>
+              <div class="navbar-collapse collapse navbar-responsive-collapse">
+                <ul class="nav navbar-nav">
+                  <li class="active"><a ui-sref="index.dashboard">Dashboard</a></li>
+                  <li class="active"><a ui-sref="index.assets">Assets</a></li>
+                </ul>
+            </div>
+          </div>
+      </div> 
+    </div>
+      
+  <div ui-view>
+    
+  </div>
+</div>

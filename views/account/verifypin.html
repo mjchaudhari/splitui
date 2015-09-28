@@ -1,0 +1,53 @@
+<div ng-controller="verifyPinController">
+  
+  <div class="col-sm-12 center">
+    <div class="col-sm-2">
+      
+    </div>
+    
+    <div class="form col-sm-8 center">
+      <div class="form-group">
+        <div class="col-xs-12 col-sm-12">
+          <h4><label for="fn" class="col-xs-12 control-label">{{title}}</label></h4>
+          
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-xs-12 col-sm-12">
+          <label for="fn" class="col-xs-12 control-label">Enter Activation code for {{userModel.UserName}}</label>
+          
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-xs-12  col-sm-12">
+          <input type="number" class="form-control floating-label" id="mobile" placeholder="Pin"
+          ng-model="pinModel.pin">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="register" class="col-xs-12 control-label"> </label>
+        <div class="col-xs-12">
+          <button class="btn btn-success btn-raised" ng-click="verify()">Verify</button>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="reRegister" class="col-xs-4 control-label"></label>
+        <div class="col-xs-12 ">
+          <label for="fn" class="col-xs-12 control-label">Send Activation code again</label>
+          <a href="" ng-href="" ng-click="resendPin()" type="button" style="btn btn-danger"> Resend again!</a>
+          
+          <label for="fn" class="col-xs-12 control-label">It's not my phone number Or you want to register again</label>
+          <a href="" ng-href="#register" type="button" style="btn btn-danger"> Register now!</a>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <div class="col-xs-12">
+          
+        </div>
+      </div>
+    
+    </div>
+    <div class="col-sm-2"></div>
+  </div>
+</div>

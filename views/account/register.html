@@ -1,0 +1,40 @@
+<div ng-controller="registerController">
+  <h4>{{title}}</h4>
+  <div class="form-horizontal">
+    <div class="form-group">
+      <label for="fn" class="col-xs-4 control-label">First name:</label>
+      <div class="col-xs-8 col-sm-5">
+        <input type="text" class="form-control floating-label" id="fn" placeholder="First name"
+        ng-model="registerModel.fn"
+        >
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="ln" class="col-xs-4 control-label">Last name:</label>
+      <div class="col-xs-8  col-sm-5">
+        <input type="text" class="form-control floating-label" id="ln" placeholder="Last name"
+        ng-model="registerModel.ln">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="mobile" class="col-xs-4 control-label">Mobile number:</label>
+      <div class="col-xs-8  col-sm-5">
+        <input type="number" class="form-control floating-label" id="mobile" placeholder="Mobile number"
+        ng-model="registerModel.mobileno">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="register" class="col-xs-4 control-label"></label>
+      <div class="col-xs-8 col-sm-5">
+        <button class="btn btn-success btn-raised" ng-click="register()">Register</button>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="register" class="col-xs-4 control-label"></label>
+      <div class="col-xs-8 col-sm-5">
+        <a href="" ng-href="#resendpin" type="button" style="btn btn-danger"> Already registered?</a>
+      </div>
+    </div>
+  
+  </div>
+</div>

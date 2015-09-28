@@ -1,0 +1,38 @@
+<div >
+	<img class="bgImage" src="./content/images/people.png" alt="" style="	">
+	<div class="bgOverlay">
+    <div ng-controller="loginCtrl">
+      <div class="col-sm-2 col-md-4 center">
+      </div>
+        
+      <div class="form  col-sm-8 col-md-4 center">
+        <div class="form-group">
+          <div class="">
+            <h4><label for="fn" class=" control-label">{{title}}</label></h4>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="userName" class=" control-label"> </label>
+          <div class="">
+            <input type="text" class="form-control floating-label" ng-model="authModel.userName" name="userName" placeholder="Enter user name">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="register" class=" control-label"> </label>
+          <div class="">
+            <input type="text" class="form-control floating-label" ng-model="authModel.password" name="userName" placeholder="Enter password">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="register" class=" control-label"> </label>
+          <div class="">
+            <button class="btn btn-success btn-raised" ng-click="verify()">Log in</button>
+            <a href="" ui-sref="#register" type="button" style="btn btn-danger"> Forgot password</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-2 col-md-4 center">
+      </div>
+    </div>
+  </div>
+</div>
