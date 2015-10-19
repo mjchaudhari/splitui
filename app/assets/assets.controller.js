@@ -9,24 +9,24 @@ angular.module("cp")
   
   var init = function(){
 
-    dataService.getAssets().then(function(d){
-        $scope.assetTree = d;
-        $scope.breadcrumb.push(d)
+//     dataService.getAssets().then(function(d){
+//         $scope.assetTree = d;
+//         $scope.breadcrumb.push(d)
         
-        $scope.selected.parent = d;
+//         $scope.selected.parent = d;
 
-        var parentId = $stateParams.id;
-        if(parentId != undefined)
-        {
-          var p = searchTree(d, parentId);
-          if(p)
-          {
-            $scope.selected.parent = p;
-          }
-        }
+//         var parentId = $stateParams.id;
+//         if(parentId != undefined)
+//         {
+//           var p = searchTree(d, parentId);
+//           if(p)
+//           {
+//             $scope.selected.parent = p;
+//           }
+//         }
 
-        $scope.$broadcast('__treeFetched', {tree:d});
-    })
+//         $scope.$broadcast('__treeFetched', {tree:d});
+//     })
   };
   
   var searchTree = function (tree,id)

@@ -1,8 +1,8 @@
 
 'use strict';
 
-angular.module('cp').factory('httpInterceptor', ['$q', '$location', 'storageService','$log',
-function ($q, $location, storageService, $log) {
+angular.module('cp').factory('httpInterceptor', ['$q', '$location', '$injector', 'storageService','$log',
+function ($q, $location, $injector , storageService, $log) {
 
     var authInterceptorServiceFactory = {};
 
@@ -12,9 +12,10 @@ function ($q, $location, storageService, $log) {
                                 
             config.headers = config.headers || {};
 
-            var authData = storageService.get('cpAdmin');
+            var authData = storageService.get('__splituserat');
             if (authData) {
-                config.headers.Authorization = 'Bearer ' + authData.token;
+                
+                config.headers.Authorization = 'Bearer ' + authData;
             }
         }
         return config;
@@ -22,28 +23,20 @@ function ($q, $location, storageService, $log) {
 
     // On request failure
     var _requestError= function (rejection) {
-        //console.log(rejection); // Contains the data about the error on the request.
-        // Return the promise rejection.
         return $q.reject(rejection);
     }
 
     // On response success
     var _response= function (response) {
-        //console.log(response); // Contains the data from the response.
-        // Return the response or promise.
         return response || $q.when(response);
     }
 
     var _responseError = function (rejection) {
         if (rejection.status === 401) {
-            //if (window.location.pathname.indexOf(global.appLoginPath) < 0) {
             if ($location.$$path.indexOf("Login") < 0)
             {
-                //$location.path(global.appLoginPath);
-                //window.location = global.appBaseUrl + global.appLoginPath;
-                //utils.goToLoginPage();
                 $log.info('Unauthenticated...redirecting to login page.');
-                $location.path("/Login");
+                $injector.get('$state').go("account.login");
             }
         }
         else {

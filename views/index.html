@@ -1,47 +1,43 @@
 <div ng-controller="indexCtrl">
-    <!--<div>
-      <div class="navbar navbar-default navbar-fixed-top">
-          <div class="navbar-header">
-              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-              </button>
-              <div>
-                <a class="navbar-brand" href="javascript:void(0)">-split-</a>  
-              </div>
-              <div class="navbar-collapse collapse navbar-responsive-collapse">
-                <ul class="nav navbar-nav">
-                  <li class="active"><a ui-sref="index.dashboard">Dashboard</a></li>
-                  <li class="active"><a ui-sref="index.assets">Assets</a></li>
-                </ul>
-            </div>
-          </div>
-      </div> 
-
-
-      
-    </div>
-    -->
-   <div class="navbar navbar-default" role="navigation">
+   <div class="navbar navbar-material-light-blue-600" role="navigation">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="javascript:void(0)">-split-</a>
-    </div>
-    <div class="navbar-collapse collapse navbar-responsive-collapse">
-      <ul class="nav navbar-nav">
+      
+      <button type="button" class="navbar-toggle" style="float:none" ng-click="slideMenuOpen=!slideMenuOpen">
+        <span class="mdi-navigation-menu"></span>
         
-        <li class="active"><a ui-sref="index.dashboard">Dashboard</a></li>
-        <li class="active"><a ui-sref="index.assets">Groups</a></li>
-      </ul>
+      </button>
+      <span>{{currentViewName}}</span>
       
     </div>
-  </div>
-<!--   <div ui-view class="content">
     
-  </div> -->
-</div>
+  </div>
+  <div>
+    <pageslide class="navbar navbar-material-light-blue-400" 
+        ps-side="left" ps-push="true" ps-size="100px" 
+        ps-open="slideMenuOpen" >
+        <div >
+            <div class="slide-menu">
+              <button type="button" class="navbar-toggle" style="float:none" ng-click="slideMenuOpen=!slideMenuOpen">
+                <span class="mdi-navigation-menu"></span>
+              </button>
+              <img src="content/images/arrows-icon.svg" style="height: 50px;">
+              <ul class="nav navbar-nav" style="padding:5px">
+                
+                <li class=""><a ui-sref="index.dashboard">Dashboard</a></li>
+                <li class=""><a ui-sref="index.groups">Groups</a>
+                  <ul class="nav navbar-nav margin-left-5">
+                    <li class="" ng-repeat="g in myGroups">
+                      <a ui-sref="index.group({id: g.ExternalId})">{{g.Name}}</a>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+            
+        </div>
+        
+    </pageslide>
+  <div ui-view class="content">
+      
+
+  </div>  

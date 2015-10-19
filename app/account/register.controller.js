@@ -1,5 +1,5 @@
 angular.module("cp")
-.controller("registerController", function($scope, $log, $location, toaster, storageService, dataService){
+.controller("registerController", function($scope, $log, $state, toaster, storageService, dataService){
   $scope.appOptions.showMenubar = false;
   $scope.title = "Register";
   $scope.registerModel = {};
@@ -22,7 +22,7 @@ angular.module("cp")
         
         storageService.add('user',model);
         storageService.add('status',"REQUESTED");
-        $location.path("/authenticate");
+        $state.go("account.login");
       },
       function (e){
         $scope.addAlert(e.message,"danger");

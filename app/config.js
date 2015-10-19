@@ -1,5 +1,5 @@
 this.config = {
-  apiBaseUrl : "https://splitapi-mjchaudhari-1.c9.io" //http://localhost:8085"
+  apiBaseUrl : "http://localhost:8085" // "https://splitapi-mjchaudhari-1.c9.io" //"
 }
 
 this.utils = {

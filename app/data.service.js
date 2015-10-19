@@ -38,14 +38,15 @@ function($http,$q, $log, $timeout){
       var url = config.apiBaseUrl + "/v1/artifact/tree/" + id;
       return $http.post(url, data);   
     },
-    getAssets : function(){
-      if(!id)
-      {
-        id = 0;
-      }
-      var url = config.apiBaseUrl + "/v1/artifact/tree";
-      return $http.post(url, data);
+    getGroups : function(){
+      
+      var url = config.apiBaseUrl + "/v1/groups?status=active";
+      return $http.get(url);
+    },
+    getGroup : function(id){
+      
+      var url = config.apiBaseUrl + "/v1/group?id="+id;
+      return $http.get(url);
     }
-    
   };
 });

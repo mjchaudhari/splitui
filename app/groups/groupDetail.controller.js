@@ -1,26 +1,30 @@
-angular.module("cp").controller("indexCtrl", 
+angular.module("cp").controller("groupDetailCtrl", 
 ['$scope', '$log', '$state', '$stateParams', 'toaster', 'storageService', 'dataService',
 function ($scope, $log, $state, $stateParams, toaster,   storageService, dataService){
-	$scope.currentViewName = "..." 
-	$scope.myGroups = [];
-  
+	$scope.currentViewName = "Group Detail" 
 
+	$scope.current = {
+	    id:$state.params.id,
+	    group:{}
+	};
   
 	var init = function(){
 
-		dataService.getGroups().then(function(d){
+		dataService.getGroup(id).then(function(d){
 			if(d.data.isError){
 				toaster.pop("error","",d.Message)
 			}
 			else{
 				angular.copy(d.data.data,$scope.myGroups);  
-				$scope.myGroups.forEach(function(obj){
+				$scope.groupList.forEach(function(obj){
 					  obj.DateCreated = new Date(obj.DateCreated);
 				   });
 			}
 		});
 	};
 
-	init();
+	$scope.getGroups = function(){
+
+	}
 
 }]);

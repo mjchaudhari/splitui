@@ -1,5 +1,5 @@
 angular.module("cp")
-.controller("resendPinController", function($scope, $log, $location, toaster, storageService, dataService){
+.controller("resendPinController", function($scope, $log, $state, toaster, storageService, dataService){
   $scope.appOptions.showMenubar = false;
   $scope.title = "Resend pin";
   $scope.userModel = null;
@@ -28,7 +28,7 @@ angular.module("cp")
         $log.info(d.data);
         storageService.add('user',model);
         storageService.add('status',"REQUESTED");
-        $location.path("/verifypin");
+        $state.go("verifypin");
       },
       function (e){
         $scope.addAlert(e.message, "danger");

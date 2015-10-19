@@ -26,14 +26,14 @@ angular.module("cp")
       function(d){
         toaster.pop('success', 'Authentiaction successful', 'You can start browsing the application now.');
         $log.info(d.data);
-        storageService.add('user',model);
-        storageService.add('status',"REGISTERED");
-        storageService.add('accessToken',d.data.AccessToken);
-        $state.go('index');
+        storageService.add('__splituser',d.data.data);
+        storageService.add('__splitstatus',"REGISTERED");
+        storageService.add('__splituserat',d.data.data.AccessToken);
+        $state.go('index.groups');
       },
       function (e){
         toaster.pop('error', '', e.message);
-        $state.go('index');
+        //$state.go('index');
       });
   }
   

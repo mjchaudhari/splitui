@@ -1,0 +1,30 @@
+<div ng-controller="groupsCtrl">
+	<!--controls-->
+	<i class="mdi-content-add-circle" ng-click="createGroup()">
+	<div>
+		
+	</div>
+	<!--List-->
+	<div>
+    	<div class="">
+			
+			<div class="col-md-4 col-sm-4 col-xs-6 " ng-repeat="g in groupList" 
+				ng-animate="{enter: 'ng-enter', leave: 'ng-leave'}">
+				<div class="well panel-info" >
+					<table>
+						<tr>
+							<td><span class="panel-title">{{g.Name}}</span></td>
+							<td><i class="mdi-action-info" ng-click="openGroup(g)"></td>
+						</tr>
+						<tr>
+							<td colspan="2"><span class="panel-title">{{g.Description}}</span></td>		
+						</tr>
+					<table>
+					
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+</div>

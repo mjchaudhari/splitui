@@ -27,6 +27,24 @@ Show the image as background to display: block;
     color: white;
 }
 
+.margin-5{
+    margin:5px
+}
+
+
+.margin-left-5{
+    margin-left:5px
+}
+.margin-right-5{
+    margin-right:5px
+}
+.margin-top-5{
+    margin-top:5px
+}
+.margin-bottom-5{
+    margin-bottom:5px
+}
+
 /***
 BREAD CRUMB
 
@@ -132,4 +150,38 @@ BREAD CRUMB
 /**
     Menu bar
 */
+.ng-pageslide {
+                background: #eee;
+            }
 
+/**
+    END of Menu bar
+*/
+
+/*
+    Animations view
+*/
+        .ng-leave {
+          -webkit-transition: all ease 400ms;
+          transition: all ease 400ms;
+        }
+        .ng-leave.ng-leave-active {
+          -webkit-transform: scale(0.5);
+          transform: scale(0.5);
+          opacity: 0;
+        }
+        .ng-enter {
+          -webkit-transition: all ease 400ms;
+          transition: all ease 400ms;
+          -webkit-transition-delay: 500ms;
+          transition-delay: 500ms;
+          -webkit-transform: scale(0.5);
+           transform: scale(0.5);
+          opacity: 0;
+        }
+        .ng-enter.ng-enter-active {
+          -webkit-transform: scale(1);
+          transform: scale(1);
+          opacity: 1;
+        }
+        

@@ -1,7 +1,7 @@
 /// <reference path="../typings/angularjs/angular.d.ts"/>
 // Code goes here
  var app = angular.module('cp', ['ui.router',
- 'ui.bootstrap', 'toaster','ngStorage', 'ui.layout','ezDirectives']);
+ 'ui.bootstrap', 'toaster','ngStorage', 'ui.layout','pageslide-directive','ezDirectives']);
  
  app.config([ "$httpProvider","$urlRouterProvider", '$stateProvider',
  function($httpProvider, $urlRouterProvider, $stateProvider){
@@ -14,17 +14,18 @@
       .state("home", {url:"/", templateUrl : "/views/intro.html"})      
       .state("intro", {url:"/intro", templateUrl : "/views/intro.html"})
       //Account
-      .state("login",{url:"/login", templateUrl:"/views/account/login.html"}) 
-      .state("register",{url:"/register", templateUrl:"/views/account/register.html"}) 
-      
-      .state('help',{url:"/help", templateUrl: '/views/help.html'})
-      //Assets routes
-      .state('index',{url:"/index", templateUrl: '/views/index.html'})
-      .state('index.assets',{url:"/assets", templateUrl: '/views/assets/assets.html'})
-      .state('index.assets.list',{url:"/:id", templateUrl: '/views/assets/assetsList.html'})
+      .state("account",{url:"/account", templateUrl:"/views/account/index.html"}) 
+      .state("account.login",{url:"/login", templateUrl:"/views/account/login.html"}) 
+      .state("account.register",{url:"/register", templateUrl:"/views/account/register.html"}) 
+      .state('account.resendpin',{url:"/resendpin", templateUrl: 'views/account/resendPin.html'})
 
-      .state('index.dashboard',{url:"/dashboard", templateUrl: '/views/assets/dashboard.html'})
-      .state('index.editAssets',{url:"/editAsset", templateUrl: '/views/assets/editAsset.html'})
+      .state('help',{url:"/help", templateUrl: '/views/help.html'})
+      //Index routes
+      .state('index',{url:"/index", templateUrl: '/views/index.html'})
+      .state('index.dashboard',{url:"/dashboard", templateUrl: '/views/dashboard.html'})
+      .state('index.groups',{url:"/groups", templateUrl: '/views/groups/groups.html'})
+      .state('index.group',{url:"/group?:id", templateUrl: '/views/groups/groupDetail.html'})
+      
       ;
       
        
