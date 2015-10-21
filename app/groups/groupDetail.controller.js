@@ -4,9 +4,16 @@ function ($scope, $log, $state, $stateParams, toaster,   storageService, dataSer
 	$scope.currentViewName = "Group Detail" 
 
 	$scope.current = {
-	    id:$state.params.id,
+		action:"view",
+	    id:0,
 	    group:{}
 	};
+	if($stateParams.id){
+		$scope.current.id = $stateParams.id;
+	}
+	if($stateParams.view){
+		$scope.current.action = $stateParams.action;
+	}
   
 	var init = function(){
 

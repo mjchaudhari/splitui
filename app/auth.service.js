@@ -26,8 +26,8 @@ angular.module('cp').factory('authService', ['$http', '$q', 'storageService',
         var config = {
             headers:
               {
-                  "Content-Type": "application/x-www-form-urlencoded",
-                  "Authorization": "Basic Y2xpZW50MTpzZWNyZXQ="
+                  //"Content-Type": "application/x-www-form-urlencoded",
+                  //"Authorization": "Basic Y2xpZW50MTpzZWNyZXQ="
               }
         };
 

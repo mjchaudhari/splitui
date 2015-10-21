@@ -1,7 +1,7 @@
-<div>
+<div ng-controller="introController">
 
 	<img class="bgImage" src="./content/images/people_faces.png" alt="" style="	">
-	<div class="bgOverlay">
+	<div class="bgOverlay" ng-show="revelView">
 		
 		<div class="center" style="carousel-caption center width:auto;" >
 			<h1><span class="whiteText">Collabourate</span> </h1>
@@ -11,6 +11,9 @@
 		<div ui-view>
 			
 		</div>
+	</div>
+	<div class="bgOverlay" ng-show="!revelView">
+		<h4 style="color:white;"> Loading...</h4>
 	</div>
 	
 </div>

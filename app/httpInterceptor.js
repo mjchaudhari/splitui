@@ -8,7 +8,7 @@ function ($q, $location, $injector , storageService, $log) {
 
     var _request = function (config) {
 
-        if (config.url.search('token') == -1 && config.url.search('ForgotPassword')=='-1') {
+        if (config.url.search('authenticate') == -1 && config.url.search('resend')=='-1') {
                                 
             config.headers = config.headers || {};
 

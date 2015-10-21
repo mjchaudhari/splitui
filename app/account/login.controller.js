@@ -27,7 +27,7 @@ angular.module("cp")
         toaster.pop('success', 'Authentiaction successful', 'You can start browsing the application now.');
         $log.info(d.data);
         storageService.add('__splituser',d.data.data);
-        storageService.add('__splitstatus',"REGISTERED");
+        //storageService.add('__splitstatus',"REGISTERED");
         storageService.add('__splituserat',d.data.data.AccessToken);
         $state.go('index.groups');
       },

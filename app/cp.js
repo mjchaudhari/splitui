@@ -24,7 +24,7 @@
       .state('index',{url:"/index", templateUrl: '/views/index.html'})
       .state('index.dashboard',{url:"/dashboard", templateUrl: '/views/dashboard.html'})
       .state('index.groups',{url:"/groups", templateUrl: '/views/groups/groups.html'})
-      .state('index.group',{url:"/group?:id", templateUrl: '/views/groups/groupDetail.html'})
+      .state('index.group',{url:"/group?id&action", templateUrl: '/views/groups/groupDetail.html'})
       
       ;
       
