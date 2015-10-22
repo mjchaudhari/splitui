@@ -1,5 +1,5 @@
 angular.module("cp")
-.controller("registerController", function($scope, $log, $state, toaster, storageService, dataService){
+.controller("registerController", function($scope, $log, $state, toaster, storageService, dataService, authService){
   $scope.appOptions.showMenubar = false;
   $scope.title = "Register";
   $scope.registerModel = {};
@@ -15,7 +15,7 @@ angular.module("cp")
       , ClientKey: $scope.registerModel.clientId
     };
     
-    dataService.register(model).then(
+    authService.register(model).then(
       function(d){
         toaster.pop('success', 'Registration successful', 'You will shortly recieve the authentication code via SMS.');
         var message = " Please enter your authorization code'";
@@ -25,8 +25,8 @@ angular.module("cp")
         $state.go("account.login");
       },
       function (e){
-        $scope.addAlert(e.message,"danger");
-        //toaster.pop('error', '', e.message);
+        //$scope.addAlert(e.message,"danger");
+        toaster.pop('error', '', e.message);
       });
   }
   

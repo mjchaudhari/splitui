@@ -40,6 +40,15 @@ function($q, $log, $localStorage){
     get : function(key)
     {
       return $localStorage["cp-data"][key];
+    },
+    
+    remove : function(key)
+    {
+      if($localStorage["cp-data"][key] != undefined)
+      {
+        $localStorage["cp-data"][key] = undefined;  
+      }
+
     }
     
   };

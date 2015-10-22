@@ -3,6 +3,7 @@ angular.module("cp")
     storageService, dataService){
   $scope.currentViewName = "Groups";
   $scope.id = $stateParams.id;
+  $scope.infoSlideOpen = false;
   $scope.groups = $scope.$parent.assetTree;
   $scope.selected = {};
   $scope.groupList = [];
@@ -19,8 +20,7 @@ angular.module("cp")
         angular.copy(d.data.data,$scope.groupList);  
         $scope.groupList.forEach(function(obj){
               obj.DateCreated = new Date(obj.DateCreated);
-           });
-        
+         });
       }
       
     });
@@ -36,13 +36,20 @@ angular.module("cp")
       
   };
 
+  $scope.viewGroupInfo = function(node){
+    
+      $scope.selected.group = node;
+      if($scope.selected.group){
+        $scope.infoSlideOpen = true;
+      }
+  };
+
   $scope.openGroup = function(node){
     
       $scope.selected.parent = node;
-      $scope.breadcrumb.push(node);
-      $state.go("index.assets.list", {id:node.Id});
-  };
+      $state.go("index.group", {id:node.ExternalId});
 
+  };
     
   init();  
 });

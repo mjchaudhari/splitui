@@ -1,6 +1,6 @@
 angular.module("cp")
 .controller("introController", 
-  function($scope, $log, $location, toaster, storageService, dataService, $state){
+  function($scope, $log, $location, toaster, storageService, dataService, authService, $state){
   $scope.appOptions.showMenubar = false;
   $scope.title = "Introduction";
   $scope.initMessages = [];

@@ -1,16 +1,20 @@
 <div ng-controller="indexCtrl">
-   <div class="navbar navbar-material-light-blue-600" role="navigation">
+   
+  <div class="navbar  navbar-material-light-blue-600" role="navigation">
     <div class="navbar-header">
-      
+      <legend></legend>
       <button type="button" class="navbar-toggle" style="float:none" ng-click="slideMenuOpen=!slideMenuOpen">
         <span class="mdi-navigation-menu"></span>
-        
       </button>
-      <span>{{currentViewName}}</span>
+      
+      
+      <button type="button" class="navbar-toggle" style="float:right" >
+        <i class="mdi-action-account-box" ng-click="logoff()"></i>
+      </button>
       
     </div>
-    
   </div>
+  
   <div>
     <pageslide class="navbar navbar-material-light-blue-400" 
         ps-side="left" ps-push="true" ps-size="100px" 
@@ -37,7 +41,9 @@
         </div>
         
     </pageslide>
+  </div>
   <div ui-view class="content">
       
 
   </div>  
+</div>  

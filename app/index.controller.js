@@ -1,10 +1,10 @@
 angular.module("cp").controller("indexCtrl", 
-['$scope', '$log', '$state', '$stateParams', 'toaster', 'storageService', 'dataService',
-function ($scope, $log, $state, $stateParams, toaster,   storageService, dataService){
+['$scope', '$log', '$state', '$stateParams', 'toaster', 'storageService', 'authService', 'dataService',
+function ($scope, $log, $state, $stateParams, toaster,   storageService, authService, dataService){
 	$scope.currentViewName = "..." 
 	$scope.myGroups = [];
   
-
+	
   
 	var init = function(){
 
@@ -21,6 +21,11 @@ function ($scope, $log, $state, $stateParams, toaster,   storageService, dataSer
 		});
 	};
 
+	$scope.logoff = function(){
+		authService.logOut().then(function(){
+			$state.go("home")
+		});
+	}
 	init();
 
 }]);

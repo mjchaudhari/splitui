@@ -1,5 +1,5 @@
 angular.module('cp').controller('mainController', function($scope, $log) {
-  $scope.currentTab = "events";
+  
   $scope.appOptions = {
     "showMenubar": true
     ,alerts: []
@@ -7,7 +7,7 @@ angular.module('cp').controller('mainController', function($scope, $log) {
   $scope.title = "easyCollabourate"
     //$scope.alerts = [];
   $scope.routeChange = function(tabName) {
-    $scope.currentTab = tabName;
+    $scope.currentViewName = tabName;
   };
   $scope.addAlert = function(message, messageType) {
     if (messageType === undefined || messageType == "") {

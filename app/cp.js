@@ -24,8 +24,8 @@
       .state('index',{url:"/index", templateUrl: '/views/index.html'})
       .state('index.dashboard',{url:"/dashboard", templateUrl: '/views/dashboard.html'})
       .state('index.groups',{url:"/groups", templateUrl: '/views/groups/groups.html'})
-      .state('index.group',{url:"/group?id&action", templateUrl: '/views/groups/groupDetail.html'})
-      
+      .state('index.editgroup',{url:"/group/e/:id?", templateUrl: '/views/groups/addEditGroup.html'})
+      .state('index.group',{url:"/group/v/:id", templateUrl: '/views/groups/GroupDetail.html'})
       ;
       
        

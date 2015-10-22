@@ -12,24 +12,7 @@ function($http,$q, $log, $timeout){
       
       return $http.get(apiPrefix + "/User");
     },
-    /**
-    Register yourself
-    */
-    register : function( registerModel){
-      var url = config.apiBaseUrl + "/v1/user";
-      $log.debug(url);
-      return $http.post(url, registerModel);
-    },
     
-    authenticate : function( data){
-      var url = config.apiBaseUrl + "/v1/authenticate";
-      return $http.post(url, data);
-    },
-    
-    resendPin : function( data){
-      var url = config.apiBaseUrl + "/v1/pin/resend";
-      return $http.post(url, data);
-    },
     getChildren  :function(id){
       if(!id)
       {
@@ -45,7 +28,7 @@ function($http,$q, $log, $timeout){
     },
     getGroup : function(id){
       
-      var url = config.apiBaseUrl + "/v1/group?id="+id;
+      var url = config.apiBaseUrl + "/v1/groups?id="+id;
       return $http.get(url);
     }
   };

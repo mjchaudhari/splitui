@@ -1,10 +1,10 @@
 angular.module("cp").controller("groupDetailCtrl", 
-['$scope', '$log', '$state', '$stateParams', 'toaster', 'storageService', 'dataService',
-function ($scope, $log, $state, $stateParams, toaster,   storageService, dataService){
-	$scope.currentViewName = "Group Detail" 
-
+['$scope', '$log', '$q','$state', '$stateParams', 'toaster', 'storageService', 'dataService',
+function ($scope, $log, $q, $state, $stateParams, toaster,   storageService, dataService){
+	$scope.$parent.currentViewName = "Group Detail" 
+	
 	$scope.current = {
-		action:"view",
+		action:"View",
 	    id:0,
 	    group:{}
 	};
@@ -14,10 +14,42 @@ function ($scope, $log, $state, $stateParams, toaster,   storageService, dataSer
 	if($stateParams.view){
 		$scope.current.action = $stateParams.action;
 	}
-  
-	var init = function(){
 
-		dataService.getGroup(id).then(function(d){
+	var preInit = function(){
+		var tasks = [];
+
+		if($scope.current.id > 0){
+			tasks.push(getGroupDetail($scope.current.id));
+		}
+  		$q.all([
+			tasks
+  		])
+  		.then(init());
+  	}
+  	
+	var init = function(){
+		
+	};
+
+	var getGroupDetail = function(id){
+		return dataService.getGroup(id).then(function(d){
+			if(d.data.isError){
+				toaster.pop("error","",d.Message)
+			}
+			else{
+				//angular.copy(d.data.data,$scope.myGroups);  
+				d.data.data.forEach(function(obj){
+					  obj.DateCreated = new Date(obj.DateCreated);
+			   	});
+			   	$scope.current.group = d.data.data[0];
+			   	
+			}
+		});
+
+	}
+
+	var getUsers = function(searchTerm){
+		return dataService.getUsers(searchTerm).then(function(d){
 			if(d.data.isError){
 				toaster.pop("error","",d.Message)
 			}
@@ -25,13 +57,12 @@ function ($scope, $log, $state, $stateParams, toaster,   storageService, dataSer
 				angular.copy(d.data.data,$scope.myGroups);  
 				$scope.groupList.forEach(function(obj){
 					  obj.DateCreated = new Date(obj.DateCreated);
-				   });
+			   	});
 			}
 		});
-	};
-
-	$scope.getGroups = function(){
 
 	}
+  	
 
+	preInit();
 }]);

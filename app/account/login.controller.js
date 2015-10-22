@@ -1,5 +1,5 @@
 angular.module("cp")
-.controller("loginCtrl", function($scope, $log, storageService, $state, toaster, dataService){
+.controller("loginCtrl", function($scope, $log, storageService, $state, toaster, authService, dataService){
   $scope.title = "";
   $scope.userModel = null;
 
@@ -17,23 +17,15 @@ angular.module("cp")
   }
   
   $scope.verify = function(){
-    var model = {
-        UserName: $scope.authModel.userName
-      , Secret: $scope.authModel.password
-    };
-    
-    dataService.authenticate(model).then(
+    authService.login($scope.authModel.userName, $scope.authModel.password).then(
       function(d){
         toaster.pop('success', 'Authentiaction successful', 'You can start browsing the application now.');
-        $log.info(d.data);
-        storageService.add('__splituser',d.data.data);
-        //storageService.add('__splitstatus',"REGISTERED");
-        storageService.add('__splituserat',d.data.data.AccessToken);
         $state.go('index.groups');
       },
       function (e){
-        toaster.pop('error', '', e.message);
-        //$state.go('index');
+        if(e && e.isError && e.err){
+          toaster.pop('error', 'Login failed', e.err);
+        }
       });
   }
   
