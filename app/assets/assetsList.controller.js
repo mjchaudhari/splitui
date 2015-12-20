@@ -1,5 +1,5 @@
 angular.module("cp")
-.controller("assetsListCtrl", function($scope, $log, $state, $stateParams , ivhTreeviewMgr, toaster, storageService, dataService){
+.controller("assetsListCtrl", function($scope, $log, $state, $stateParams, storageService, dataService){
   $scope.title = "Asset List";
   $scope.id = $stateParams.id;
   $scope.assetTree = $scope.$parent.assetTree;
@@ -49,7 +49,7 @@ angular.module("cp")
             }
         })
         
-        ivhTreeviewMgr.expandTo($scope.assetTree,parentId, {},true);
+        //ivhTreeviewMgr.expandTo($scope.assetTree,parentId, {},true);
             
     }
 

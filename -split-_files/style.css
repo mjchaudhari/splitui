@@ -1,0 +1,67 @@
+
+/*----------------------BOOTSTRAP OVERRIDES Ends------------------*/
+/* 
+Show the image as background to display: block;
+*/
+.bgImage {
+    position: fixed;
+    top: 0;
+    left: 0;/* Preserve aspet ratio */
+    min-width: 100%;
+    min-height: 100%;
+    image-rendering: pixelated;
+}
+.bgOverlay {
+    position: relative;
+}
+
+.whiteText {
+    color: white;
+}
+md-content.md-default-theme {
+  background-color: #eee;
+}
+.md-tile{}
+.md-card {
+  background-color: #fff;
+  height:70px;
+}
+.md-card h2:first-of-type {
+  margin-top: 0;
+}
+
+.md-toolbar .md-button.md-default-theme {
+  border-radius: 99%;
+}
+
+h2 {
+  font-weight: 400;
+}
+[scroll] {
+  position:fixed;
+  top:0;
+}
+
+.md-toolbar-tools-bottom {
+  font-size: small;
+}
+.md-toolbar-tools-bottom :last-child {
+  opacity: 0.8;
+}
+
+md-toolbar:not(.md-hue-1),
+.md-fab {
+  fill: #fff;
+}
+
+md-sidenav {
+  fill: #737373;
+}
+md-sidenav ng-md-icon {
+  position: relative;
+  top: 5px;
+}
+
+.user-avatar {
+  border-radius: 99%;
+}

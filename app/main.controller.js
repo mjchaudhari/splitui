@@ -1,10 +1,10 @@
-angular.module('cp').controller('mainController', function($scope, $log) {
-  
+angular.module('cp').controller('mainController', function($scope, $log, storageService) {
+  $scope.AUTHDATA = null;
   $scope.appOptions = {
     "showMenubar": true
     ,alerts: []
   };
-  $scope.title = "easyCollabourate"
+  $scope.title = "-split-"
     //$scope.alerts = [];
   $scope.routeChange = function(tabName) {
     $scope.currentViewName = tabName;
@@ -23,7 +23,11 @@ angular.module('cp').controller('mainController', function($scope, $log) {
     $scope.appOptions.alerts.splice(index, 1);
   };
   var init = function() {
+    //TODO Check auth
+    $scope.AUTHDATA = storageService.get('__splituser');
     
   }
+
   init();
+  
 });

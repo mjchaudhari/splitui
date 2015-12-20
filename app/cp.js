@@ -1,11 +1,40 @@
 /// <reference path="../typings/angularjs/angular.d.ts"/>
 // Code goes here
- var app = angular.module('cp', ['ui.router',
- 'ui.bootstrap', 'toaster','ngStorage', 'ui.layout','pageslide-directive','ezDirectives']);
+ var app = angular.module('cp', ['ngMaterial','ngMdIcons', 'ngAnimate', 'ui.router',
+      ,'ngStorage','ngFileUpload', 'ezDirectives']);
  
- app.config([ "$httpProvider","$urlRouterProvider", '$stateProvider',
- function($httpProvider, $urlRouterProvider, $stateProvider){
+ app.config([ "$httpProvider","$urlRouterProvider", '$stateProvider','$mdThemingProvider',
+ function($httpProvider, $urlRouterProvider, $stateProvider, $mdThemingProvider){
    
+   $mdThemingProvider.theme('default')
+    .primaryPalette('blue-grey')
+    .accentPalette('amber');
+
+   $mdThemingProvider.theme('light-blue')
+    .primaryPalette('light-blue')
+    .accentPalette('orange');
+
+   $mdThemingProvider.theme('amber')
+    .primaryPalette('amber')
+    .accentPalette('orange');
+
+   $mdThemingProvider.theme('cyan')
+    .primaryPalette('cyan')
+    .accentPalette('orange');
+
+   $mdThemingProvider.theme('yellow')
+    .primaryPalette('yellow')
+    .accentPalette('orange');
+//light-green
+   $mdThemingProvider.theme('light-green')
+    .primaryPalette('light-green')
+    .accentPalette('green');
+//lime
+      $mdThemingProvider.theme('lime')
+          .primaryPalette('lime')
+          .accentPalette('orange');
+         
+         $mdThemingProvider.alwaysWatchTheme(true);
    $httpProvider.interceptors.push('httpInterceptor');
    
    $urlRouterProvider.otherwise("/");

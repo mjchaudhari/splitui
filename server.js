@@ -24,6 +24,6 @@ app.get('/', function (req, res, next) {
   res.sendFile( __dirname + '/views/default.html');
 });
 // launch =====ss=================================================================
- 
+
 app.listen(port);
 console.log('Start on port ' + port);

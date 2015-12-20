@@ -1,5 +1,5 @@
 angular.module("cp")
-.controller("resendPinController", function($scope, $log, $state, toaster, storageService, dataService, authService){
+.controller("resendPinController", function($scope, $log, $state, storageService, dataService, authService){
   $scope.appOptions.showMenubar = false;
   $scope.title = "Resend pin";
   $scope.userModel = null;
@@ -23,7 +23,7 @@ angular.module("cp")
     
     authService.resendPin(model).then(
       function(d){
-        toaster.pop('success', 'Activation code', 'You will shortly recieve the authentication via SMS.');
+        //toaster.pop('success', 'Activation code', 'You will shortly recieve the authentication via SMS.');
         var message = " Please enter your authorization code'";
         $log.info(d.data);
         storageService.add('user',model);

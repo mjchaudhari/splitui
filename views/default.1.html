@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html ng-app="cp">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
+  <title>admin</title>
+
+
+  <link rel="stylesheet" href="scripts/bootstrap/dist/css/bootstrap.min.css">
+  
+  <link href="dist/css/roboto.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="./content/bootstrap-material-design/css/material-fullpalette.css">
+  <link rel="stylesheet" href="./content/bootstrap-material-design/css/ripples.min.css">
+  
+  <link rel="stylesheet" href="./content/bootstrap-material-design/fonts/Material-Design-Icons.eot">
+  <link rel="stylesheet" href="./content/bootstrap-material-design/fonts/Material-Design-Icons.ttf">
+  <link rel="stylesheet" href="./content/bootstrap-material-design/fonts/Material-Design-Icons.svg">
+  <link rel="stylesheet" href="./content/bootstrap-material-design/fonts/Material-Design-Icons.woff">
+
+  <link  rel="stylesheet" href="./content/eztree.css">
+
+  <script data-require="jquery@*" data-semver="2.1.3" src="scripts/jquery-2.1.4.min.js"></script>
+  <script src="scripts/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="content/bootstrap-material-design/js/material.min.js"></script>
+  <script src="content/bootstrap-material-design/js/ripples.min.js"></script>
+
+  <script src="scripts/angular/angular.min.js"></script>
+  <script src="scripts/angular-animate.js"></script>
+
+  <script src="scripts/angular-ui-bootstrap/ui-bootstrap-tpls.min.js"></script>
+  <script src ="scripts/angular-ui-router.js"></script>
+  <script src ="scripts/angular-pageslide-directive.min.js"></script>
+<!--   <script src ="scripts/angulargrid.min.js"></script> -->
+<!--   <script src ="scripts/angular-masonry.js"></script>
+  <script src ="scripts/imagesloaded.js"></script>
+   -->
+
+  <script src="./scripts/ezTree.directive.js"></script>
+  
+
+  
+  
+  <link href="./content/toaster.min.css" rel="stylesheet" />
+  <link href="./content/ui-layout.css" rel="stylesheet" />
+  
+  <link rel="stylesheet" href="./content/style.css">
+
+  
+</head>
+
+<body ng-controller="mainController">
+  <toaster-container
+   toaster-options="{
+      'close-button':{ 'toast-warning': true, 'toast-error': false } 
+      ,'position-class': 'toast-top-full-width'
+    }">
+    </toaster-container>
+  <div class="">
+    
+    <div style="" ui-view>
+      
+    </div>
+  </div>
+</body>
+  <!--THIRD PARTY PLUGINS-->
+  <script src="scripts/toaster.min.js"></script>
+  <script src="scripts/ngStorage.min.js"></script>
+  <script src="scripts/ui-layout.js"></script>
+  
+  <!--Applciation files-->
+  <script src="app/cp.js"></script>
+  <script src="app/storage.service.js"></script>
+  <script src="app/data.service.js"></script>
+  <script src="app/auth.service.js"></script>
+  <script src="app/httpInterceptor.js"></script>
+  <script src="app/config.js"></script>
+  <script src="app/main.controller.js"></script>
+  <script src="app/home.controller.js"></script>
+  <script src="app/init.controller.js"></script>
+  <script src="app/intro.controller.js"></script>
+  <script src="app/account/login.controller.js"></script>
+  <script src="app/account/register.controller.js"></script>
+  
+  
+  
+  <script src="app/index.controller.js"></script>
+  <script src="app/assets/dashboard.controller.js"></script>  
+  <script src="app/groups/groups.controller.js"></script>
+  <script src="app/groups/addEditGroup.controller.js"></script>
+  <script src="app/groups/groupDetail.controller.js"></script>
+
+
+
+</html>

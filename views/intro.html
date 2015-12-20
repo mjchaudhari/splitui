@@ -1,19 +1,23 @@
 <div ng-controller="introController">
-
-	<img class="bgImage" src="./content/images/people_faces.png" alt="" style="	">
-	<div class="bgOverlay" ng-show="revelView">
-		
-		<div class="center" style="carousel-caption center width:auto;" >
-			<h1><span class="whiteText">Collabourate</span> </h1>
-			<a  ui-sref="account.login"  class="btn  btn-success">Sign in</a> 
-			<a  ui-sref="account.register"  class="btn  btn-success">Register</a> 
-		</div>
-		<div ui-view>
+	<md-content  layout-padding layout="row" layout-sm="column">
+		<img class="bgImage" src="./content/images/people_faces.png" alt="" style="	">
+		<div class="bgOverlay" ng-show="revelView">
 			
+			<div class="center" style="carousel-caption center width:auto;" >
+				<h1><span class="whiteText">-split-</span> </h1>
+				
+				<md-button ui-sref="account.login" class="md-raised md-primary"> Sign in </md-button>
+				<md-button ui-sref="account.register" class="md-raised md-primary"> Register </md-button> 
+				 
+			</div>
+			<div ui-view>
+				
+			</div>
 		</div>
-	</div>
-	<div class="bgOverlay" ng-show="!revelView">
-		<h4 style="color:white;"> Loading...</h4>
-	</div>
+		<div class="bgOverlay" ng-show="!revelView">
+			<h4 style="color:white;"> Loading...</h4>
+		</div>	
+	</md-content>
+	
 	
 </div>

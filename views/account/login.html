@@ -1,38 +1,35 @@
-<div >
+<div ng-controller="loginCtrl">
 	<img class="bgImage" src="./content/images/people.png" alt="" style="	">
-	<div class="bgOverlay">
-    <div ng-controller="loginCtrl">
-      <div class="col-sm-2 col-md-4 center">
-      </div>
+	
+	<md-content layout-padding>
+		<h4 class="md-title">{{title}}</h4>
+		<form name="userForm">
+			<div layout="row">
+				<div flex="10"></div>
+				<div flex="70">
+				  <div layout="column">
+					<md-input-container >
+					  <label>Mobile No.</label>
+					  <input ng-model="authModel.userName">
+					</md-input-container>
+					<md-input-container >
+					  <label>Pin</label>
+					  <input ng-model="authModel.password" type="password">
+					</md-input-container>
+				  </div>
+				  <div layout layout-sm="row">
+					<md-button ng-click="verify()">Ok</md-button>
+					<md-button>Cancel</md-button>
+				  </div>
+				  <div layout layout-sm="row">
+					<a href="" ui-sref="resendpin" type="" > Forgot password?</a> 
+				  </div>
+				</div>
+				<div layout="column" flex="15"></div>
+		  </div>
         
-      <div class="form  col-sm-8 col-md-4 center">
-        <div class="form-group">
-          <div class="">
-            <h4><label for="fn" class=" control-label">{{title}}</label></h4>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="userName" class=" control-label"> </label>
-          <div class="">
-            <input type="text" class="form-control floating-label" ng-model="authModel.userName" name="userName" placeholder="Enter registered mobile no.">
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="register" class=" control-label"> </label>
-          <div class="">
-            <input type="password" class="form-control floating-label" ng-model="authModel.password" name="password" placeholder="Enter password">
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="register" class=" control-label"> </label>
-          <div class="">
-            <button class="btn btn-success btn-raised" ng-click="verify()">Log in</button>
-            <a href="" ui-sref="resendpin" type="button" style="btn btn-danger"> Forgot password</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-2 col-md-4 center">
-      </div>
-    </div>
-  </div>
+		</form>
+  </md-content>
+            
+      
 </div>

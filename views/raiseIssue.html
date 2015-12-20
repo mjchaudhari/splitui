@@ -1,1 +1,146 @@
-raise incident
+<div class="">
+    
+    <!-- uiView:  --><div style="" ui-view="" class="ng-scope"><div layout="row" ng-controller="indexCtrl" class="ng-scope">
+  
+  <md-sidenav class="md-sidenav-left md-whiteframe-z2 md-closed ng-isolate-scope" md-component-id="left" tabindex="-1">
+      <md-toolbar class="md-default-theme">
+        <span flex=""></span>
+        <button class="md-icon-button md-button md-default-theme" ng-transclude="" ng-click="toggleLeft()" tabindex="0">
+            <i class="material-icons ng-scope">menu</i>
+        </button>
+        <div layout="column" class="md-toolbar-tools-bottom inset">
+          <user-avatar></user-avatar>
+          <span></span>
+          <div class="ng-binding">Mahesh Chaudhari</div>
+        </div>
+      </md-toolbar>
+      <md-list role="list" class="md-default-theme">
+        <md-item>
+          <a>
+            <md-item-content md-ink-ripple="" layout="row" layout-align="start center">
+              <div class="inset">
+                <i class="material-icons">dashboard</i>
+              </div>
+              <div class="inset">Dashboard</div>
+            </md-item-content>
+          </a>
+        </md-item>
+        <md-divider class="md-default-theme"></md-divider>
+        <h2 class="md-subheader md-default-theme"><div class="md-subheader-inner"><span class="md-subheader-content"><span class="ng-scope">Groups</span></span></div></h2>
+        <!-- ngRepeat: item in myGroups --><md-item ng-repeat="item in myGroups" class="ng-scope">
+          <a>
+            <md-item-content md-ink-ripple="" layout="row" layout-align="start center">
+              <div class="inset">
+                <i class="material-icons">people_outline</i>
+              </div>
+              <div class="inset ng-binding">Group1</div>
+            </md-item-content>
+          </a>
+        </md-item><!-- end ngRepeat: item in myGroups --><md-item ng-repeat="item in myGroups" class="ng-scope">
+          <a>
+            <md-item-content md-ink-ripple="" layout="row" layout-align="start center">
+              <div class="inset">
+                <i class="material-icons">people_outline</i>
+              </div>
+              <div class="inset ng-binding">Group3</div>
+            </md-item-content>
+          </a>
+        </md-item><!-- end ngRepeat: item in myGroups --><md-item ng-repeat="item in myGroups" class="ng-scope">
+          <a>
+            <md-item-content md-ink-ripple="" layout="row" layout-align="start center">
+              <div class="inset">
+                <i class="material-icons">people_outline</i>
+              </div>
+              <div class="inset ng-binding">Group3</div>
+            </md-item-content>
+          </a>
+        </md-item><!-- end ngRepeat: item in myGroups -->
+      </md-list>
+  </md-sidenav>
+  <md-toolbar class="md-default-theme">
+    <div class="md-toolbar-tools">
+      <button class="md-button md-default-theme" ng-transclude="" ng-click="toggleLeft()" hide-gt-md="" aria-label="Menu" tabindex="0">
+        <i class="material-icons ng-scope">menu</i>
+      </button>
+      <h3>
+        -split-
+      </h3>
+      <span flex=""></span>
+      <button class="md-button md-default-theme" ng-transclude="" aria-label="Search" ng-click="showSearch = !showSearch" tabindex="0">
+        <i class="material-icons ng-scope">search</i>
+      </button>
+      <button class="md-button md-default-theme" ng-transclude="" aria-label="Open Settings" ng-click="showListBottomSheet($event)" tabindex="0">
+        
+        <i class="material-icons ng-scope">more_vert</i>
+      </button>
+    </div>
+    <md-tabs md-stretch-tabs="" class="md-primary ng-isolate-scope md-default-theme md-no-tab-content" md-selected="data.selectedIndex">        <md-tabs-wrapper ng-class="{ 'md-stretch-tabs': $mdTabsCtrl.shouldStretchTabs() }" class="md-stretch-tabs">          <md-tab-data>
+      <md-tab id="tab1" aria-controls="tab1-content" class="ng-scope ng-isolate-scope"></md-tab>
+      <md-tab id="tab2" aria-controls="tab2-content" class="ng-scope ng-isolate-scope"></md-tab>
+    </md-tab-data>          <!-- ngIf: $mdTabsCtrl.shouldPaginate() -->          <!-- ngIf: $mdTabsCtrl.shouldPaginate() -->          <md-tabs-canvas tabindex="0" aria-activedescendant="tab-item-001" ng-focus="$mdTabsCtrl.redirectFocus()" ng-class="{                  'md-paginated': $mdTabsCtrl.shouldPaginate(),                  'md-center-tabs': $mdTabsCtrl.shouldCenterTabs()              }" ng-keydown="$mdTabsCtrl.keydown($event)" role="tablist">            <md-pagination-wrapper ng-class="{ 'md-center-tabs': $mdTabsCtrl.shouldCenterTabs() }" md-tab-scroll="$mdTabsCtrl.scroll($event)" style="left: 0px;">              <!-- ngRepeat: tab in $mdTabsCtrl.tabs --><md-tab-item tabindex="-1" class="md-tab ng-scope ng-isolate-scope md-active" style="max-width: none" ng-repeat="tab in $mdTabsCtrl.tabs" role="tab" aria-controls="tab-content-001" aria-selected="true" aria-disabled="false" ng-click="$mdTabsCtrl.select(tab.getIndex())" ng-class="{                      'md-active':    tab.isActive(),                      'md-focused':   tab.hasFocus(),                      'md-disabled':  tab.scope.disabled                  }" ng-disabled="tab.scope.disabled" md-swipe-left="$mdTabsCtrl.nextPage()" md-swipe-right="$mdTabsCtrl.previousPage()" md-template="tab.label" md-scope="tab.parent"><span class="ng-scope">
+        Latest
+      </span></md-tab-item><!-- end ngRepeat: tab in $mdTabsCtrl.tabs --><md-tab-item tabindex="-1" class="md-tab ng-scope ng-isolate-scope" style="max-width: none" ng-repeat="tab in $mdTabsCtrl.tabs" role="tab" aria-controls="tab-content-002" aria-selected="false" aria-disabled="false" ng-click="$mdTabsCtrl.select(tab.getIndex())" ng-class="{                      'md-active':    tab.isActive(),                      'md-focused':   tab.hasFocus(),                      'md-disabled':  tab.scope.disabled                  }" ng-disabled="tab.scope.disabled" md-swipe-left="$mdTabsCtrl.nextPage()" md-swipe-right="$mdTabsCtrl.previousPage()" md-template="tab.label" md-scope="tab.parent"><span class="ng-scope">
+        Favorites
+      </span></md-tab-item><!-- end ngRepeat: tab in $mdTabsCtrl.tabs -->              <md-ink-bar ng-hide="noInkBar" class="" style="left: 0px; right: 172px;"></md-ink-bar>            </md-pagination-wrapper>            <div class="md-visually-hidden md-dummy-wrapper">              <!-- ngRepeat: tab in $mdTabsCtrl.tabs --><md-dummy-tab tabindex="-1" id="tab-item-001" role="tab" aria-controls="tab-content-001" aria-selected="true" aria-disabled="false" ng-focus="$mdTabsCtrl.hasFocus = true" ng-blur="$mdTabsCtrl.hasFocus = false" ng-repeat="tab in $mdTabsCtrl.tabs" md-template="tab.label" md-scope="tab.parent" class="ng-scope ng-isolate-scope"><span class="ng-scope">
+        Latest
+      </span></md-dummy-tab><!-- end ngRepeat: tab in $mdTabsCtrl.tabs --><md-dummy-tab tabindex="-1" id="tab-item-002" role="tab" aria-controls="tab-content-002" aria-selected="false" aria-disabled="false" ng-focus="$mdTabsCtrl.hasFocus = true" ng-blur="$mdTabsCtrl.hasFocus = false" ng-repeat="tab in $mdTabsCtrl.tabs" md-template="tab.label" md-scope="tab.parent" class="ng-scope ng-isolate-scope"><span class="ng-scope">
+        Favorites
+      </span></md-dummy-tab><!-- end ngRepeat: tab in $mdTabsCtrl.tabs -->            </div>          </md-tabs-canvas>        </md-tabs-wrapper>        <md-tabs-content-wrapper ng-show="$mdTabsCtrl.hasContent" aria-hidden="true" class="ng-hide">          <!-- ngRepeat: (index, tab) in $mdTabsCtrl.tabs --><!-- ngIf: $mdTabsCtrl.hasContent --><!-- end ngRepeat: (index, tab) in $mdTabsCtrl.tabs --><!-- ngIf: $mdTabsCtrl.hasContent --><!-- end ngRepeat: (index, tab) in $mdTabsCtrl.tabs -->        </md-tabs-content-wrapper>      </md-tabs>
+  </md-toolbar>
+  <md-content flex="" md-scroll-y="" class="md-default-theme">
+    <!-- uiView: undefined --><ui-view layout="column" layout-fill="" layout-padding="" class="ng-scope"><div layout="row" ng-controller="groupsCtrl" class="ng-scope ng-binding">
+	<!--controls-->
+<!-- 	
+	<md-button class="md-fab md-fab-top-right" aria-label="Add" ng-click="showAdd($event)">
+
+		 <i class="material-icons">add</i>
+	</md-button>
+			 -->
+	<!--List-->
+	groups : 3
+<!-- 			
+	<div  ng-repeat="g in groupList" ng-animate="{enter: 'ng-enter', leave: 'ng-leave'}">
+		<md-card>
+			 <md-card-content>
+			   <h2>{{g.Name}}</h2>
+			   <p>{{g.Description}}</p>
+			 </md-card-content>
+			 <md-card-footer>
+				<md-button class="md-icon-button" ng-click="viewGroupInfo(g)">
+				  <i class="material-icons">info</i>
+			  </md-button>
+			 </md-card-footer>
+		</md-card>
+	</div> -->
+<!-- 				<md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right" >
+					<div >
+						<a ng-click="infoSlideOpen=false" class="btn btn-warning btn-fab btn-raised mdi-hardware-keyboard-tab"></a>
+						<a ng-click="edit=!edit" class="btn  btn-fab btn-raised mdi-content-create"
+							ng-class="{'btn-primary mdi-content-create':edit==true, 'btn-primary mdi-content-clear':edit==false}"></a>
+						
+						<div class="thumbnail">
+							<img class="circle" ng-src="{{selected.group.Thumbnail}}" alt="icon">
+						<div>
+						
+						<div class="inputs">
+
+						  <input type="text" class="form-control floating-label" ng-model="selected.group.Name" placeholder="Group name">
+
+						  
+						  <textarea class="form-control floating-label" ng-model="selected.group.Description" placeholder="Description"></textarea>
+
+						  <div class="form-group has-error">
+							<input type="text" class="form-control form-control-success" placeholder="label">
+							<input type="text" class="form-control form-control-success floating-label" placeholder="floating label">
+						  </div>
+						
+						<a ng-show="edit" ng-click="saveGroup(g)" class="btn btn-success btn-fab btn-raised mdi-navigation-check"></a>
+					</div>
+
+				</md-sidename> -->
+		
+</div></ui-view>
+  </md-content>
+</div>  
+</div>
+  </div>

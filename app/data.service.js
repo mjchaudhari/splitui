@@ -2,7 +2,7 @@ angular.module('cp').factory('dataService',
 function($http,$q, $log, $timeout){
   
   return {
-    apiPrefix : config.apiBaseURL,  
+    apiPrefix : config.apiBaseUrl,  
     
     getUser : function( ){
       
@@ -30,6 +30,12 @@ function($http,$q, $log, $timeout){
       
       var url = config.apiBaseUrl + "/v1/groups?id="+id;
       return $http.get(url);
+    },
+    saveGroup : function(grp){
+      
+      var url = config.apiBaseUrl + "/v1/group";
+      return $http.post(url, grp);
     }
+
   };
 });

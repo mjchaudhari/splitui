@@ -1,3 +1,69 @@
-<div ng-controller="groupDetailCtrl" class="col-sm-12">
-    {{current.action}}
+<div ng-controller="addEditGroupCtrl" style="">
+    <md-toolbar class="fixed" >
+          <div class="md-toolbar-tools">
+            <span>Split</span>
+           <span flex></span>
+            <md-button ng-click="toggleLeft()">
+              <ng-md-icon icon="menu"></ng-md-icon> 
+            </md-button>
+          </div>
+    </md-toolbar>
+    <md-content flex class='md-padding'>
+        <span>{{message}}</span>
+<!--     <md-content flex class='md-padding' layout="column"> -->
+      <md-card>
+        
+        <img ng-if="current.Thumbnail != null" ng-src="{{current.Thumbnail}}" style="align-self:center;height:auto; width:auto;max-height:150px; max-width:150px;" class="md-card-image" alt="Washed Out">
+        <img ng-if="current.Thumbnail == null" ng-src="{{defaultImage}}" style="align-self:center;height:auto; width:auto;max-height:150px; max-width:150px;" class="md-card-image" alt="Washed Out">
+        
+        <md-card-actions layout="row" layout-align="end center">
+          <md-button class="md-icon-button md-primary accent" aria-label="Settings"
+           type="file" ngf-select="uploadFiles($file, $invalidFiles)" accept="image/*" ngf-max-height="1000" ngf-max-size="1MB"
+           >
+            <i class="material-icons">add_a_photo</i>
+          </md-button>
+          
+          <md-button class="md-icon-button md-primary accent" aria-label="Share">
+            <i class="material-icons">restore</i>
+          </md-button>
+        </md-card-actions>
+      </md-card>
+      <div layout-gt-sm="row">
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>Group name</label>
+          <input ng-model="current.group.Name">
+        </md-input-container>
+        <div class="hint" >What's your group called!</div>
+      </div>
+      <md-input-container class="md-block">
+        <label>Purpose</label>
+        <textarea ng-model="current.group.Description" columns="1" md-maxlength="150" rows="5"></textarea>
+      </md-input-container>
+      <div class="hint" >Tell more about this awesome group and the activities!</div>
+      
+      <div layout-gt-sm="row">
+        
+        <div class="hint" >What's your group called!</div>
+      
+      </div>
+      <div>
+        <md-button class="md-fab md-mini md-fab-right" aria-label="Add" ng-click="addMember()">
+            <i class="material-icons">person_add</i>
+        </md-button>
+        <md-sub-header>
+            Group Members
+        </md-sub-header>
+        <md-card ng-repeat="m in current.group.Members">
+            
+        </md-card>
+      </div>
+    </md-content>
+    <footer>
+        <md-button class="md-button md-primary accent" ng-click="save()">
+            Save
+        </md-button>
+        <md-button class="md-button md-primary accent" ng-click="cancel()">
+            Cancel
+        </md-button>
+    </footer>
 </div>

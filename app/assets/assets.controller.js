@@ -1,5 +1,5 @@
 angular.module("cp")
-.controller("assetsCtrl", function($scope, $log, $stateParams, toaster, storageService, dataService){
+.controller("assetsCtrl", function($scope, $log, $stateParams, storageService, dataService){
   $scope.title = "Asset List"
   $scope.assetTree = null;
   $scope.breadcrumb = [];

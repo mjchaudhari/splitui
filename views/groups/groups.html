@@ -1,94 +1,38 @@
 <div ng-controller="groupsCtrl">
-	<!--controls-->
-	
-	<div>
-		<div>
-			<a ui-sref="index.group" class="btn btn-warning btn-fab btn-raised mdi-content-add"></a>
-		</div>
-		<div>
-			
-		</div>
+	<md-toolbar >
+      <div class="md-toolbar-tools">
+        <span>Split</span>
+       <span flex></span>
+        <md-button ng-click="toggleLeft()">
+          <ng-md-icon icon="menu"></ng-md-icon> 
+        </md-button>
+      </div>
+    </md-toolbar>
+	<div layout="column" class="relative" layout-fill role="main">
+		<md-button class="md-fab md-fab-bottom-right" aria-label="Add" ng-click="editGroup()">
+			<ng-md-icon icon="add"></ng-md-icon>
+		  </md-button>
 	</div>
-	<!--List-->
-	<div>
-    	<div class="">
-			
-			<div class="col-xs-6 " ng-repeat="g in groupList" 
-				ng-animate="{enter: 'ng-enter', leave: 'ng-leave'}">
-<!-- 					<div class="well well-sm ">
-					<div class="row-picture">
-						<img class="circle" src="http://lorempixel.com/56/56/people/6" alt="icon">
-					</div>
-					<div class="row-content">
-						<h4 class="list-group-item-heading">Tile with another avatar</h4>
-						<p class="list-group-item-text">Maecenas sed diam eget risus varius blandit.</p>
-					</div>
-				</div> -->
-<!--  				<div class="well well-sm" >
-					<div class="row">
-						<div class="col-xs-2">
-								
-						</div>
-						<div class="col-xs-8">
-							<h4 class="list-group-item-heading">{{g.Name}}</h4>
-							<p class=" panel-text">{{g.Description}}</p>
-						</div>
-						<div class="col-xs-2">
-							<i class="mdi-action-info" ng-click="openGroup(g)"/>
-						</div>
-					</div>
-				</div> -->
-				<div class="" >
-					<div class=" thumbnail">
-						
-						<img class="circle" ng-src="{{g.Thumbnail}}" alt="icon">
-						<div class="row">
-							<div class="col-xs-2">
-								
-							</div>
-							<div class="col-xs-8">
-								
-								<p class=" panel-text">{{g.Name}}</p>
-							</div>
-							<div class="col-xs-2">
-								<i class="mdi-action-info-outline" ng-click="viewGroupInfo(g)"/>
-							</div>
-						</div>
-					</div>
-				</div>
+	<div>	
+		<md-content flex class='md-padding'>  
+			<md-grid-list md-cols-sm="2" md-cols-md="4" md-cols-lg="8" md-cols-gt-lg="12" md-gutter="12px" md-row-height-gt-md="3:4" md-row-height-md="1:3" md-row-height-sm="1:1">
+				<md-grid-tile class="green" ng-repeat="g in myGroups" 
+					style="background-image: url({{g.Thumbnail}}); background-size: cover;">
 
-			</div>
-			<div>
-				<pageslide class="" 
-					ps-side="right" ps-push="true" ps-size="100%" 
-					ps-open="infoSlideOpen" >
-					<div >
-						<a ng-click="infoSlideOpen=false" class="btn btn-warning btn-fab btn-raised mdi-hardware-keyboard-tab"></a>
-						<a ng-click="edit=!edit" class="btn  btn-fab btn-raised mdi-content-create"
-							ng-class="{'btn-primary mdi-content-create':edit==true, 'btn-primary mdi-content-clear':edit==false}"></a>
-						
-						<div class="thumbnail">
-							<img class="circle" ng-src="{{selected.group.Thumbnail}}" alt="icon">
-						<div>
-						<!--Edit group-->
-						<div class="inputs">
 
-						  <input type="text" class="form-control floating-label" ng-model="selected.group.Name" placeholder="Group name">
+				  <md-grid-tile-footer>
+					<h4 class="md-title">{{g.Name}}</h4>
 
-						  
-						  <textarea class="form-control floating-label" ng-model="selected.group.Description" placeholder="Description"></textarea>
+					<md-button class="md-icon-button md-primary" aria-label="More">
+						<ng-md-icon icon="view" ng-click="openGroup(g)"></ng-md-icon>
+					</md-button>
+					<md-button class="md-icon-button  md-primary" aria-label="More">
+						<ng-md-icon icon="edit" ng-click="editGroup(g)"></ng-md-icon>
+					</md-button>
 
-						  <div class="form-group has-error">
-							<input type="text" class="form-control form-control-success" placeholder="label">
-							<input type="text" class="form-control form-control-success floating-label" placeholder="floating label">
-						  </div>
-						<!--Edit group-->
-						<!--Save button to be displayed only in edit mode -->
-						<a ng-show="edit" ng-click="saveGroup(g)" class="btn btn-success btn-fab btn-raised mdi-navigation-check"></a>
-					</div>
-
-				</pageslide>
-			</div>
-		</div>
+				  </md-grid-tile-footer>
+				</md-grid-tile>
+			</md-grid-list>	
+		</md-content>
 	</div>
 </div>

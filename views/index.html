@@ -1,49 +1,76 @@
-<div ng-controller="indexCtrl">
-   
-  <div class="navbar  navbar-material-light-blue-600" role="navigation">
-    <div class="navbar-header">
-      <legend></legend>
-      <button type="button" class="navbar-toggle" style="float:none" ng-click="slideMenuOpen=!slideMenuOpen">
-        <span class="mdi-navigation-menu"></span>
-      </button>
-      
-      
-      <button type="button" class="navbar-toggle" style="float:right" >
-        <i class="mdi-action-account-box" ng-click="logoff()"></i>
-      </button>
-      
-    </div>
-  </div>
-  
-  <div>
-    <pageslide class="navbar navbar-material-light-blue-400" 
-        ps-side="left" ps-push="true" ps-size="100px" 
-        ps-open="slideMenuOpen" >
-        <div >
-            <div class="slide-menu">
-              <button type="button" class="navbar-toggle" style="float:none" ng-click="slideMenuOpen=!slideMenuOpen">
-                <span class="mdi-navigation-menu"></span>
-              </button>
-              <img src="content/images/arrows-icon.svg" style="height: 50px;">
-              <ul class="nav navbar-nav" style="padding:5px">
-                
-                <li class=""><a ui-sref="index.dashboard">Dashboard</a></li>
-                <li class=""><a ui-sref="index.groups">Groups</a>
-                  <ul class="nav navbar-nav margin-left-5">
-                    <li class="" ng-repeat="g in myGroups">
-                      <a ui-sref="index.group({id: g.ExternalId})">{{g.Name}}</a>
-                    </li>
-                  </ul>
-                </li>
-              </ul>
-            </div>
-            
-        </div>
-        
-    </pageslide>
-  </div>
-  <div ui-view class="content">
-      
+<!-- Side nav, main container -->
+<div  ng-controller="indexCtrl" md-theme="{{themes[theme]}}" md-theme-watch="true">
+  <section layout="column" flex>
+    <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" >
+        <md-toolbar class="md-tall md-hue-2">
+          <span flex></span>
+          <div layout="column" class="md-toolbar-tools-bottom inset">
+            <user-avatar></user-avatar>
+            <span></span>
+            <div>{{AUTHDATA.FirstName}} {{AUTHDATA.LastName}}</div>
+          </div>
+        </md-toolbar>
+        <md-list>
+          <md-item >
+            <md-button >
+              <md-item-content md-ink-ripple layout="row" layout-align="start center">
+                <div class="inset">
+                  <ng-md-icon icon="dashboard"></ng-md-icon>
+                </div>
+                <div class="inset">Dashboard
+                </div>
+              </md-item-content>
+            </md-button>
+          </md-item>
+          <md-divider></md-divider>
+          <md-item>
+            <md-button ui-sref="index.groups">
+              <md-item-content md-ink-ripple layout="row" layout-align="start center">
+                <div class="inset">
 
-  </div>  
-</div>  
+                  <ng-md-icon icon="group"></ng-md-icon>
+                </div>
+                <div class="inset">Groups
+                </div>
+              </md-item-content>
+            </md-button>
+          </md-item>
+<!--           <md-item layout="" ng-repeat="item in myGroups">
+            <md-button ui-sref="index.group({'id':item.ExternalId})">
+              <md-item-content md-ink-ripple layout="row" layout-align="start center">
+                <div class="inset">
+                  <ng-md-icon icon="people"></ng-md-icon>
+
+                </div>
+                <div class="inset">{{item.Name}}
+                </div>
+              </md-item-content>
+            </md-button>
+          </md-item> -->
+          <md-divider></md-divider>
+          <md-item>
+            <md-button ng-click="nextTheme()">
+              <md-item-content md-ink-ripple layout="row" layout-align="start center">
+                <div class="inset">
+
+                  <ng-md-icon icon="format_color_fill"></ng-md-icon>
+                </div>
+                <div class="inset">Change color
+                </div>
+              </md-item-content>
+            </md-button>
+          </md-item>
+        </md-list>
+    </md-sidenav>
+    
+    <div layout="column" layout-fill role="main">
+<!--       <md-content style="background-color:whiteframe;"> -->
+        <hr/>
+        <ui-view layout="column" layout-fill >
+<!--           <div class="inset" hide-sm></div> -->
+
+        <md-view >
+<!--       </md-content> -->
+    </div>
+  </section>
+</div>
