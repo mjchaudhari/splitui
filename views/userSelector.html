@@ -1,0 +1,80 @@
+<md-dialog aria-label="Members"  ng-cloak>
+    <div class="spinner" style="height:600px" ng-show="showAppLoader">
+        <md-progress-circular class="md-warn md-hue-3" md-diameter="70"></md-progress-circular>
+    </div>
+    <div ng-hide="showAppLoader" ng-view">
+        <form>
+            <md-toolbar>
+              <div class="md-toolbar-tools">
+                <h2>Invite members</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                  <md-icon aria-label="Close dialog">close</md-icon>
+                </md-button>
+              </div>
+            </md-toolbar>
+            <md-dialog-content>
+              <div class="md-dialog-content">
+                <div>
+                    <form ng-submit="$event.preventDefault()">
+                      
+                      <md-autocomplete
+                          md-selected-item="selectedUser"
+                          
+                          md-search-text="searchText"
+                          
+                          md-items="item in getUsers(searchText)"
+                          md-item-text="item.FirstName"
+                          md-min-length="0"
+                          placeholder="Choose group member"
+                          md-menu-class="autocomplete-custom-template">
+                        <md-item-template>
+                          <span class="item-title"> 
+                            <img ng-src="{{item.Picture}}" class="md-avatar" alt="{{item.FirstName.charAt(0).toUpperCase()}}" />
+                            <span> {{item.FirstName}} {{item.LastName}} </span>
+                            <p>{{ item.UserName }}{{item.City}} {{item.Country}}</p>
+                          </span>
+                          <span class="item-metadata">
+                            <span class="item-metastat">
+                              <strong>{{item.City}}</strong> 
+                            </span>
+                          </span>
+                        </md-item-template>
+                      </md-autocomplete>
+                      <md-button ng-click="addMember(selectedUser)">
+                        <md-icon class="md-icon-button" area-label="Add member">person_add</md-icon>
+                      </md-button>
+                    </form>
+                <div>
+                <md-list>
+                  <md-subheader class="md-no-sticky">New Members</md-subheader>
+                  <md-list-item class="md-3-line" ng-repeat="item in addedMembers">
+                    <img ng-src="{{item.Picture}}" class="md-avatar" alt="{{substring(item.FirstName,0,1).toUppercase()}}" />
+                    <div class="md-list-item-text" layout="column">
+                      <h3>{{ item.FirstName }} {{item.LastName }}</h3>
+                      <p>{{ item.UserName }}{{item.City}} {{item.Country}}</p>
+                    </div>
+                  </md-list-item>
+                  <md-divider ></md-divider>
+                  <md-subheader class="md-no-sticky">Current Members</md-subheader>
+                  <md-list-item class="md-3-line" ng-repeat="item in members">
+                    <img ng-src="{{item.Picture}}" class="md-avatar" alt="{{item.FirstName}}" />
+                    <div class="md-list-item-text" layout="column">
+                      <h3>{{ item.FirstName }} {{item.LastName }}</h3>
+                      <p>{{ item.City + "," + item.Country }}</p>
+                    </div>
+                  </md-list-item>
+                </md-list>
+              </div>
+            </md-dialog-content>
+            <md-dialog-actions layout="row">
+              <md-button ng-click="done('not useful')">
+               Done
+              </md-button>
+              <md-button ng-click="cancel()" style="margin-right:20px;">
+                Cancel
+              </md-button>
+            </md-dialog-actions>
+        </form>
+    </div>
+</md-dialog>

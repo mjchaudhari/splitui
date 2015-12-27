@@ -36,7 +36,7 @@
             </md-button>
           </md-item>
 <!--           <md-item layout="" ng-repeat="item in myGroups">
-            <md-button ui-sref="index.group({'id':item.ExternalId})">
+            <md-button ui-sref="index.group({'id':item.Id})">
               <md-item-content md-ink-ripple layout="row" layout-align="start center">
                 <div class="inset">
                   <ng-md-icon icon="people"></ng-md-icon>
@@ -63,14 +63,14 @@
         </md-list>
     </md-sidenav>
     
-    <div layout="column" layout-fill role="main">
-<!--       <md-content style="background-color:whiteframe;"> -->
-        <hr/>
-        <ui-view layout="column" layout-fill >
-<!--           <div class="inset" hide-sm></div> -->
+    <div layout="column"  role="main">
+        <div style="background-color:whiteframe;"> 
+            
+            <ui-view layout="column" >
+              <div class="inset" hide-sm></div>
 
-        <md-view >
-<!--       </md-content> -->
+            <md-view >
+        </div>   
     </div>
   </section>
 </div>

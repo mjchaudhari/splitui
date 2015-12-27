@@ -8,9 +8,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
   <title>-easy split-</title> 
-  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/0.9.4/angular-material.min.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=RobotoDraft:300,400,500,700,400italic">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<!--   <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/0.9.4/angular-material.min.css"> -->
+<!--   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=RobotoDraft:300,400,500,700,400italic"> -->
+<!--   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
+  
+  <link rel="stylesheet" href="./content/angular-material.min.css">
+  <link rel="stylesheet" href="./content/robotodraft.css">
+  <link rel="stylesheet" href="./content/icon.css">
+
   <link  rel="stylesheet" href="./content/eztree.css">
   <link rel="stylesheet" href="./content/style.css">
 
@@ -21,9 +26,9 @@
   
 </head>
 
-<body  ng-controller="mainController">
+<body  ng-controller="mainController" >
 
-  <div style="" ui-view>
+  <div ui-view >
 
   </div>
 
@@ -31,12 +36,19 @@
   
   
 <!-- Angular Material Dependencies -->
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-animate.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-aria.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/angular_material/0.9.4/angular-material.min.js"></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/angular-material-icons/0.6.0/angular-material-icons.min.js"></script> 
 
+<!--   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script> -->
+<!--   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-animate.min.js"></script> -->
+<!--   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-aria.min.js"></script> -->
+<!--   <script src="https://ajax.googleapis.com/ajax/libs/angular_material/0.11.4/angular-material.min.js"></script> -->
+<!--   <script src="//cdnjs.cloudflare.com/ajax/libs/angular-material-icons/0.6.0/angular-material-icons.min.js"></script>  -->
+
+  <script src="./scripts/angular/angular.min.js"></script>
+  <script src="./scripts/angular/angular-animate.min.js"></script>
+  <script src="./scripts/angular/angular-aria.min.js"></script>
+  <script src="./scripts/angular-material.min.js"></script>
+  <script src="./scripts/angular-material-icons.min.js"></script>
+  
   <!--THIRD PARTY PLUGINS-->
 
   <script src ="scripts/angular-ui-router.js"></script>
@@ -46,6 +58,7 @@
   
   <script src="scripts/ngStorage.min.js"></script>
   <script src="./scripts/ezTree.directive.js"></script>
+  <script src="./scripts/ezImageUpload.directive.js"></script>
   <!--Applciation files-->
   <script src="app/cp.js"></script>
   <script src="app/storage.service.js"></script>
@@ -59,6 +72,8 @@
   <script src="app/intro.controller.js"></script>
   <script src="app/account/login.controller.js"></script>
   <script src="app/account/register.controller.js"></script>
+
+  <script src="app/userSelector.controller.js"></script>
   
   <script src="app/index.controller.js"></script>
   <script src="app/assets/dashboard.controller.js"></script>  

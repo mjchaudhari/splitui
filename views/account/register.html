@@ -1,43 +1,39 @@
 <div ng-controller="registerController">
   <h4>{{title}}</h4>
   
-  <div class="col-xs-12">
+  <div class="">
   
-    <div class="form-horizontal center">
-      <div class="form-group">
-
-        <div class="col-xs-10 col-sm-5">
-          <input type="text" class="form-control floating-label" id="fn" placeholder="First name"
-          ng-model="registerModel.fn"
-          >
+    <div class="" layout="row">
+      <div flex="10"></div>
+      <div flex="70">
+        <div layout="column">
+          <md-input-container >
+            <label>First Name</label>
+            <input ng-model="registerModel.fn">
+          </md-input-container>
+          <md-input-container >
+            <label>Last Name</label>
+            <input ng-model="registerModel.ln" >
+          </md-input-container>
+          <md-input-container >
+            <label>Mobile Number <sup>*</sup></label>
+            <input ng-model="registerModel.mobileno" >
+          </md-input-container>
         </div>
-      </div>
-      <div class="form-group">
-
-        <div class="col-xs-10  col-sm-5">
-          <input type="text" class="form-control floating-label" id="ln" placeholder="Last name"
-          ng-model="registerModel.ln">
+        <div layout layout-sm="row">
+          <md-button class="md-raised md-primary" ng-click="register()">Join</md-button>
+          <md-button class="md-raised md-primary">Cancel</md-button>
         </div>
-      </div>
-      <div class="form-group">
-
-        <div class="col-xs-10  col-sm-5">
-          <input type="number" class="form-control floating-label" id="mobile" placeholder="Mobile number"
-          ng-model="registerModel.mobileno">
-        </div>
-      </div>
-      <div class="form-group">
-
-        <div class="col-xs-10 col-sm-5">
-          <button class="btn btn-success btn-raised" ng-click="register()">Join</button>
-        </div>
-      </div>
-      <div class="form-group">
+        <div class="form-group">
         
-        <div class="col-xs-10 col-sm-5">
-          <a href="" ng-href="#resendpin" type="button" style="btn btn-danger"> Already registered?</a>
+          <div class="col-xs-10 col-sm-5">
+            <md-button href="" ng-href="#resendpin" type="button" style="btn btn-danger"> Already registered?</md-button>
+          </div>
         </div>
       </div>
+
+      
+      
 
     </div>
   </div>

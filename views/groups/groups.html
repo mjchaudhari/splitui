@@ -1,35 +1,49 @@
-<div ng-controller="groupsCtrl">
-	<md-toolbar >
-      <div class="md-toolbar-tools">
-        <span>Split</span>
-       <span flex></span>
-        <md-button ng-click="toggleLeft()">
-          <ng-md-icon icon="menu"></ng-md-icon> 
-        </md-button>
-      </div>
-    </md-toolbar>
-	<div layout="column" class="relative" layout-fill role="main">
-		<md-button class="md-fab md-fab-bottom-right" aria-label="Add" ng-click="editGroup()">
+<div ng-controller="groupsCtrl" >
+	<md-button class="md-fab md-fab-bottom-right" aria-label="Add" ng-click="editGroup()">
 			<ng-md-icon icon="add"></ng-md-icon>
-		  </md-button>
-	</div>
-	<div>	
+	</md-button>
+
+	<div layout="column" style="height:600px" ng-cloak class="toolbarScrollShrink">
+		<md-toolbar md-scroll-shrink="">
+		  <div class="md-toolbar-tools">
+			<span>Split</span>
+			<span flex></span>
+			<md-button ng-click="toggleLeft()">
+			  <ng-md-icon icon="menu"></ng-md-icon> 
+			</md-button>
+		  </div>
+		</md-toolbar>
+
+	
 		<md-content flex class='md-padding'>  
 			<md-grid-list md-cols-sm="2" md-cols-md="4" md-cols-lg="8" md-cols-gt-lg="12" md-gutter="12px" md-row-height-gt-md="3:4" md-row-height-md="1:3" md-row-height-sm="1:1">
-				<md-grid-tile class="green" ng-repeat="g in myGroups" 
-					style="background-image: url({{g.Thumbnail}}); background-size: cover;">
+
+				<md-grid-tile class="md-whiteframe-5dp" ng-repeat="g in myGroups" 
+					style="background-image: url({{g.Thumbnail}}); background-size: cover;"
+					>
 
 
-				  <md-grid-tile-footer>
-					<h4 class="md-title">{{g.Name}}</h4>
-
-					<md-button class="md-icon-button md-primary" aria-label="More">
-						<ng-md-icon icon="view" ng-click="openGroup(g)"></ng-md-icon>
-					</md-button>
-					<md-button class="md-icon-button  md-primary" aria-label="More">
-						<ng-md-icon icon="edit" ng-click="editGroup(g)"></ng-md-icon>
-					</md-button>
-
+				  <md-grid-tile-footer class="grid-tile-footer" layout="column">
+						<span flex="">{{g.Name}}</span>
+						<md-menu>
+						  <md-button aria-label="Open phone interactions menu" class="md-icon-button" ng-click="openMenu($mdOpenMenu, $event)">
+							<md-icon style="" >more_vert</md-icon>
+						  </md-button>
+						  <md-menu-content width="4">
+							<md-menu-item>
+							  <md-button ng-click="editGroup(g)">
+								<md-icon md-menu-align-target>edit</md-icon>
+								Edit
+							  </md-button>
+							</md-menu-item>
+							<md-menu-item>
+							  <md-button ng-click="openGroup(g)">
+								<md-icon md-menu-align-target>launch</md-icon>
+								Details
+							  </md-button>
+							</md-menu-item>
+						  </md-menu-content>
+						</md-menu>
 				  </md-grid-tile-footer>
 				</md-grid-tile>
 			</md-grid-list>	

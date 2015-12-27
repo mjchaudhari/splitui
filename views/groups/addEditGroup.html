@@ -1,5 +1,5 @@
-<div ng-controller="addEditGroupCtrl" style="">
-    <md-toolbar class="fixed" >
+<div ng-controller="addEditGroupCtrl" >
+<!--     <md-toolbar class="" md-scroll-shrink>
           <div class="md-toolbar-tools">
             <span>Split</span>
            <span flex></span>
@@ -8,62 +8,95 @@
             </md-button>
           </div>
     </md-toolbar>
-    <md-content flex class='md-padding'>
-        <span>{{message}}</span>
-<!--     <md-content flex class='md-padding' layout="column"> -->
-      <md-card>
-        
-        <img ng-if="current.Thumbnail != null" ng-src="{{current.Thumbnail}}" style="align-self:center;height:auto; width:auto;max-height:150px; max-width:150px;" class="md-card-image" alt="Washed Out">
-        <img ng-if="current.Thumbnail == null" ng-src="{{defaultImage}}" style="align-self:center;height:auto; width:auto;max-height:150px; max-width:150px;" class="md-card-image" alt="Washed Out">
-        
-        <md-card-actions layout="row" layout-align="end center">
-          <md-button class="md-icon-button md-primary accent" aria-label="Settings"
-           type="file" ngf-select="uploadFiles($file, $invalidFiles)" accept="image/*" ngf-max-height="1000" ngf-max-size="1MB"
-           >
-            <i class="material-icons">add_a_photo</i>
+    <md-content flex class='md-padding'> -->
+    <div layout="column" style="height:600px" ng-cloak class="toolbarScrollShrink">
+        <md-toolbar md-scroll-shrink="">
+          <div class="md-toolbar-tools">
+            <span>Split</span>
+            <span flex></span>
+            <md-button ng-click="toggleLeft()">
+              <ng-md-icon icon="menu"></ng-md-icon> 
+            </md-button>
+          </div>
+        </md-toolbar>
+
+
+        <md-content flex class='md-padding'>  
+
+          <span>{{message}}</span>
+          <ez-image-upload img="current.group.Thumbnail" ></ez-image-upload>
+          <div layout-gt-sm="row">
+            <md-input-container class="md-block" flex-gt-sm>
+              <label>Group name</label>
+              <input ng-model="current.group.Name">
+            </md-input-container>
+            <div class="hint" >What's your group called!</div>
+          </div>
+          <md-input-container class="md-block">
+            <label>Purpose</label>
+            <textarea ng-model="current.group.Description" columns="1" md-maxlength="150" rows="5"></textarea>
+          </md-input-container>
+          <div class="hint" >Tell more about this awesome group and the activities!</div>
+
+          <md-button class="md-fab md-mini" aria-label="Add" ng-click="showAdd= !showAdd">
+                <md-icon area-label="Add member">person_add</md-icon>
           </md-button>
+          <md-sub-header>Group Members</md-sub-header>
+          <div ng-show="showAdd">
+            <!--Add members-->
+            <form ng-submit="$event.preventDefault()">
+                <div layout="row" flex-gt-xs>
+                  <md-autocomplete
+                      md-selected-item="selectedUser"
+                      md-search-text="searchText"
+                      md-items="item in getUsers(searchText)"
+                      md-item-text="item.FirstName"
+                      md-min-length="0"
+                      placeholder="Choose group member"
+                      md-menu-class="autocomplete-custom-template">
+                    <md-item-template>
+                      <span class="item-title"> 
+                        <img ng-src="{{item.Picture}}" class="md-avatar" alt="{{item.FirstName.charAt(0).toUpperCase()}}" />
+                        <span> {{item.FirstName}} {{item.LastName}} </span>
+                        <p>{{ item.UserName }}{{item.City}} {{item.Country}}</p>
+                      </span>
+                      <span class="item-metadata">
+                        <span class="item-metastat">
+                          <strong>{{item.City}}</strong> 
+                        </span>
+                      </span>
+                    </md-item-template>
+                  </md-autocomplete>
+                  <md-button ng-click="addMember(selectedUser)" >
+                    <md-icon class="md-icon-button" area-label="Add member">person_add</md-icon>
+                  </md-button>
+              </div>
+            </form>
+            <!--Add members End-->
+          </div>
+          <md-list>
+              <md-list-item class="md-3-line" ng-repeat="item in current.group.Members">
+                <img ng-src="{{item.Picture}}" class="md-avatar" alt="{{item.FirstName.charAt(0)}}" />
+                <div class="md-list-item-text" layout="column">
+                  <h3>{{ item.FirstName }} {{item.LastName }}</h3>
+                  <p>{{ item.UserName}}, {{item.City }}</p>
+                </div>
+                <md-button ng-click="removeMember(item)">
+                  <i class="material-icons">remove_circle_outline</i>
+                </md-button>
+              </md-list-item>
+          </md-list>
+
           
-          <md-button class="md-icon-button md-primary accent" aria-label="Share">
-            <i class="material-icons">restore</i>
-          </md-button>
-        </md-card-actions>
-      </md-card>
-      <div layout-gt-sm="row">
-        <md-input-container class="md-block" flex-gt-sm>
-          <label>Group name</label>
-          <input ng-model="current.group.Name">
-        </md-input-container>
-        <div class="hint" >What's your group called!</div>
-      </div>
-      <md-input-container class="md-block">
-        <label>Purpose</label>
-        <textarea ng-model="current.group.Description" columns="1" md-maxlength="150" rows="5"></textarea>
-      </md-input-container>
-      <div class="hint" >Tell more about this awesome group and the activities!</div>
-      
-      <div layout-gt-sm="row">
-        
-        <div class="hint" >What's your group called!</div>
-      
-      </div>
-      <div>
-        <md-button class="md-fab md-mini md-fab-right" aria-label="Add" ng-click="addMember()">
-            <i class="material-icons">person_add</i>
-        </md-button>
-        <md-sub-header>
-            Group Members
-        </md-sub-header>
-        <md-card ng-repeat="m in current.group.Members">
-            
-        </md-card>
-      </div>
-    </md-content>
-    <footer>
-        <md-button class="md-button md-primary accent" ng-click="save()">
-            Save
-        </md-button>
-        <md-button class="md-button md-primary accent" ng-click="cancel()">
-            Cancel
-        </md-button>
-    </footer>
+        </md-content>
+        <div>
+            <md-button class="md-button md-primary accent" ng-click="save()">
+                Save
+            </md-button>
+            <md-button class="md-button md-primary accent" ng-click="cancel()">
+                Cancel
+            </md-button>
+        </div>
+    </div>
 </div>
+
