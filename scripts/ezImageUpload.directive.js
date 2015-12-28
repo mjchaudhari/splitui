@@ -15,7 +15,7 @@
 
         '<md-card-actions layout="row" layout-align="end center">',
           '<md-button class="md-icon-button md-primary accent" aria-label="Settings"',
-           'type="file" ngf-select="uploadFiles($file, $invalidFiles)" accept="image/*" ngf-max-height="1000" ngf-max-size="1MB"',
+           'type="file" ngf-select="uploadFiles($file, $invalidFiles)" accept="image/*" ngf-capture="\'camera\'" ngf-max-height="1000" ngf-max-size="1MB"',
            '>',
             '<i class="material-icons">add_a_photo</i>',
           '</md-button>',
