@@ -14,13 +14,13 @@
         '<img ng-if="img == null" ng-src="{{defaultImage}}" style="align-self:center;height:auto; width:auto;max-height:150px; max-width:150px;" class="md-card-image" alt="Default">',
 
         '<md-card-actions layout="row" layout-align="end center">',
-          '<md-button class="md-icon-button md-primary accent" aria-label="Settings"',
+          '<md-button class="md-primary accent" aria-label="Settings"',
            'type="file" ngf-select="uploadFiles($file, $invalidFiles)" accept="image/*" ngf-capture="\'camera\'" ngf-max-height="1000" ngf-max-size="1MB"',
            '>',
             '<i class="material-icons">add_a_photo</i>',
           '</md-button>',
 
-          '<md-button class="md-icon-button md-primary accent" aria-label="reset" ng-click="resetImage()">',
+          '<md-button class="md-primary accent" aria-label="reset" ng-click="resetImage()">',
             '<i class="material-icons">restore</i>',
           '</md-button>',
         '</md-card-actions>',
