@@ -1,8 +1,8 @@
 (function() {
   
-  var module ;
+  var module = null;
   try {
-        module = $injector.get('cp');
+        module = angular.module('ezDirectives');;
     } catch (e) {
         module = angular.module('ezDirectives', []);
     }
@@ -10,21 +10,22 @@
   this.template = [
       '<md-card>',
         
-        '<img ng-if="img != null" ng-src="{{img}}" style="align-self:center;height:auto; width:auto;max-height:150px; max-width:150px;" class="md-card-image" alt="No image">',
-        '<img ng-if="img == null" ng-src="{{defaultImage}}" style="align-self:center;height:auto; width:auto;max-height:150px; max-width:150px;" class="md-card-image" alt="Default">',
+        '<img ng-if="img != null" ng-src="{{img}}" style="border:4;align-self:center;height:auto; width:auto;max-height:150px; max-width:150px;" class="md-card-image" alt="No image">',
+        '<img ng-if="img == null" ng-src="{{defaultImage}}" style="border:4;align-self:center;height:auto; width:auto;max-height:150px; max-width:150px;" class="md-card-image" alt="Default">',
 
         '<md-card-actions layout="row" layout-align="end center">',
-          '<md-button class="md-primary accent" aria-label="Settings"',
-           'type="file" ngf-select="uploadFiles($file, $invalidFiles)" accept="image/*" ngf-capture="\'camera\'" ngf-max-height="1000" ngf-max-size="1MB"',
-           '>',
+          '<md-button class="md-primary md-raised accent" aria-label="Settings"',
+           'ngf-select="uploadFiles($file, $invalidFiles)" accept="image/*" ngf-max-height="1000" ngf-max-size="1MB">',
             '<i class="material-icons">add_a_photo</i>',
           '</md-button>',
 
-          '<md-button class="md-primary accent" aria-label="reset" ng-click="resetImage()">',
+          '<md-button class="md-primary md-raised accent" aria-label="reset" ng-click="alert();resetImage()">',
             '<i class="material-icons">restore</i>',
           '</md-button>',
         '</md-card-actions>',
+        
       '</md-card>',
+
 
     
     ].join('\n');
@@ -52,9 +53,9 @@
                   if(originalImg ){
                           $scope.img = originalImg;
                   }
-                  else if(defaultImage)
+                  else if($scope.defaultImage)
                   {
-                         $scope.img = defaultImage; 
+                         $scope.img = $scope.defaultImage; 
                   }
           }
           $scope.uploadFiles = function(file, errFiles){

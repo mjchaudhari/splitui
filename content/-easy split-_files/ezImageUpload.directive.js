@@ -39,7 +39,7 @@
           img: '='
         },
         //controller start
-        controller: ["$scope","Upload", function ($scope, Upload) {
+        controller: ["$scope","$upload", function ($scope, $upload) {
           var originalImg = $scope.img;
           var img = undefined;
           $scope.defaultImage = "./content/images/group-default3.png";
@@ -61,7 +61,7 @@
                 
                 if (file) {
                     var baseUrl = config.apiBaseURL
-                    file.upload = Upload.upload({
+                    file.upload = $upload.upload({
                         url: config.apiBaseUrl + '/v1/file/upload',
                         data: {file: file}
                     });

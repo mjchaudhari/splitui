@@ -53,6 +53,7 @@ function ($scope, $log, $state, $stateParams,   storageService, authService, $md
 			$state.go("home")
 		});
 	}
+	
 	init();
 
 }]);

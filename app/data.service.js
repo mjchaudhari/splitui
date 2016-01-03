@@ -62,7 +62,7 @@ function($http,$q, $log, $timeout){
     removeGroupMembers : function(data){
       
       var url = config.apiBaseUrl + "/v1/group/members";
-      return $http.delete(url, data);
+      return $http['delete'](url, data);
     },
 
   };

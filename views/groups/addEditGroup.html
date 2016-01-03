@@ -24,26 +24,8 @@
         <md-content flex class='md-padding'>  
 
           <span>{{message}}</span>
-        <md-card>
-        
-        <img ng-if="img != null" ng-src="{{img}}" style="align-self:center;height:auto; width:auto;max-height:150px; max-width:150px;" class="md-card-image" alt="No image">
-        <img ng-if="img == null" ng-src="{{defaultImage}}" style="align-self:center;height:auto; width:auto;max-height:150px; max-width:150px;" class="md-card-image" alt="Default">
-
-        <md-card-actions layout="row" layout-align="end center">
-          <md-button class="md-icon-button md-primary accent" aria-label="Settings"
-           type="file" ngf-select="uploadFiles($file, $invalidFiles)" accept="image/*" ngf-capture="'camera'" ngf-max-height="1000" ngf-max-size="1MB">
-           
-            <i class="material-icons">add_a_photo</i>
-          </md-button>
-
-          <md-button class="md-icon-button md-primary accent" aria-label="reset" ng-click="resetImage()">
-            <i class="material-icons">restore</i>
-          </md-button>
-        </md-card-actions>'
-      </md-card>
-
+          <ez-image-upload img="current.group.Thumbnail" ></ez-image-upload>
           
-<!--           <ez-image-upload img="current.group.Thumbnail" ></ez-image-upload> -->
           <div layout-gt-sm="row">
             <md-input-container class="md-block" flex-gt-sm>
               <label>Group name</label>
@@ -107,15 +89,16 @@
           </md-list>
 
           
+        
+            <div>
+                <md-button class="md-button md-primary accent" ng-click="save()">
+                    Save
+                </md-button>
+                <md-button class="md-button md-primary accent" ng-click="cancel()">
+                    Cancel
+                </md-button>
+            </div>
         </md-content>
-        <div>
-            <md-button class="md-button md-primary accent" ng-click="save()">
-                Save
-            </md-button>
-            <md-button class="md-button md-primary accent" ng-click="cancel()">
-                Cancel
-            </md-button>
-        </div>
     </div>
 </div>
 
