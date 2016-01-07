@@ -2,12 +2,12 @@
   
   var module ;
   try {
-        module = $injector.get('ezDirectives');
+        module = angular.module('ezDirectives');;
     } catch (e) {
         module = angular.module('ezDirectives', ['ngFileUpload']);
     }
     
-  this.template = [
+  this.ezTreeTemplate = [
     
     '<div>{{title}}' ,
         '<ul style="list-style-type:none;">',
@@ -40,7 +40,7 @@
     '$timeout', function($timeout) {
       return {
         restrict: 'AE',
-        template: this.template,
+        template: this.ezTreeTemplate,
         replace: true,
         scope: {
           tree: '=',

@@ -1,104 +1,117 @@
 <div ng-controller="addEditGroupCtrl" >
-<!--     <md-toolbar class="" md-scroll-shrink>
-          <div class="md-toolbar-tools">
-            <span>Split</span>
-           <span flex></span>
-            <md-button ng-click="toggleLeft()">
-              <ng-md-icon icon="menu"></ng-md-icon> 
-            </md-button>
-          </div>
-    </md-toolbar>
-    <md-content flex class='md-padding'> -->
-    <div layout="column" style="height:600px" ng-cloak class="toolbarScrollShrink">
-        <md-toolbar md-scroll-shrink="">
-          <div class="md-toolbar-tools">
-            <span>Split</span>
-            <span flex></span>
-            <md-button ng-click="toggleLeft()">
-              <ng-md-icon icon="menu"></ng-md-icon> 
-            </md-button>
-          </div>
-        </md-toolbar>
-
-
-        <md-content flex class='md-padding'>  
-
-          <span>{{message}}</span>
-          <ez-image-upload img="current.group.Thumbnail" ></ez-image-upload>
-          
-          <div layout-gt-sm="row">
-            <md-input-container class="md-block" flex-gt-sm>
-              <label>Group name</label>
-              <input ng-model="current.group.Name">
-            </md-input-container>
-            <div class="hint" >What's your group called!</div>
-          </div>
-          <md-input-container class="md-block">
-            <label>Purpose</label>
-            <textarea ng-model="current.group.Description" columns="1" md-maxlength="150" rows="5"></textarea>
-          </md-input-container>
-          <div class="hint" >Tell more about this awesome group and the activities!</div>
-
-          <md-button class="md-fab md-mini" aria-label="Add" ng-click="showAdd= !showAdd">
-                <md-icon area-label="Add member">person_add</md-icon>
-          </md-button>
-          <md-sub-header>Group Members</md-sub-header>
-          <div ng-show="showAdd">
-            <!--Add members-->
-            <form ng-submit="$event.preventDefault()">
-                <div layout="row" flex-gt-xs>
-                  <md-autocomplete
-                      md-selected-item="selectedUser"
-                      md-search-text="searchText"
-                      md-items="item in getUsers(searchText)"
-                      md-item-text="item.FirstName"
-                      md-min-length="0"
-                      placeholder="Choose group member"
-                      md-menu-class="autocomplete-custom-template">
-                    <md-item-template>
-                      <span class="item-title"> 
-                        <img ng-src="{{item.Picture}}" class="md-avatar" alt="{{item.FirstName.charAt(0).toUpperCase()}}" />
-                        <span> {{item.FirstName}} {{item.LastName}} </span>
-                        <p>{{ item.UserName }}{{item.City}} {{item.Country}}</p>
-                      </span>
-                      <span class="item-metadata">
-                        <span class="item-metastat">
-                          <strong>{{item.City}}</strong> 
-                        </span>
-                      </span>
-                    </md-item-template>
-                  </md-autocomplete>
-                  <md-button ng-click="addMember(selectedUser)" >
-                    <md-icon class="md-icon-button" area-label="Add member">person_add</md-icon>
-                  </md-button>
-              </div>
-            </form>
-            <!--Add members End-->
-          </div>
-          <md-list>
-              <md-list-item class="md-3-line" ng-repeat="item in current.group.Members">
-                <img ng-src="{{item.Picture}}" class="md-avatar" alt="{{item.FirstName.charAt(0)}}" />
-                <div class="md-list-item-text" layout="column">
-                  <h3>{{ item.FirstName }} {{item.LastName }}</h3>
-                  <p>{{ item.UserName}}, {{item.City }}</p>
-                </div>
-                <md-button ng-click="removeMember(item)">
-                  <i class="material-icons">remove_circle_outline</i>
-                </md-button>
-              </md-list-item>
-          </md-list>
-
-          
-        
-            <div>
-                <md-button class="md-button md-primary accent" ng-click="save()">
-                    Save
-                </md-button>
-                <md-button class="md-button md-primary accent" ng-click="cancel()">
-                    Cancel
+    <div layout="column" style="min-height:600px" ng-cloak class="toolbarScrollShrink">
+      <div ng-switch="currentView">
+        <div ng-switch-when="main">
+            <md-toolbar md-scroll-shrink="">
+            <div class="md-toolbar-tools">
+                <span>Split</span>
+                <span flex></span>
+                <md-button ng-click="toggleLeft()">
+                <ng-md-icon icon="menu"></ng-md-icon> 
                 </md-button>
             </div>
-        </md-content>
+            </md-toolbar>
+
+
+            <md-content flex class='md-padding'>  
+           
+                <span>{{message}}</span>
+                <ez-image-upload img="current.group.Thumbnail" ></ez-image-upload>
+                
+                <div layout-gt-sm="row">
+                    <md-input-container class="md-block" flex-gt-sm>
+                    <label>What's the group called!</label>
+                    <input ng-model="current.group.Name">
+                    </md-input-container>
+                    <div class="hint" ></div>
+                </div>
+                <md-input-container class="md-block">
+                    <label>More about this awesome group</label>
+                    <textarea ng-model="current.group.Description" columns="1" md-maxlength="150" rows="5"></textarea>
+                </md-input-container>
+                
+                <md-button class="md-fab md-mini" aria-label="Add" ng-click="showAddMembers()">
+                        <md-icon area-label="Add member">person_add</md-icon>
+                </md-button>
+
+                <div>
+                    <md-button class="md-button md-raised md-primary accent" ng-click="save()">
+                        Save
+                    </md-button>
+                    <md-button class="md-button md-raised md-primary accent" ng-click="cancel()">
+                        Cancel
+                    </md-button>
+                </div>
+           
+            </md-content>
+        </div>
+        <div ng-switch-when="members">
+            <!--Members list-->
+            <md-toolbar md-scroll-shrink="">
+                <div class="md-toolbar-tools">
+                    <md-button class="md-icon-button"  ng-click="cancelMemberAdd()">
+                        <i class="material-icons">keyboard_backspace</i> 
+                    </md-button>
+                    <span flex></span>
+                    <span>Add members</span>
+                </div>
+            </md-toolbar>
+            <div flex class='md-padding' >
+                <!--Add members-->
+                <form ng-submit="$event.preventDefault()">
+                    <div layout="row" >
+                        
+                            <md-autocomplete
+                                
+                                md-selected-item="selectedUser"
+                                md-search-text="searchText"
+                                md-items="item in getUsers(searchText)"
+                                md-item-text="item.FirstName"
+                                md-min-length="0"
+                                placeholder="Choose group member"
+                                md-menu-class="autocomplete-custom-template">
+                                <md-item-template>
+                                        <span class="item-title" lauout="column"> 
+                                            <img ng-if="item.Picture != null" ng-src="{{item.Picture}}" class="md-avatar" />
+
+                                            <span> {{item.FirstName}} {{item.LastName}} </span>
+                                            <p>{{ item.UserName }}{{item.City}} {{item.Country}}</p>
+                                        </span>
+                                        <span class="item-metadata">
+                                            <span class="item-metastat">
+                                            <strong>{{item.City}}</strong> 
+                                            </span>
+                                        </span>
+                                </md-item-template>
+                            </md-autocomplete>
+                        
+                            <md-button ng-click="addMember(selectedUser)" >
+                                <md-icon class="md-icon-button" area-label="Add member">person_add</md-icon>
+                            </md-button>
+                        <div>
+                    </div>
+                </form>
+                <!--Add members End-->
+            </div>
+            <md-sub-header>Group Members</md-sub-header>
+            <md-list>
+                <md-list-item class="md-2-line" ng-repeat="item in current.group.Members">
+                    
+                    <img ng-if="item.Picture!=null" ng-src="{{item.Picture}}" class="md-avatar" />
+                    <ez-initials ng-if="item.Picture==null" class="md-avatar" text="item.FirstName" ></ez-initials >
+                    
+                    <div class="md-list-item-text" layout="column">
+                    <h3>{{ item.FirstName }} {{item.LastName }}</h3>
+                    <p>{{ item.UserName}}, {{item.City }}</p>
+                    </div>
+                    <md-button ng-click="removeMember(item)">
+                    <i class="material-icons">remove_circle_outline</i>
+                    </md-button>
+                    
+                </md-list-item>
+            </md-list>            
+        </div>
+        </div>
     </div>
 </div>
 

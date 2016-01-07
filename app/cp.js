@@ -1,5 +1,6 @@
 /// <reference path="../typings/angularjs/angular.d.ts"/>
 // Code goes here
+ //module = angular.module('ezDirectives', ['ngFileUpload']);
  var app = angular.module('cp', ['ngMaterial','ngMdIcons', 'ngAnimate', 'ui.router',
       ,'ngStorage','ngFileUpload', 'ezDirectives']);
  

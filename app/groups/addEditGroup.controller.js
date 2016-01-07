@@ -5,7 +5,7 @@ function ($scope, $log, $q, $state, $stateParams, $mdToast,  storageService, $ti
 	$scope.defaultImage = "./content/images/group-default3.png"
 	$scope.toastPosition = 'top';
 	$scope.message = "";
-	$scope.showAddUsers
+    $scope.currentView = "main";
 	$scope.current = {
 		action:"Create",
 	    id:0,
@@ -145,8 +145,8 @@ function ($scope, $log, $q, $state, $stateParams, $mdToast,  storageService, $ti
 			}
 			else{
 
-				var index = index = _.indexOf(_.pluck($scope.current.group.members, '_id'), item._id);
-				$scope.current.group.members.splice(index);			
+				var index = _.indexOf(_.pluck($scope.current.group.Members, '_id'), item._id);
+				$scope.current.group.Members.splice(index,1);			
 			}
 		});
 
@@ -190,5 +190,11 @@ function ($scope, $log, $q, $state, $stateParams, $mdToast,  storageService, $ti
 		//take back to list of groups
 		$window.history.back();
 	}
+    $scope.showAddMembers = function(){
+        $scope.currentView = "members"
+    }
+    $scope.cancelMemberAdd = function(){
+        $scope.currentView = "main"
+    }
 	preInit();
 }]);

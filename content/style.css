@@ -143,3 +143,16 @@ md-icon {
   width: 18px; }
 
   /*  Select User item template Ends */
+.circle
+{
+  border-radius:50%;
+  color:#fff;
+  width:40px;
+  height:40px;
+  line-height:40px;
+  text-align:center;
+  background: dimgrey;
+  border-radius: 20% !important;
+  border-bottom-right-radius: 0 !important;
+}
+ 
