@@ -28,11 +28,11 @@ angular.module("cp")
         
       },
       function (e){
-        if(e && e.isError && e.err){
+        if(e && e.data.isError && e.data.err){
           //toaster.pop('error', 'Login failed', e.err);
           $mdToast.show(
             $mdToast.simple()
-              .content(e.message)
+              .content(e.data.err)
               //.position($scope.getToastPosition())
               .hideDelay(3000)
           );

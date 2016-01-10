@@ -1,42 +1,24 @@
-<div ng-controller="resendPinController">
-  
-  <div class="col-sm-12 center">
-    <div class="col-sm-2">
-      
-    </div>
-    
-    <div class="form col-sm-8 center">
-      <div class="form-group">
-        <div class="col-xs-12 col-sm-12">
-          <h4><label for="fn" class="col-xs-12 control-label">{{title}}</label></h4>
-          
-        </div>
-      </div>
-      <div class="form-group">
-        <div class="col-xs-12 col-sm-12">
-          <label for="fn" class="col-xs-12 control-label">Enter mobile number </label>
-          
-        </div>
-      </div>
-      <div class="form-group">
-        <div class="col-xs-12  col-sm-12">
-          <input type="number" class="form-control floating-label" id="mobile" placeholder="Mobile number"
-          ng-model="pinModel.mobileno">
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="register" class="col-xs-12 control-label"> </label>
-        <div class="col-xs-12">
-          <button class="btn btn-success btn-raised" ng-click="resendPin()">Resend Pin</button>
-        </div>
-      </div>
-      <div class="form-group">
-        <div class="col-xs-12">
-          
-        </div>
-      </div>
-    
-    </div>
-    <div class="col-sm-2"></div>
-  </div>
+<div ng-controller="resendPinCtrl">
+  <md-content layout-padding>
+		<h4 class="md-title">{{title}}</h4>
+		<form name="userForm">
+			<div layout="row">
+				<div flex="10"></div>
+				<div flex="70">
+				  <div layout="column">
+					<md-input-container >
+					  <label>Mobile No.</label>
+					  <input ng-model="pinModel.mobileno">
+					</md-input-container>
+				  </div>
+				  <div layout layout-sm="row">
+					<button class="md-button md-raised" ng-click="resendPin()">Resend Pin</button>
+					
+				  </div>
+				</div>
+				<div layout="column" flex="15"></div>
+		  </div>
+        
+		</form>
+  </md-content>
 </div>

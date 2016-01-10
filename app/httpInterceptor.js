@@ -33,7 +33,7 @@ function ($q, $location, $injector , storageService, $log) {
 
     var _responseError = function (rejection) {
         if (rejection.status === 401) {
-            if ($location.$$path.indexOf("Login") < 0)
+            if ($location.$$path.indexOf("login") <= -1  )
             {
                 $log.info('Unauthenticated...redirecting to login page.');
                 $injector.get('$state').go("account.login");

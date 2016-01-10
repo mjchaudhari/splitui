@@ -33,7 +33,25 @@
                 <md-button class="md-fab md-mini" aria-label="Add" ng-click="showAddMembers()">
                         <md-icon area-label="Add member">person_add</md-icon>
                 </md-button>
+                <md-sub-header>Group Members</md-sub-header>
+                <md-content>
+                    <md-list>
+                        <md-list-item class="md-2-line" ng-repeat="item in current.group.Members">
 
+                            <img ng-if="item.Picture!=null" ng-src="{{item.Picture}}" class="md-avatar" />
+                            <ez-initials ng-if="item.Picture==null" class="md-avatar" text="item.FirstName" ></ez-initials >
+
+                            <div class="md-list-item-text" layout="column">
+                                    <h3>{{ item.FirstName }} {{item.LastName }}</h3>
+                                    <p>{{ item.UserName}}, {{item.City }}</p>
+                            </div>
+                            <md-button ng-click="removeMemberConfirmation($event,item)">
+                                <i class="material-icons">remove_circle_outline</i>
+                            </md-button>
+
+                        </md-list-item>
+                    </md-list>            
+                </md-content>
                 <div>
                     <md-button class="md-button md-raised md-primary accent" ng-click="save()">
                         Save
@@ -49,7 +67,7 @@
             <!--Members list-->
             <md-toolbar md-scroll-shrink="">
                 <div class="md-toolbar-tools">
-                    <md-button class="md-icon-button"  ng-click="cancelMemberAdd()">
+                    <md-button class="md-icon-button md-cols-7"   ng-click="cancelMemberAdd()">
                         <i class="material-icons">keyboard_backspace</i> 
                     </md-button>
                     <span flex></span>
@@ -59,22 +77,23 @@
             <div flex class='md-padding' >
                 <!--Add members-->
                 <form ng-submit="$event.preventDefault()">
-                    <div layout="row" >
-                        
+                    <div layout="column" >
+<!--                            
                             <md-autocomplete
-                                
-                                md-selected-item="selectedUser"
+                                class=""
+                                md-selected-item"selectedUser"
+                                md-selected-item-change="onItemChanged(d)"
                                 md-search-text="searchText"
                                 md-items="item in getUsers(searchText)"
-                                md-item-text="item.FirstName"
+                                md-item-text="Name"
                                 md-min-length="0"
                                 placeholder="Choose group member"
                                 md-menu-class="autocomplete-custom-template">
                                 <md-item-template>
                                         <span class="item-title" lauout="column"> 
                                             <img ng-if="item.Picture != null" ng-src="{{item.Picture}}" class="md-avatar" />
-
-                                            <span> {{item.FirstName}} {{item.LastName}} </span>
+                                           
+                                            <span> {{item.Name}}</span>
                                             <p>{{ item.UserName }}{{item.City}} {{item.Country}}</p>
                                         </span>
                                         <span class="item-metadata">
@@ -83,34 +102,46 @@
                                             </span>
                                         </span>
                                 </md-item-template>
-                            </md-autocomplete>
-                        
-                            <md-button ng-click="addMember(selectedUser)" >
-                                <md-icon class="md-icon-button" area-label="Add member">person_add</md-icon>
-                            </md-button>
+                            </md-autocomplete> -->
+                            <div layout="row" >
+                                <md-button class="md-icon-button" ng-click="searchText=''" >
+                                        <ng-md-icon icon="search"></ng-md-icon>
+                                </md-button>
+                                <md-input-container flex class="flex" md-no-float>
+                                        <input placeholder="Search members" ng-model="searchText" ng-change="onSerch(searchText)"/>
+                                </md-input-container>
+
+                                <md-button class="md-icon-button" ng-click="searchText=''" >
+                                        <ng-md-icon icon="clear"></ng-md-icon>
+                                </md-button>
+                            </div>
+                            
                         <div>
                     </div>
                 </form>
                 <!--Add members End-->
             </div>
-            <md-sub-header>Group Members</md-sub-header>
+            <md-sub-header ng-show="searchResult.length > 0">{{"Found :" + searchResult.length}}</md-sub-header>
+            
             <md-list>
-                <md-list-item class="md-2-line" ng-repeat="item in current.group.Members">
+                <md-list-item class="md-2-line" ng-repeat="item in searchResult">
                     
-                    <img ng-if="item.Picture!=null" ng-src="{{item.Picture}}" class="md-avatar" />
-                    <ez-initials ng-if="item.Picture==null" class="md-avatar" text="item.FirstName" ></ez-initials >
+                    <img ng-disabled="item.__added"  ng-if="item.Picture!=null" ng-src="{{item.Picture}}" class="md-avatar" />
+                    <ez-initials ng-disabled="item.__added" ng-if="item.Picture==null" class="md-avatar" text="item.FirstName" ></ez-initials >
                     
                     <div class="md-list-item-text" layout="column">
-                    <h3>{{ item.FirstName }} {{item.LastName }}</h3>
-                    <p>{{ item.UserName}}, {{item.City }}</p>
+                            <h3>{{ item.FirstName }} {{item.LastName }}</h3>
+                            <p>{{ item.UserName}}, {{item.City }}</p>
+                            <p>{{item.__added==true?"Added":""}}
                     </div>
-                    <md-button ng-click="removeMember(item)">
-                    <i class="material-icons">remove_circle_outline</i>
+
+                    <md-button ng-disabled="___item.__added" ng-click="addMemberConfirmation($event,item)">
+                        <i class="material-icons">add_circle_outline</i>
                     </md-button>
                     
                 </md-list-item>
             </md-list>            
-        </div>
+        
         </div>
     </div>
 </div>

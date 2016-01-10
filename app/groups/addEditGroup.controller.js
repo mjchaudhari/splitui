@@ -1,5 +1,5 @@
 angular.module("cp").controller("addEditGroupCtrl", 
-['$scope', '$log', '$q','$state', '$stateParams', '$mdToast', 'storageService','$timeout', 'Upload', 'dataService', '$mdMedia','$mdDialog','$window',
+['$scope', '$log', '$q','$state', '$stateParams', '$mdToast', 'storageService','$timeout', 'Upload', 'dataService', '$mdMedia','$mdDialog', '$window',
 function ($scope, $log, $q, $state, $stateParams, $mdToast,  storageService, $timeout, Upload, dataService,$mdMedia, $mdDialog, $window){
 	$scope.$parent.currentViewName = "Edit Group";
 	$scope.defaultImage = "./content/images/group-default3.png"
@@ -9,14 +9,15 @@ function ($scope, $log, $q, $state, $stateParams, $mdToast,  storageService, $ti
 	$scope.current = {
 		action:"Create",
 	    id:0,
-	    group:{}
+	    group:{},
+	    selectedUser:null
 	};
-	
+	$scope.selectedUser ={Name:'Not selected'};
 	/*Add participants*/
 	$scope.members = [];
 	$scope.searchText = "";
-	$scope.selectedUser = null;
-
+	$scope.searchResult = [];
+	
 	var preInit = function(){
         $scope.current.group = {
             Id : 0,
@@ -91,21 +92,20 @@ function ($scope, $log, $q, $state, $stateParams, $mdToast,  storageService, $ti
 			$log.error(e);
 		});
 	}
-
-	var getUsers = function(searchTerm){
-		return dataService.getUsers(searchTerm).then(function(d){
-			if(d.data.isError){
-				//toaster.pop("error","",d.Message)
-			}
-			else{
-				angular.copy(d.data.data,$scope.myGroups);  
-				$scope.groupList.forEach(function(obj){
-					  obj.DateCreated = new Date(obj.DateCreated);
-			   	});
-			}
+	
+	$scope.getUsers = function(term){
+		var defer = $q.defer();
+		dataService.getUsers(term)
+		.then(function(d){   
+			var users = [];
+			d.data.data.forEach(function(u){
+				u.Name = u.FirstName + ' ' + u.LastName;
+			});
+			defer.resolve(d.data.data);
 		});
-
+		return defer.promise;
 	}
+	
   	$scope.uploadFiles = function(file, errFiles) {
         $scope.f = file;
         $scope.errFile = errFiles && errFiles[0];
@@ -132,8 +132,62 @@ function ($scope, $log, $q, $state, $stateParams, $mdToast,  storageService, $ti
             });
         }
 	}   
+	var confirmMessageHtml = 
+			'<md-dialog aria-label="List dialog" class="layout-padding">' +
+           '  <md-dialog-heading>'+
+           '  	<h2>{{title}}</h2>'+	
+           '  </md-dialog-heading>'+
+           '  <md-dialog-content>'+
+		   '	<img ng-disabled="item.__added"  ng-if="item.Picture!=null" ng-src="{{item.Picture}}" class="md-avatar" />' +
+           '         <ez-initials ng-disabled="item.__added" ng-if="item.Picture==null" class="md-avatar" text="item.FirstName" ></ez-initials >'+
+           '         <div class="md-list-item-text" layout="column">' +
+           '                 <h3>{{ item.FirstName }} {{item.LastName }}</h3>' +
+           '                 <p>{{ item.UserName}}, {{item.City }}</p>' +
+           '                 <p>{{item.__added==true?"Added":""}}' +
+           '         </div>' + 
+		   '  </md-dialog-content>' +
+           '  <md-dialog-actions>' +
+           '    <md-button ng-click="confirmed()" class="md-primary">' +
+           '      Yes' +
+           '    </md-button>' +
+           '  	<md-button ng-click="canceled()" class="md-primary">' +
+           '      Cancel' +
+           '    </md-button>' +
+           '  </md-dialog-actions>' +
+           '</md-dialog>';
+	
+	$scope.removeMemberConfirmation = function(ev,selUser) {
+		var confirmOpts = {
+			template: confirmMessageHtml,
+			//targetEvent:ev,
+			locals: {
+			   item: selUser,
+			   title: 'Remove member '
+			 },
+			controller : function ($scope, $mdDialog, item, title){
+				$scope.item = item;
+				$scope.title = title;
+				$scope.confirmed = function() {
+              		$mdDialog.hide();
+              	}
+              	$scope.canceled = function() {
+              		$mdDialog.cancel();
+              	}
+			}
+		}
+		
+		$mdDialog.show(confirmOpts)
+		.then(function(a){
+			removeMember(selUser);
+		}, function(e){
+			
+		})
+		.finally(function(a) {
+            cnf = undefined;
+          });
 
-	$scope.removeMember = function (item){
+	};           
+	var removeMember = function (item){
 		var data = 
 		{
 			"groupId":$scope.current.group._id,
@@ -146,16 +200,71 @@ function ($scope, $log, $q, $state, $stateParams, $mdToast,  storageService, $ti
 			else{
 
 				var index = _.indexOf(_.pluck($scope.current.group.Members, '_id'), item._id);
-				$scope.current.group.Members.splice(index,1);			
+				$scope.current.group.Members.splice(index,1);		
+					
 			}
 		});
 
 	}
+	$scope.onSerch = function(searchText){
+		$scope.searchResult=[];
+		if(searchText && searchText.length > 0){
 
-	$scope.addMember = function (){
+		}
+		
+		$scope.getUsers(searchText).then(function(d){
+			
+			d.forEach(function(u){
+				//check if this user is alredy added
+				var exist = _.findWhere($scope.current.group.Members,{"_id":u._id});
+				if(exist){
+					u.__added = true;
+				}
+			})
+			var sorted = _.sortBy(d,"FirstName");
+			angular.copy(sorted,$scope.searchResult)
+			
+		})
+	}
+
+	$scope.addMemberConfirmation = function(ev,selUser) {
+		var confirmOpts = {
+			template: confirmMessageHtml,
+			//targetEvent:ev,
+			locals: {
+			   item: selUser,
+			   title: 'Add new member  '
+			 },
+			controller : function ($scope, $mdDialog, item, title){
+				$scope.item = item;
+				$scope.title = title;
+				$scope.confirmed = function() {
+              		$mdDialog.hide();
+              	}
+              	$scope.canceled = function() {
+              		$mdDialog.cancel();
+              	}
+			}
+		}
+		
+		
+		$mdDialog.show(confirmOpts)
+		.then(function(a){
+			
+			addMember(selUser);
+		}, function(e){
+			
+		})
+		.finally(function(a) {
+          
+          });
+
+	};
+
+	var addMember = function (selUser){
 		var exist = false;
 		$scope.current.group.Members.forEach(function(u){
-		  if(u.UserName == $scope.selectedUser.UserName){
+		  if(u.UserName == selUser.UserName){
 			exist = true;
 		  }
 		});
@@ -163,27 +272,22 @@ function ($scope, $log, $q, $state, $stateParams, $mdToast,  storageService, $ti
 			var data = 
 			{
 				"groupId":$scope.current.group._id,
-				"members":[$scope.selectedUser._id]
+				"members":[selUser._id]
 			}
 			dataService.addGroupMembers(data).then(function(d){
 				if(d.isError){
 					$scope.showToast("Failed to add member", "");	
 				}
 				else{
-					$scope.current.group.Members.push($scope.selectedUser);			
+
+					$scope.current.group.Members.push(selUser);
+					selUser.__added = true;
 				}
 			});
 		}
 	}
 
-	$scope.getUsers = function(term){
-		var defer = $q.defer();
-		dataService.getUsers(term)
-		.then(function(d){   
-			defer.resolve(d.data.data);
-		});
-		return defer.promise;
-	}
+	
 
 
 	$scope.cancel =function(){

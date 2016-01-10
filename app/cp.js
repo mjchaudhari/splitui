@@ -1,7 +1,7 @@
 /// <reference path="../typings/angularjs/angular.d.ts"/>
 // Code goes here
  //module = angular.module('ezDirectives', ['ngFileUpload']);
- var app = angular.module('cp', ['ngMaterial','ngMdIcons', 'ngAnimate', 'ui.router',
+ var app = angular.module('cp', ['ngMaterial','ngMdIcons', 'ngAnimate', 'ngSanitize', 'ui.router',
       ,'ngStorage','ngFileUpload', 'ezDirectives']);
  
  app.config([ "$httpProvider","$urlRouterProvider", '$stateProvider','$mdThemingProvider',
