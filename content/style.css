@@ -118,12 +118,11 @@ md-icon {
   border: 1px solid #ddd; }
 
 .grid-tile-footer{
-/*   background-color : rgba(0,0,0,.18) ; */
-
-  color:black;
-  padding:2px;
-  text-alignment:center;
-}
+  background-color: rgba(0,0,0,.5)!important;
+  color: white;
+  /* padding:2px; */
+  text-alignment: left !important;
+  }
 
 /*  Select User item template */
 .autocompletedemoCustomTemplate .autocomplete-custom-template li {

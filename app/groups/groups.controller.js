@@ -11,7 +11,7 @@ angular.module("cp")
 
   
   var init = function(){
-    
+    $scope.groupList = [];
     dataService.getGroups().then(function(d){
      if(d.data.isError){
         //toaster.pop("error","",d.Message)

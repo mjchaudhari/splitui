@@ -1,4 +1,4 @@
-angular.module('cp').controller('mainController', function($scope, $log, storageService) {
+angular.module('cp').controller('mainController', function($scope, $log, $state, storageService, authService) {
   $scope.AUTHDATA = null;
   $scope.appOptions = {
     "showMenubar": true
@@ -27,7 +27,16 @@ angular.module('cp').controller('mainController', function($scope, $log, storage
     $scope.AUTHDATA = storageService.get('__splituser');
     
   }
-
+  $scope.$on('evtLoggedIn',function(data) 
+  { 
+      $scope.AUTHDATA = storageService.get('__splituser');
+  });
+  $scope.logoff = function(){
+		authService.logOut().then(function(){
+			$scope.AUTHDATA = null;
+			$state.go("home")
+		});
+  }
   init();
   
 });

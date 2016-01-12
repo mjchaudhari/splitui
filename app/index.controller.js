@@ -48,11 +48,7 @@ function ($scope, $log, $state, $stateParams,   storageService, authService, $md
 		return $mdSidenav('left')
           .toggle();
 	}
-	$scope.logoff = function(){
-		authService.logOut().then(function(){
-			$state.go("home")
-		});
-	}
+	
 	
 	init();
 

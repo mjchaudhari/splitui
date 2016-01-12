@@ -30,10 +30,10 @@
                     <textarea ng-model="current.group.Description" columns="1" md-maxlength="150" rows="5"></textarea>
                 </md-input-container>
                 
-                <md-button class="md-fab md-mini" aria-label="Add" ng-click="showAddMembers()">
+                <md-button ng-if="showMemberManagement && current.group._id && current.group._id != ''" class="md-fab md-mini" aria-label="Add" ng-click="showAddMembers()">
                         <md-icon area-label="Add member">person_add</md-icon>
                 </md-button>
-                <md-sub-header>Group Members</md-sub-header>
+                <md-sub-header ng-if="current.group._id && current.group._id != ''">Group Members</md-sub-header>
                 <md-content>
                     <md-list>
                         <md-list-item class="md-2-line" ng-repeat="item in current.group.Members">
@@ -45,7 +45,7 @@
                                     <h3>{{ item.FirstName }} {{item.LastName }}</h3>
                                     <p>{{ item.UserName}}, {{item.City }}</p>
                             </div>
-                            <md-button ng-click="removeMemberConfirmation($event,item)">
+                            <md-button ng-if="showMemberManagement" ng-click="removeMemberConfirmation($event,item)">
                                 <i class="material-icons">remove_circle_outline</i>
                             </md-button>
 
@@ -135,7 +135,7 @@
                             <p>{{item.__added==true?"Added":""}}
                     </div>
 
-                    <md-button ng-disabled="___item.__added" ng-click="addMemberConfirmation($event,item)">
+                    <md-button ng-disabled="item.__added" ng-click="addMemberConfirmation($event,item)">
                         <i class="material-icons">add_circle_outline</i>
                     </md-button>
                     

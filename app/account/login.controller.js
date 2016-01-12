@@ -19,6 +19,7 @@ angular.module("cp")
   $scope.verify = function(){
     authService.login($scope.authModel.userName, $scope.authModel.password).then(
       function(d){
+        $scope.$emit('evtLoggedIn', { data: d.data });
         $mdToast.show(
             $mdToast.simple()
               .content("Authenticated")

@@ -12,12 +12,12 @@ function ($scope, $log, $q, $state, $stateParams, $mdToast,  storageService, $ti
 	    group:{},
 	    selectedUser:null
 	};
-	$scope.selectedUser ={Name:'Not selected'};
+	$scope.selectedUser = {Name:'Not selected'};
 	/*Add participants*/
 	$scope.members = [];
 	$scope.searchText = "";
 	$scope.searchResult = [];
-	
+	$scope.showMemberManagement = false;
 	var preInit = function(){
         $scope.current.group = {
             Id : 0,
@@ -75,6 +75,11 @@ function ($scope, $log, $q, $state, $stateParams, $mdToast,  storageService, $ti
 					  obj.DateCreated = new Date(obj.DateCreated);
 			   	});
 			   	$scope.current.group = d.data.data[0];
+
+			   	//if this group is created by current user then allow user to manage users
+			   	if($scope.current.group.CreatedBy.toString() == $scope.AUTHDATA._id.toString() ){
+			   		$scope.showMemberManagement = true;
+			   	}
 			   	
 			}
 		});
@@ -86,7 +91,12 @@ function ($scope, $log, $q, $state, $stateParams, $mdToast,  storageService, $ti
 		//$scope.current.group._id = $scope.current.group.Id; 
 		dataService.saveGroup($scope.current.group)
 		.then(function(g){
+			$scope.current.group._id = g.data._id
 			$scope.showToast("Group saved.");
+			//if this group is created by current user then allow user to manage users
+			if($scope.current.group.CreatedBy.toString() == $scope.AUTHDATA._id.toString() ){
+				$scope.showMemberManagement = true;
+			}
 		},
 		function(e){
 			$log.error(e);
@@ -201,7 +211,7 @@ function ($scope, $log, $q, $state, $stateParams, $mdToast,  storageService, $ti
 
 				var index = _.indexOf(_.pluck($scope.current.group.Members, '_id'), item._id);
 				$scope.current.group.Members.splice(index,1);		
-					
+				
 			}
 		});
 
@@ -279,7 +289,7 @@ function ($scope, $log, $q, $state, $stateParams, $mdToast,  storageService, $ti
 					$scope.showToast("Failed to add member", "");	
 				}
 				else{
-
+					$scope.showToast("Member added", "");	
 					$scope.current.group.Members.push(selUser);
 					selUser.__added = true;
 				}
