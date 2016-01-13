@@ -16,42 +16,55 @@
 
 		
 		<md-content flex class='md-padding'>  
-			<lable ng-if="groupList.length==0"><h4> Create groups.</h4></lable>
-			<md-grid-list 
-				
-				md-cols-sm="2" 
-				md-cols-md="4" 
-				md-cols-lg="4" 
-				md-cols-gt-lg="4" md-gutter="12px" 
-				md-row-height-gt-md="1:1" 
-				md-row-height-md="1:1" 
-				md-row-height-sm="1:1">
-				<md-grid-tile class="md-whiteframe-5dp" ng-repeat="g in groupList" 
-					style="background-image: url({{g.Thumbnail}}); background-size: cover;">
-				  <md-grid-tile-footer class="grid-tile-footer" layout="column">
-						<span flex="">{{g.Name}}</span>
-						<md-menu>
-						  <md-button aria-label="Open phone interactions menu" class="md-icon-button" ng-click="openMenu($mdOpenMenu, $event)">
-							<md-icon style="" >more_vert</md-icon>
-						  </md-button>
-						  <md-menu-content width="4">
-							<md-menu-item>
-							  <md-button ng-click="editGroup(g)">
-								<md-icon md-menu-align-target>edit</md-icon>
-								Edit
+			<div class="container" ng-if="groupsLoading">
+				<md-progress-linear md-mode="query"></md-progress-linear>
+				<div class="bottom-block">
+					<p/>
+				  	<span>Loading groups...</span>
+				  	<p/>
+				</div>
+			</div>
+			
+			<div ng-if="!groupsLoading">
+			
+				<lable ng-if="groupList.length==0"><h4> Create groups.</h4></lable>
+				<md-grid-list 
+
+					md-cols-sm="2" 
+					md-cols-md="4" 
+					md-cols-lg="4" 
+					md-cols-gt-lg="4" md-gutter="12px" 
+					md-row-height-gt-md="1:1" 
+					md-row-height-md="1:1" 
+					md-row-height-sm="1:1">
+					<md-grid-tile class="md-whiteframe-5dp" ng-repeat="g in groupList" 
+						style="background-image: url({{g.Thumbnail}}); background-size: cover;">
+					  <md-grid-tile-footer class="grid-tile-footer" layout="column">
+							<span flex="">{{g.Name}}</span>
+							<md-menu>
+							  <md-button aria-label="Open phone interactions menu" class="md-icon-button" ng-click="openMenu($mdOpenMenu, $event)">
+								<md-icon style="color:white;" >settings</md-icon>
 							  </md-button>
-							</md-menu-item>
-							<md-menu-item>
-							  <md-button ng-click="openGroup(g)">
-								<md-icon md-menu-align-target>launch</md-icon>
-								Details
-							  </md-button>
-							</md-menu-item>
-						  </md-menu-content>
-						</md-menu>
-				  </md-grid-tile-footer>
-				</md-grid-tile>
-			</md-grid-list>	
+							  <md-menu-content width="4">
+								<md-menu-item>
+								  <md-button ng-click="editGroup(g)">
+									<md-icon md-menu-align-target>edit</md-icon>
+									Edit
+								  </md-button>
+								</md-menu-item>
+								<md-menu-item>
+								  <md-button ng-click="openGroup(g)">
+									<md-icon md-menu-align-target>launch</md-icon>
+									Details
+								  </md-button>
+								</md-menu-item>
+							  </md-menu-content>
+							</md-menu>
+					  </md-grid-tile-footer>
+					</md-grid-tile>
+				</md-grid-list>	
+	
+			</div>
 		</md-content>
 	</div>
 </div>

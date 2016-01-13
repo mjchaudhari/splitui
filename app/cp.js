@@ -7,9 +7,15 @@
  app.config([ "$httpProvider","$urlRouterProvider", '$stateProvider','$mdThemingProvider',
  function($httpProvider, $urlRouterProvider, $stateProvider, $mdThemingProvider){
    
-   $mdThemingProvider.theme('default')
-    .primaryPalette('blue-grey')
-    .accentPalette('amber');
+//    $mdThemingProvider.theme('default')
+//     .primaryPalette('blue-grey')
+//     .accentPalette('amber');
+    $mdThemingProvider.theme('default')
+    .primaryPalette('purple')
+    
+   $mdThemingProvider.theme('light-blue')
+    .primaryPalette('light-blue')
+    .accentPalette('red');
 
    $mdThemingProvider.theme('light-blue')
     .primaryPalette('light-blue')

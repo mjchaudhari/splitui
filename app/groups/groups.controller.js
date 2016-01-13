@@ -8,10 +8,11 @@ angular.module("cp")
   $scope.selected = {};
   $scope.groupList = [];
   $scope.fabIsOpen = false;
-
+  $scope.groupsLoading = false;
   
   var init = function(){
     $scope.groupList = [];
+    $scope.groupsLoading = true;
     dataService.getGroups().then(function(d){
      if(d.data.isError){
         //toaster.pop("error","",d.Message)
@@ -23,6 +24,7 @@ angular.module("cp")
               obj.DateCreated = new Date(obj.DateCreated);
          });
       }
+      $scope.groupsLoading = false;
       
     });
 

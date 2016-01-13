@@ -1,5 +1,13 @@
 <div ng-controller="addEditGroupCtrl" >
-    <div layout="column" style="min-height:600px" ng-cloak class="toolbarScrollShrink">
+    <div class="container" ng-if="isLoading">
+        <md-progress-linear md-mode="query"></md-progress-linear>
+        <div class="bottom-block">
+            <p/>
+            <span>Loading...</span>
+            <p/>
+        </div>
+    </div>    
+    <div ng-if="!isLoading" layout="column" style="min-height:600px" class="toolbarScrollShrink">
       <div ng-switch="currentView">
         <div ng-switch-when="main">
             <md-toolbar md-scroll-shrink="">

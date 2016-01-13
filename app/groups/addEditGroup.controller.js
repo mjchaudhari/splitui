@@ -2,6 +2,7 @@ angular.module("cp").controller("addEditGroupCtrl",
 ['$scope', '$log', '$q','$state', '$stateParams', '$mdToast', 'storageService','$timeout', 'Upload', 'dataService', '$mdMedia','$mdDialog', '$window',
 function ($scope, $log, $q, $state, $stateParams, $mdToast,  storageService, $timeout, Upload, dataService,$mdMedia, $mdDialog, $window){
 	$scope.$parent.currentViewName = "Edit Group";
+	$scope.isLoading = false;
 	$scope.defaultImage = "./content/images/group-default3.png"
 	$scope.toastPosition = 'top';
 	$scope.message = "";
@@ -19,6 +20,7 @@ function ($scope, $log, $q, $state, $stateParams, $mdToast,  storageService, $ti
 	$scope.searchResult = [];
 	$scope.showMemberManagement = false;
 	var preInit = function(){
+		$scope.isLoading = true;
         $scope.current.group = {
             Id : 0,
             Name : "",
@@ -35,19 +37,28 @@ function ($scope, $log, $q, $state, $stateParams, $mdToast,  storageService, $ti
 			$scope.$parent.currentViewName = "Create Group" ;
 		}
 		
-		var tasks = [];
-
 		if($scope.current.group._id && $scope.current.group._id != 0){
-			tasks.push(getGroupDetail($scope.current.group._id));
+			getGroupDetail($scope.current.group._id)
+			.finally(function(d){
+				init();
+			});
 		}
-  		$q.all([
-			tasks
-  		])
-  		.then(init());
-  	}
+		else{
+			init();
+		}
+
+// 		var tasks = [];
+// 		if($scope.current.group._id && $scope.current.group._id != 0){
+// 			tasks.push(getGroupDetail($scope.current.group._id));
+// 		}
+//   		$q.all([
+// 			getGroupDetail($scope.current.group._id)
+//   		])
+	}
   	
 	var init = function(){
 		//$scope.showToast("Loaded", "");
+		$scope.isLoading = false;
 	};
 	$scope.showToast = function(msg, type) {
 		var toast = $mdToast.simple()
@@ -64,7 +75,8 @@ function ($scope, $log, $q, $state, $stateParams, $mdToast,  storageService, $ti
 	};
 	
 	var getGroupDetail = function(id){
-		return dataService.getGroup(id).then(function(d){
+		//var defered = $q.defer();
+		var promise =  dataService.getGroup(id).then(function(d){
 			if(d.data.isError){
 				//toaster.pop("error","",d.Message)
 			}
@@ -77,12 +89,19 @@ function ($scope, $log, $q, $state, $stateParams, $mdToast,  storageService, $ti
 			   	$scope.current.group = d.data.data[0];
 
 			   	//if this group is created by current user then allow user to manage users
-			   	if($scope.current.group.CreatedBy.toString() == $scope.AUTHDATA._id.toString() ){
+
+			   	if($scope.current.group.CreatedBy == $scope.AUTHDATA._id ){
 			   		$scope.showMemberManagement = true;
 			   	}
 			   	
 			}
-		});
+			//defered.resolve();
+		},
+		function(){
+			//defered.reject();
+		}
+		);
+		return promise;
 	};
 	
 	$scope.save = function(){
@@ -91,10 +110,11 @@ function ($scope, $log, $q, $state, $stateParams, $mdToast,  storageService, $ti
 		//$scope.current.group._id = $scope.current.group.Id; 
 		dataService.saveGroup($scope.current.group)
 		.then(function(g){
-			$scope.current.group._id = g.data._id
+			
 			$scope.showToast("Group saved.");
 			//if this group is created by current user then allow user to manage users
-			if($scope.current.group.CreatedBy.toString() == $scope.AUTHDATA._id.toString() ){
+			
+			if($scope.current.group.CreatedBy == $scope.AUTHDATA._id ){
 				$scope.showMemberManagement = true;
 			}
 		},
