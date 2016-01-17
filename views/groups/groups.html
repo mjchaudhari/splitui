@@ -6,11 +6,13 @@
 	<div layout="column" style="height:600px" ng-cloak class="toolbarScrollShrink">
 		<md-toolbar md-scroll-shrink="">
 		  <div class="md-toolbar-tools">
-			<span>Split</span>
-			<span flex></span>
-			<md-button ng-click="toggleLeft()">
+			<md-button class="md-icon-button" ng-click="toggleLeft()">
 			  <ng-md-icon icon="menu"></ng-md-icon> 
 			</md-button>
+			<span flex></span>
+			<span>Split</span>
+			
+			
 		  </div>
 		</md-toolbar>
 
@@ -32,13 +34,15 @@
 
 					md-cols-sm="2" 
 					md-cols-md="4" 
-					md-cols-lg="4" 
-					md-cols-gt-lg="4" md-gutter="12px" 
+					md-cols-lg="6" 
+					md-cols-gt-lg="6" md-gutter="12px" 
 					md-row-height-gt-md="1:1" 
 					md-row-height-md="1:1" 
 					md-row-height-sm="1:1">
 					<md-grid-tile class="md-whiteframe-5dp" ng-repeat="g in groupList" 
-						style="background-image: url({{g.Thumbnail}}); background-size: cover;">
+						style="background-image: url({{g.Thumbnail}}); background-size: cover;"
+						ui-sref="index.group({'id':g._id})"
+						>
 					  <md-grid-tile-footer class="grid-tile-footer" layout="column">
 							<span flex="">{{g.Name}}</span>
 							<md-menu>

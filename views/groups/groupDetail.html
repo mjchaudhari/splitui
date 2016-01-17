@@ -1,10 +1,39 @@
 <div ng-controller="groupDetailCtrl" class="col-sm-12">
-    <div>
-        <div class="col-sm-2">
-            <img src=""></img>
+    <div class="container" ng-if="isLoading">
+        <md-progress-linear md-mode="query"></md-progress-linear>
+        <div class="bottom-block">
+            <p/>
+            <span>Loading...</span>
+            <p/>
         </div>
-        <div class="col-sm-10">
-            
-        </div>
+    </div>    
+    <div ng-if="!isLoading" layout="column" style="min-height:600px" class="toolbarScrollShrink">
+        <md-toolbar md-scroll-shrink="">
+            <div class="md-toolbar-tools">
+                <md-button class="md-icon-button" ng-click="toggleLeft()">
+                  <ng-md-icon icon="menu"></ng-md-icon> 
+                </md-button>
+                <span flex></span>
+                <span>Split</span>
+            </div>
+        </md-toolbar>
+        <md-content flex layout-padding>
+            <md-card>
+                <div class="" layout="row" >
+                    
+                    <img ng-src="{{group.Thumbnail}}" class="avatar" alt="{{group.Name}}">
+                    <div class="inset md-list-item-text">
+                      
+                      <b>{{group.Name}}</b>
+                      
+                    </div>
+                </div>
+                <p>{{group.Description}} This is an awesome group careated for sharing thoughts and ideas</p>
+                <md-card-actions layout="row" layout-align="end center">
+                    <ng-md-icon icon="message"></ng-md-icon><div class="inset">{{group.unreadMessages.length||'--'}}</div>
+                    <ng-md-icon icon="people"></ng-md-icon><div class="inset">{{group.Members.length}}</div>
+                </md-card-actions>
+            </md-card>
+        <md-content >
     </div>
 </div>

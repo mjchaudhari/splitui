@@ -55,9 +55,14 @@ md-sidenav {
     top: 5px; // adjust for svg viewbox
   }
 }
-.user-avatar {
+.avatar {
   border-radius: 99%;
-}
+  border: 1px solid #ddd;
+  width: 55px;
+  height: 55px;
+  margin: 0px;
+  }
+
 ng-md-icon {
 /*/
 /fill: currentColor;/

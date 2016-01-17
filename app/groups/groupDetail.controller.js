@@ -2,12 +2,14 @@ angular.module("cp").controller("groupDetailCtrl",
 ['$scope', '$log', '$q','$state', '$stateParams', 'storageService', 'dataService',
 function ($scope, $log, $q, $state, $stateParams,   storageService, dataService){
 	$scope.$parent.currentViewName = "Group Detail" 
-	
+	$scope.isLoading = false;
 	$scope.current = {
 		action:"View",
 	    id:0,
-	    group:{}
+	    
 	};
+	$scope.group = null;
+
 	if($stateParams.id){
 		$scope.current.id = $stateParams.id;
 	}
@@ -17,14 +19,18 @@ function ($scope, $log, $q, $state, $stateParams,   storageService, dataService)
 
 	var preInit = function(){
 		var tasks = [];
-
-		if($scope.current.id > 0){
+		$scope.isLoading = true;
+  			
+		if($scope.current.id != ''){
 			tasks.push(getGroupDetail($scope.current.id));
 		}
   		$q.all([
 			tasks
   		])
-  		.then(init());
+  		.then(function(){
+
+  			init()
+  		});
   	}
   	
 	var init = function(){
@@ -32,6 +38,7 @@ function ($scope, $log, $q, $state, $stateParams,   storageService, dataService)
 	};
 
 	var getGroupDetail = function(id){
+		$scope.isLoading = true;
 		return dataService.getGroup(id).then(function(d){
 			if(d.data.isError){
 				//toaster.pop("error","",d.Message)
@@ -41,25 +48,18 @@ function ($scope, $log, $q, $state, $stateParams,   storageService, dataService)
 				d.data.data.forEach(function(obj){
 					  obj.DateCreated = new Date(obj.DateCreated);
 			   	});
-			   	$scope.current.group = d.data.data[0];
+			   	$scope.group = d.data.data[0];
 			   	
 			}
+		}).finally(function(){
+			$scope.isLoading = false;
 		});
 
 	}
-
-	var getUsers = function(searchTerm){
-		return dataService.getUsers(searchTerm).then(function(d){
-			if(d.data.isError){
-				//toaster.pop("error","",d.Message)
-			}
-			else{
-				angular.copy(d.data.data,$scope.myGroups);  
-				$scope.groupList.forEach(function(obj){
-					  obj.DateCreated = new Date(obj.DateCreated);
-			   	});
-			}
-		});
+	
+	var getGroupActivities = function(id){
+		
+		
 
 	}
   	

@@ -11,13 +11,13 @@
       <div ng-switch="currentView">
         <div ng-switch-when="main">
             <md-toolbar md-scroll-shrink="">
-            <div class="md-toolbar-tools">
-                <span>Split</span>
-                <span flex></span>
-                <md-button ng-click="toggleLeft()">
-                <ng-md-icon icon="menu"></ng-md-icon> 
+              <div class="md-toolbar-tools">
+                <md-button class="md-icon-button" ng-click="toggleLeft()">
+                    <ng-md-icon icon="menu"></ng-md-icon> 
                 </md-button>
-            </div>
+                <span flex></span>
+                <span>Split</span>
+              </div>
             </md-toolbar>
 
 
@@ -79,10 +79,11 @@
                         <i class="material-icons">keyboard_backspace</i> 
                     </md-button>
                     <span flex></span>
-                    <span>Add members</span>
+                    <span>{{current.group.Name}}</span>
                 </div>
             </md-toolbar>
             <div flex class='md-padding' >
+                Add members
                 <!--Add members-->
                 <form ng-submit="$event.preventDefault()">
                     <div layout="column" >

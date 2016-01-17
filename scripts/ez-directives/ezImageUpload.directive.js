@@ -37,13 +37,14 @@
         template: this.ezImageUploadTemplate,
         replace: true,
         scope: {
-          img: '='
+          img: '=',
+          defaultImage: "=?"
         },
         //controller start
         controller: ["$scope","Upload", function ($scope, Upload) {
           var originalImg = $scope.img;
           var img = undefined;
-          $scope.defaultImage = "./content/images/group-default3.png";
+          //$scope.defaultImage = "./content/images/group-default3.png";
           
           var init = function(){
             
@@ -63,7 +64,7 @@
                 if (file) {
                     var baseUrl = config.apiBaseURL
                     file.upload = Upload.upload({
-                        url: config.apiBaseUrl + '/v1/file/upload',
+                        url: config.apiBaseUrl + '/v1/file',
                         data: {file: file}
                     });
 
@@ -88,6 +89,15 @@
               if(newValue)
               {
                   $scope.img = newValue;
+              }
+          });
+          $scope.$watch('defaultImage', function(newValue, oldValue){
+              if(newValue)
+              {
+                  $scope.defaultImage = newValue;
+              }
+              else{
+                $scope.defaultImage = "https://placehold.it/100x100";
               }
           });
           

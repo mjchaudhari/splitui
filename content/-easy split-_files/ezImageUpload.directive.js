@@ -10,8 +10,8 @@
   this.template = [
       '<md-card>',
         
-        '<img ng-if="img != null" ng-src="{{img}}" style="align-self:center;height:auto; width:auto;max-height:150px; max-width:150px;" class="md-card-image" alt="No image">',
-        '<img ng-if="img == null" ng-src="{{defaultImage}}" style="align-self:center;height:auto; width:auto;max-height:150px; max-width:150px;" class="md-card-image" alt="Default">',
+        '<img ng-if="img != null" ng-src="{{img}}" style="align-self:center;height:auto; width:auto;max-height:100px; max-width:100px;" class="md-card-image" alt="No image">',
+        '<img ng-if="img == null" ng-src="{{defaultImage}}" style="align-self:center;height:auto; width:auto;max-height:100px; max-width:100px;" class="md-card-image" alt="Default">',
 
         '<md-card-actions layout="row" layout-align="end center">',
           '<md-button class="md-icon-button md-primary accent" aria-label="Settings"',
@@ -36,13 +36,15 @@
         template: this.template,
         replace: true,
         scope: {
-          img: '='
+          img: '=',
+          defaultImage: "=?"
         },
         //controller start
         controller: ["$scope","$upload", function ($scope, $upload) {
           var originalImg = $scope.img;
           var img = undefined;
-          $scope.defaultImage = "./content/images/group-default3.png";
+          var defaultImage = $scope.defaultImage;
+          //$scope.defaultImage = "./content/images/group-default3.png";
           
           var init = function(){
             
@@ -62,7 +64,7 @@
                 if (file) {
                     var baseUrl = config.apiBaseURL
                     file.upload = $upload.upload({
-                        url: config.apiBaseUrl + '/v1/file/upload',
+                        url: config.apiBaseUrl + '/v1/file',
                         data: {file: file}
                     });
 
@@ -87,6 +89,15 @@
               if(newValue)
               {
                   $scope.img = newValue;
+              }
+          });
+          $scope.$watch('defaultImage', function(newValue, oldValue){
+              if(newValue)
+              {
+                  $scope.defaultImage = newValue;
+              }
+              else{
+                $scope.defaultImage = "placehold.it/150x150";
               }
           });
           

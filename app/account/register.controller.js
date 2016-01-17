@@ -5,7 +5,7 @@ angular.module("cp")
   $scope.registerModel = {};
   $scope.blockUI = false;
   
-  $scope.register = function(){
+  $scope.saveRegistration = function(){
     
     
     var model = {
@@ -13,6 +13,7 @@ angular.module("cp")
       , LastName: $scope.registerModel.ln
       , UserName: $scope.registerModel.mobileno
       , ClientKey: $scope.registerModel.clientId
+      , Picture : $scope.registerModel.Thumbnail
     };
     
     authService.register(model).then(

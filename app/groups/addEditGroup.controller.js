@@ -113,7 +113,9 @@ function ($scope, $log, $q, $state, $stateParams, $mdToast,  storageService, $ti
 			
 			$scope.showToast("Group saved.");
 			//if this group is created by current user then allow user to manage users
-			
+			$scope.current.group._id = g.data._id;
+			$scope.current.group.Members = g.data.Members;
+			$scope.current.group.CreatedBy = g.data.CreatedBy;
 			if($scope.current.group.CreatedBy == $scope.AUTHDATA._id ){
 				$scope.showMemberManagement = true;
 			}

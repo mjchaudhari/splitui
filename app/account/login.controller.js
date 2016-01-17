@@ -1,6 +1,6 @@
 angular.module("cp")
 .controller("loginCtrl", function($scope, $log, $timeout, storageService, $state,$mdToast, authService, dataService){
-  $scope.title = "-split-";
+  $scope.title = ":: collaborate";
   $scope.userModel = null;
 
   $scope.authModel = {

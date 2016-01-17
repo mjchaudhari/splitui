@@ -15,42 +15,38 @@
           </div>
         </md-toolbar>
         <md-list>
-          <md-item >
-            <md-button >
-              <md-item-content md-ink-ripple layout="row" layout-align="start center">
+          <md-list-item  >
+              <md-list-content md-ink-ripple layout="row" layout-align="start center">
                 <div class="inset">
                   <ng-md-icon icon="dashboard"></ng-md-icon>
                 </div>
-                <div class="inset">Dashboard
+                <div class="">Dashboard
                 </div>
-              </md-item-content>
-            </md-button>
-          </md-item>
+              </md-list-content>
+          </md-list-item >
           <md-divider></md-divider>
-          <md-item>
-            <md-button ui-sref="index.groups">
-              <md-item-content md-ink-ripple layout="row" layout-align="start center">
-                <div class="inset">
-
-                  <ng-md-icon icon="group"></ng-md-icon>
+          <md-subheader ui-sref="index.groups" >
+            <div layout="row">
+                <div >
+                <ng-md-icon icon="group"></ng-md-icon>
                 </div>
-                <div class="inset">Groups
-                </div>
-              </md-item-content>
-            </md-button>
-          </md-item>
-<!--           <md-item layout="" ng-repeat="item in myGroups">
-            <md-button ui-sref="index.group({'id':item.Id})">
-              <md-item-content md-ink-ripple layout="row" layout-align="start center">
+                <div>Groups</div>
+            </div>
+          </md-subheader>
+          <md-list-item layout="" ng-repeat="item in myGroups">
+              <md-item-content ui-sref="index.group({'id':item.Id})" md-ink-ripple layout="row" layout-align="start center">
                 <div class="inset">
                   <ng-md-icon icon="people"></ng-md-icon>
-
                 </div>
-                <div class="inset">{{item.Name}}
-                </div>
+                <div class="">{{item.Name}}</div>
+                
               </md-item-content>
-            </md-button>
-          </md-item> -->
+          </md-list-item>
+          <md-list-item ng-if="myGroups.length > 1">
+            <md-item-content  ui-sref="index.groups" md-ink-ripple layout="row" layout-align="start center">
+                More...
+              </md-item-content>
+          </md-list-item >
           <md-divider></md-divider>
           <md-item>
             <md-button ng-click="nextTheme()">
@@ -59,7 +55,7 @@
 
                   <ng-md-icon icon="format_color_fill"></ng-md-icon>
                 </div>
-                <div class="inset">Change color
+                <div class="">Change color
                 </div>
               </md-item-content>
             </md-button>
