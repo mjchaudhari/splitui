@@ -72,7 +72,7 @@
                         $timeout(function () {
                             //file.result = response.data;
                             if(!response.data.isError){
-                                $scope.img = response.data.data.url;
+                                $scope.img = response.data.url;
                             }
                         });
                     }, function (response) {

@@ -1,6 +1,16 @@
 angular.module('cp').factory('dataService', 
-function($http,$q, $log, $timeout){
-  
+function($http,$q, $log, $timeout, CacheFactory){
+  if (!CacheFactory.get('dataServiceCache')) {
+      
+      CacheFactory.createCache('dataServiceCache', {
+        deleteOnExpire: 'aggressive',
+        recycleFreq: 1 * 60 * 1000
+      });
+    }
+
+    var dataServiceCache = CacheFactory.get('dataServiceCache');
+    var requestOpts = {cache: dataServiceCache};
+    
   return {
     apiPrefix : config.apiBaseUrl,  
     
@@ -11,11 +21,11 @@ function($http,$q, $log, $timeout){
     getUsers : function(searchTerm ){
       if(searchTerm)
       {
-        return $http.get(this.apiPrefix + "/v1/user/search" + "?term=" + searchTerm);
+        return $http.get(this.apiPrefix + "/v1/user/search" + "?term=" + searchTerm, requestOpts);
       }
       else
       {
-        return $http.get(this.apiPrefix + "/v1/user/search");
+        return $http.get(this.apiPrefix + "/v1/user/search", requestOpts);
       }
     },
     
@@ -30,12 +40,12 @@ function($http,$q, $log, $timeout){
     getGroups : function(){
       
       var url = config.apiBaseUrl + "/v1/groups?status=active";
-      return $http.get(url);
+      return $http.get(url, requestOpts);
     },
     getGroup : function(id){
       
       var url = config.apiBaseUrl + "/v1/groups?_id="+id;
-      return $http.get(url);
+      return $http.get(url, requestOpts);
     },
     saveGroup : function(grp){
       
@@ -45,7 +55,7 @@ function($http,$q, $log, $timeout){
     getGroupMembers : function(id){
       
       var url = config.apiBaseUrl + "/v1/group/members?groupid="+id;
-      return $http.get(url);
+      return $http.get(url, requestOpts);
     },
     /**
     * @param data : {groupId: 1, members:"1,2,3" }

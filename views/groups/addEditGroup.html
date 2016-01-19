@@ -12,10 +12,14 @@
         <div ng-switch-when="main">
             <md-toolbar md-scroll-shrink="">
               <div class="md-toolbar-tools">
+                <md-button class="md-icon-button" ui-sref="index.groups">
+                    <i class="material-icons">keyboard_backspace</i> 
+                </md-button>
+                <span flex></span>
                 <md-button class="md-icon-button" ng-click="toggleLeft()">
                     <ng-md-icon icon="menu"></ng-md-icon> 
                 </md-button>
-                <span flex></span>
+                
                 <span>Split</span>
               </div>
             </md-toolbar>

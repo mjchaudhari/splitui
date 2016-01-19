@@ -16,7 +16,7 @@
         </md-toolbar>
         <md-list>
           <md-list-item  >
-              <md-list-content md-ink-ripple layout="row" layout-align="start center">
+              <md-list-content  ng-click="toggleLeft()"  md-ink-ripple layout="row" layout-align="start center">
                 <div class="inset">
                   <ng-md-icon icon="dashboard"></ng-md-icon>
                 </div>
@@ -34,7 +34,7 @@
             </div>
           </md-subheader>
           <md-list-item layout="" ng-repeat="item in myGroups">
-              <md-item-content ui-sref="index.group({'id':item.Id})" md-ink-ripple layout="row" layout-align="start center">
+              <md-item-content  ng-click="toggleLeft()"  ui-sref="index.group({'id':item._id})" md-ink-ripple layout="row" layout-align="start center">
                 <div class="inset">
                   <ng-md-icon icon="people"></ng-md-icon>
                 </div>
@@ -43,7 +43,7 @@
               </md-item-content>
           </md-list-item>
           <md-list-item ng-if="myGroups.length > 1">
-            <md-item-content  ui-sref="index.groups" md-ink-ripple layout="row" layout-align="start center">
+            <md-item-content ng-click="toggleLeft()" ui-sref="index.groups" md-ink-ripple layout="row" layout-align="start center">
                 More...
               </md-item-content>
           </md-list-item >

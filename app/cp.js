@@ -2,11 +2,13 @@
 // Code goes here
  //module = angular.module('ezDirectives', ['ngFileUpload']);
  var app = angular.module('cp', ['ngMaterial','ngMdIcons', 'ngAnimate', 'ngSanitize', 'ui.router',
-      ,'ngStorage','ngFileUpload', 'ezDirectives']);
+      ,'ngStorage','ngFileUpload', 'ezDirectives','angular-cache']);
  
- app.config([ "$httpProvider","$urlRouterProvider", '$stateProvider','$mdThemingProvider',
- function($httpProvider, $urlRouterProvider, $stateProvider, $mdThemingProvider){
+ app.config([ "$httpProvider","$urlRouterProvider", '$stateProvider','$mdThemingProvider', 'CacheFactoryProvider',
+ function($httpProvider, $urlRouterProvider, $stateProvider, $mdThemingProvider, CacheFactoryProvider ){
    
+   angular.extend(CacheFactoryProvider.defaults, { maxAge: 1 * 60 * 1000 });
+
 //    $mdThemingProvider.theme('default')
 //     .primaryPalette('blue-grey')
 //     .accentPalette('amber');
