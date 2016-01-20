@@ -1,5 +1,6 @@
 
 var gulp = require('gulp');
+var fs = require('fs');
 var path = require('path');
 var clean = require('gulp-clean');
 var concat = require('gulp-concat');
@@ -56,38 +57,44 @@ var config = {
 }
 
 gulp.task('clean', function () {
-	return gulp.src(config.dist)
+	var tsk = gulp.src(config.dist)
 		.pipe(clean({force: true}))
-
+        
+        fs.access(config.dist, function (err) {
+            console.log(err ? 'no access!' : 'can read/write');
+            fs.mkdirSync(config.dist);
+        });
+    
+    return tsk;
 });
 gulp.task('vendor', function () {
 	return gulp.src(config.vendor)
-        .pipe(concat(path.join(config.dist + 'all.js')))
+        .pipe(concat('all.js'))
 		.pipe(gulp.dest('dist'));
 });
 
 gulp.task('directives', function () {
 	return gulp.src(config.directives)
-        .pipe(concat(path.join(config.dist + 'directives.js')))
-		.pipe(gulp.dest('dist'));
+        .pipe(concat('directives.js'))
+		.pipe(gulp.dest(config.dist));
 });
 
 gulp.task('app', function () {
 	return gulp.src(config.app)
-        .pipe(concat(path.join(config.dist + 'app.js')))
-		.pipe(gulp.dest('dist'));
+        .pipe(concat('app.js'))
+		.pipe(gulp.dest(config.dist));
 });
 
 gulp.task('css', function () {
 	return gulp.src(config.app)
-        .pipe(concat(path.join(config.dist + 'styles.css')))
-		.pipe(gulp.dest('dist'));
+        .pipe(concat('styles.css'))
+		.pipe(gulp.dest(config.dist));
+
 });
 
 gulp.task('dependencies', function () {
 	return gulp.src(config.dependencies)
-          
-		.pipe(gulp.dest('dist'));
+		.pipe(gulp.dest(config.dist));
 });
 
 gulp.task('default',['clean','vendor','directives','app','dependencies'], function () {
