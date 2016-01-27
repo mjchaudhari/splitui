@@ -17,7 +17,7 @@ angular.module("cp")
     
     authService.register(model).then(
       function(d){
-        if(d.data.isError){
+        if(d.isError){
 
           return;
         }

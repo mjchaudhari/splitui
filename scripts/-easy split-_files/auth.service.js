@@ -1,6 +1,6 @@
 
-angular.module('cp').factory('authService', ['$http','$log','$q', 'storageService', 'CacheFactory',
-	function ($http, $log, $q, storageService, CacheFactory) {
+angular.module('cp').factory('authService', ['$http','$log','$q', 'storageService', 
+	function ($http, $log, $q, storageService) {
 
     var authServiceFactory = {};
 
@@ -44,13 +44,7 @@ angular.module('cp').factory('authService', ['$http','$log','$q', 'storageServic
     	$q.all(
 			storageService.remove('__splituser'),
 			storageService.remove('__splituserat')
-
     	).then(function(){
-    		
-    		if (!CacheFactory.get('dataServiceCache')) {
-    			CacheFactory.destroy('dataServiceCache');
-    		}
-    		CacheFactory.destroyAll();
     		deferred.resolve();
     	});
 		return deferred.promise;

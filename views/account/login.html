@@ -1,34 +1,25 @@
 <div ng-controller="loginCtrl">
-	<img class="bgImage" src="./content/images/people.png" alt="" style="	">
+	<img class="bgImage blur5"  src="./content/images/people_faces.png" alt="" style="	">
 	
-	<md-content layout-padding>
-		<b class="md-title">{{title}}</b>
+	<md-content  layout-padding class="transperent-bg">
+		<a href="" ui-sref="home" style="color:white;text-decoration:none;" ><b class="md-title">{{title}}</b></a>	
+	</md-content>
+	<md-footer layout-padding class="transperent-bg">
+		
 		<form name="userForm">
-        	<md-card>
-				<div class="inset">
-					<md-card-content>
-						<div layout="column">
-							<md-input-container >
-							  <label>Mobile No.</label>
-							  <input ng-model="authModel.userName">
-							</md-input-container>
-							<md-input-container >
-							  <label>Pin</label>
-							  <input ng-model="authModel.password" type="password">
-							</md-input-container>
-						</div>
-						
-					</md-card-content>
-					<md-card-footer>
-						<md-card-actions layout="row" layout-align="end center">
-							<md-button class="md-raised md-primary" ng-click="verify()">Ok</md-button>
-							<md-button  ui-sref="home" class=" md-raised md-primary" >Cancel</md-button>
-						</md-card-actions>
-					</md-card-footer>
-				</div>
-			</md-card>
+			<div layout="column">
+				<md-input-container class="login-input" >
+				  <label>Mobile No.</label>
+				  <input  ng-model="authModel.userName">
+				</md-input-container>
+				<md-input-container class="login-input" >
+				  <label>Pin</label>
+				  <input ng-model="authModel.password" type="password">
+				</md-input-container>
+			</div>
+			<div layout="column" layout-align="end center">
+				<md-button class="md-button md-raised md-primary" ng-click="verify()">Ok</md-button>
+			</div>
 		</form>
-  </md-content>
-            
-      
+  </md-footer>
 </div>

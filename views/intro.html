@@ -1,13 +1,15 @@
-<div ng-controller="introController">
-	<img class="bgImage" src="./content/images/people.png" alt="" style="	">
+<div ng-controller="introController" >
+	<img class="bgImage blur5" src="./content/images/people_faces.png" alt="" style="	">
 	
-	<md-content  layout-padding layout="row" layout-sm="column">
+	<md-content  layout-padding class="transperent-bg">
 <!-- 		<img class="bgImage" src="./content/images/people_faces.png" alt="" style="	"> -->
-		<div layout-padding class="bgOverlay" ng-show="revelView">
+		
+	</md-content>
+   <md-bottom-sheet class="transperent-bg">
+      <div layout-padding class="bgOverlay" ng-show="revelView">
 			
 			<div class="" style="text-align:center; carousel-caption center width:auto;" >
 				<h1><span class="">-split-</span> </h1>
-				
 				<md-button ui-sref="account.login" class="md-raised md-default"> Sign in </md-button>
 				<md-button ui-sref="account.register" class="md-raised md-default"> Register </md-button> 
 				 
@@ -19,7 +21,6 @@
 		<div class="bgOverlay" ng-show="!revelView">
 			<h4 style="color:white;"> Loading...</h4>
 		</div>	
-	</md-content>
-	
+   </md-bottom-sheet>
 	
 </div>

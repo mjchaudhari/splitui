@@ -89,6 +89,7 @@ Show the image as background to display: block;
 }
 .bgOverlay {
     position: relative;
+    background-color: transparent;
 }
 
 .whiteText {
@@ -237,5 +238,24 @@ md-icon {
   border-bottom-right-radius: 0 !important;
 }
  
-
- 
+.transperent-bg{
+  background-color: transparent;
+}
+.blur5{
+  -webkit-filter: blur(5px);
+  -moz-filter: blur(5px);
+  -o-filter: blur(5px);
+  -ms-filter: blur(5px);
+  filter: blur(5px);
+}
+.blur10{
+  -webkit-filter: blur(10px);
+  -moz-filter: blur(10px);
+  -o-filter: blur(10px);
+  -ms-filter: blur(10px);
+  filter: blur(10px);
+}
+.login-input{
+  background-color:white;
+  border-radius:5px;
+}
