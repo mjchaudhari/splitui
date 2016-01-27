@@ -27,7 +27,7 @@ angular.module("cp")
       $scope.groupsLoading = false;
       
     }, function(e){
-      console.error(e);
+      //console.error(e);
     });
 
   };
