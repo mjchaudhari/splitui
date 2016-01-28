@@ -25,6 +25,7 @@ angular.module("cp")
               .content("Authenticated")
               .hideDelay(3000)
         );
+        dataService.clearCache();
         $timeout(function(){$state.go('index.groups');},1000);
         
       },

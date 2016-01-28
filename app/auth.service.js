@@ -1,6 +1,6 @@
 
-angular.module('cp').factory('authService', ['$http','$log','$q', 'storageService', 'CacheFactory',
-	function ($http, $log, $q, storageService, CacheFactory) {
+angular.module('cp').factory('authService', ['$http','$log','$q', 'storageService', 'CacheFactory','dataService',
+	function ($http, $log, $q, storageService, CacheFactory,dataService) {
 
     var authServiceFactory = {};
 
@@ -28,6 +28,7 @@ angular.module('cp').factory('authService', ['$http','$log','$q', 'storageServic
         var url = config.apiBaseUrl + "/v1/authenticate";
         $http.post(url, model).then(
         function(d){
+        	dataService.clearCache();
             storageService.add('__splituser',d.data.data);
             storageService.add('__splituserat',d.data.data.AccessToken);
             deferred.resolve(d.data.data);
@@ -46,11 +47,7 @@ angular.module('cp').factory('authService', ['$http','$log','$q', 'storageServic
 			storageService.remove('__splituserat')
 
     	).then(function(){
-    		
-    		if (!CacheFactory.get('dataServiceCache')) {
-    			CacheFactory.destroy('dataServiceCache');
-    		}
-    		CacheFactory.destroyAll();
+    		dataService.clearCache();
     		deferred.resolve();
     	});
 		return deferred.promise;

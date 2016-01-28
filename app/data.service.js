@@ -13,7 +13,9 @@ function($http,$q, $log, $timeout, CacheFactory){
     
   return {
     apiPrefix : config.apiBaseUrl,  
-    
+    clearCache:function(){
+      CacheFactory.clearAll();
+    },
     getUser : function( ){
       
     },
@@ -38,9 +40,15 @@ function($http,$q, $log, $timeout, CacheFactory){
       return $http.post(url, data);   
     },
     getGroups : function(){
-      
+      var defered = $q.defer();
       var url = config.apiBaseUrl + "/v1/groups?status=active";
-      return $http.get(url, requestOpts);
+      $http.get(url, requestOpts)
+      .then(function(d){
+        defered.resolve(d);
+      }, function(e){
+        defered.reject(e);
+      });
+      return defered.promise;
     },
     getGroup : function(id){
       
