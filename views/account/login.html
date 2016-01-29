@@ -6,19 +6,29 @@
 	</md-content>
 	<md-footer layout-padding class="transperent-bg">
 		
-		<form name="userForm">
-			<div layout="column">
-				<md-input-container class="login-input" >
-				  <label>Mobile No.</label>
-				  <input  ng-model="authModel.userName">
-				</md-input-container>
-				<md-input-container class="login-input" >
-				  <label>Pin</label>
-				  <input ng-model="authModel.password" type="password">
-				</md-input-container>
-			</div>
-			<div layout="column" layout-align="end center">
-				<md-button class="md-button md-raised md-primary" ng-click="verify()">Ok</md-button>
+		<form name="userForm" >
+			<div layout="row">
+			   <div class="panel" flex="20" flex-gt-xs="30" show-gt-xs>
+			   </div>
+			   <div class="panel" flex="60" >
+				   <div layout="column">
+				   		
+						<md-input-container  class="login-input" >
+						  <label>Mobile No.</label>
+						  <input  ng-model="authModel.userName">
+						</md-input-container>
+						<md-input-container class="login-input" >
+						  <label>Pin</label>
+						  <input ng-model="authModel.password" type="password">
+						</md-input-container>
+						
+						<md-button class="md-button md-raised md-primary" ng-click="verify()">Ok</md-button>
+						
+					</div>
+					
+			   </div>
+			   <div class="panel" flex="20" flex-gt-xs="30" show-gt-xs >
+			   </div>
 			</div>
 		</form>
   </md-footer>
