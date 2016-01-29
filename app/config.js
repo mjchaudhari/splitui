@@ -1,5 +1,5 @@
 this.config = {
-  apiBaseUrl : "https://ez-split.azurewebsites.net" // "http://localhost:8085" // "https://splitapi-mjchaudhari-1.c9.io" //"
+  apiBaseUrl : "https://ezco.azurewebsites.net" // "http://localhost:8085" // "https://splitapi-mjchaudhari-1.c9.io" //"
   //apiBaseUrl :  "http://localhost:8085" 
 }
 
