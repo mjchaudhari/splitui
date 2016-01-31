@@ -2,6 +2,7 @@ angular.module("cp").controller("addEditGroupCtrl",
 ['$scope', '$log', '$q','$state', '$stateParams', '$mdToast', 'storageService','$timeout', 'Upload', 'dataService', '$mdMedia','$mdDialog', '$window',
 function ($scope, $log, $q, $state, $stateParams, $mdToast,  storageService, $timeout, Upload, dataService,$mdMedia, $mdDialog, $window){
 	$scope.$parent.currentViewName = "Edit Group";
+	
 	$scope.isLoading = false;
 	$scope.defaultImage = "./content/images/group-default3.png"
 	$scope.toastPosition = 'top';

@@ -3,21 +3,17 @@
 			<ng-md-icon icon="add"></ng-md-icon>
 	</md-button>
 
-	<div layout="column" style="height:600px" ng-cloak class="toolbarScrollShrink">
-		<md-toolbar md-scroll-shrink="">
+	<div layout="column" ng-cloak class="">
+		<md-toolbar md-scroll-shrink="false">
 		  <div class="md-toolbar-tools">
 			<md-button class="md-icon-button" ng-click="toggleLeft()">
-			  <ng-md-icon icon="menu"></ng-md-icon> 
+			  <ng-md-icon icon="keyboard_backspace"></ng-md-icon> 
 			</md-button>
 			<span flex></span>
 			<span>{{_appName}}</span>
-			
-			
 		  </div>
 		</md-toolbar>
-
-		
-		<md-content flex class='md-padding'>  
+		<md-content flex class='md-padding content-height'>  
 			<div class="container" ng-if="groupsLoading">
 				<md-progress-linear md-mode="query"></md-progress-linear>
 				<div class="bottom-block">

@@ -13,14 +13,14 @@
             <md-toolbar md-scroll-shrink="">
               <div class="md-toolbar-tools">
                 <md-button class="md-icon-button" ui-sref="index.groups">
-                    <i class="material-icons">keyboard_backspace</i> 
+                    <ng-md-icon icon="keyboard_backspace"></ng-md-icon> 
                 </md-button>
-                <span flex></span>
+                <span flex>{{title}}</span>
                 <md-button class="md-icon-button" ng-click="toggleLeft()">
                     <ng-md-icon icon="menu"></ng-md-icon> 
                 </md-button>
                 
-                <span>->collaborate<-</span>
+                
               </div>
             </md-toolbar>
 

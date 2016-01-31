@@ -9,6 +9,7 @@ angular.module("cp")
   $scope.groupList = [];
   $scope.fabIsOpen = false;
   $scope.groupsLoading = false;
+  $scope.assetsLoading = false;
   
   var init = function(){
     $scope.groupList = [];

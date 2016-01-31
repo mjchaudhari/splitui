@@ -8,33 +8,72 @@
         </div>
     </div>    
     <div ng-if="!isLoading" layout="column" style="min-height:600px" class="toolbarScrollShrink">
-        <md-toolbar md-scroll-shrink="">
+        <md-button class="md-fab md-fab-bottom-right" aria-label="Add" ng-click="createAsset()">
+			<ng-md-icon icon="add"></ng-md-icon>
+	    </md-button>
+        <md-toolbar md-scroll-shrink="false">
             <div class="md-toolbar-tools">
                 <md-button class="md-icon-button" ui-sref="index.groups">
-                  <ng-md-icon icon="menu"></ng-md-icon> 
+                  <ng-md-icon icon="keyboard_backspace"></ng-md-icon> 
                 </md-button>
-                <span flex></span>
-                <span>Split</span>
+                <span flex>{{group.Name}}</span>
+                <span><img ng-src="{{group.Thumbnail}}"  class="avatar-small" alt="{{group.Name}}"></span>
             </div>
         </md-toolbar>
-        <md-content flex layout-padding>
-            <md-card>
+        <md-content flex layout-padding class="content-height">
+            <md-card md-scroll-shrink="true">
                 <div class="" layout="row" >
                     
                     <img ng-src="{{group.Thumbnail}}" class="avatar" alt="{{group.Name}}">
                     <div class="inset md-list-item-text">
-                      
                       <b>{{group.Name}}</b>
-                      
+                      <p>{{group.Description}}</p>
                     </div>
                 </div>
-                <p>{{group.Description}}</p>
+                
                 <md-card-actions layout="row" layout-align="end center">
                     <ng-md-icon icon="message"></ng-md-icon><div class="inset">{{group.unreadMessages.length||'--'}}</div>
                     <ng-md-icon icon="people"></ng-md-icon><div class="inset">{{group.Members.length}}</div>
                 </md-card-actions>
             </md-card>
-            
+            <!-- Tabls for messages | topics |  -->
+            <div ng-controller="assetsCtrl">
+                <md-tabs md-dynamic-height md-border-bottom>
+                    <md-tab label="Assets">
+                        <md-content class="md-padding">
+                            <md-list>
+                                <md-list-item class="md-3-line" ng-repeat="item in assets">
+                                    
+                                        <div  layout="row">
+                                            <img ng-src="{{item.Thumbnail}}" class="md-avatar" />
+                                            <div class="md-list-item-text" layout="column">
+                                                <h3>{{ item.Name }}</h3>
+                                                <p>{{ item.Description }}</p>
+                                                <p>
+                                                    <span class="md-caption">{{ item.AuditTrail[0].UpdatedBy.FirstName}} {{item.AuditTrail[0].UpdatedBy.LastName}}</span> 
+                                                    <span class="md-caption"> on {{item.AuditTrail[0].UpdatedOn | date:'MM/dd/yyyy'}}</span>
+                                                </p>
+                                                <div layout="row">
+                                                    <div flex></div>
+                                                    <md-button class="md-icon-button" ui-sref="index.groups">
+                                                      <ng-md-icon icon="thumb_up"></ng-md-icon> 
+                                                    </md-button>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    <md-divider></md-divider>
+                                </md-list-item>
+                            </md-list>
+                        <md-content>
+                    </md-tab>
+                    <md-tab label="Topics">
+                        <md-content class="md-padding">
+                        <md-content>
+                    </md-tab>
+                </md-tabs>
+            </div>
         <md-content >
     </div>
 </div>

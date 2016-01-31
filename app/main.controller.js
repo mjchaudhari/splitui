@@ -4,7 +4,7 @@ angular.module('cp').controller('mainController', function($scope, $log, $state,
     "showMenubar": true
     ,alerts: []
   };
-  $scope._appName = "->collaborate<-"
+  $scope._appName = "::collaborate"
     //$scope.alerts = [];
   $scope.routeChange = function(tabName) {
     $scope.currentViewName = tabName;

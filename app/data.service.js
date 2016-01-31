@@ -31,14 +31,6 @@ function($http,$q, $log, $timeout, CacheFactory){
       }
     },
     
-    getChildren  :function(id){
-      if(!id)
-      {
-        id = 0;
-      }
-      var url = config.apiBaseUrl + "/v1/artifact/tree/" + id;
-      return $http.post(url, data);   
-    },
     getGroups : function(){
       var defered = $q.defer();
       var url = config.apiBaseUrl + "/v1/groups?status=active";
@@ -81,6 +73,41 @@ function($http,$q, $log, $timeout, CacheFactory){
       
       var url = config.apiBaseUrl + "/v1/group/members/remove";
       return $http.post(url, data);
+    },
+
+    /**
+    * @param data : {groupId: 1, members:"1,2,3" }
+    **/
+    getAssets : function(filter){
+      var qryString = "";
+
+      if(filter.parentId)
+      {
+        if(qryString.length > 0){
+          qryString+="&";
+        }
+        qryString+="parentId="+filter.parentId
+      }
+      if(filter.count)
+      {
+        if(qryString.length > 0){
+          qryString+="&";
+        }
+        qryString+="count="+filter.count
+      }
+      if(filter.from)
+      {
+        if(qryString.length > 0){
+          qryString+="&";
+        }
+        qryString+="from="+filter.from
+      }
+
+      var url = config.apiBaseUrl + "/v1/"+ filter.groupId +"/assets";
+      if(qryString.length > 0){
+        url+="?"+qryString;
+      }
+      return $http.get(url);
     },
 
   };

@@ -3,6 +3,7 @@ angular.module("cp").controller("groupDetailCtrl",
 function ($scope, $log, $q, $state, $stateParams,   storageService, dataService){
 	$scope.$parent.currentViewName = "Group Detail" 
 	$scope.isLoading = false;
+	
 	$scope.current = {
 		action:"View",
 	    id:0,
