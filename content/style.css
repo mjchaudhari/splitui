@@ -32,7 +32,7 @@ md-card {
 }
 md-toolbar {
   .md-button.md-default-theme {
-    border-radius: 99%; // round toolbar buttons
+    border-radius: 99%; 
   }
 }
 h2 {
@@ -195,4 +195,35 @@ md-icon {
 
 .small-txt{
   font-size:x-small;
+}
+
+
+@-webkit-keyframes rotating {
+0% { -webkit-transform: rotate(0deg);}
+100% { -webkit-transform: rotate(360deg);}
+}
+@-moz-keyframes rotating {
+0% { -moz-transform: rotate(0deg);}
+100% { -moz-transform: rotate(360deg);}
+}
+@-o-keyframes rotating {
+0% { -o-transform: rotate(0deg);}
+100% { -o-transform: rotate(360deg);}
+}
+@-ms-keyframes rotating {
+0% { -ms-transform: rotate(0deg);}
+100% { -ms-transform: rotate(360deg);}
+}
+@-keyframes rotating {
+0% { transform: rotate(0deg);}
+100% { transform: rotate(360deg);}
+}
+
+
+.rotating {
+    -webkit-animation: rotating 2s infinite linear;
+    -moz-animation: rotating 2s infinite linear;
+    -o-animation: rotating 2s infinite linear;
+    -ms-animation: rotating 2s infinite linear;
+    animation: rotating 2s infinite linear;
 }

@@ -19,7 +19,7 @@ angular.module("cp")
     count:100,
   }
   var init = function(){
-
+    //$scope.refreshRepo();
     var localRepo = storageService.get($scope.filter.groupId);
 
     if(localRepo && localRepo.list == null){
@@ -33,7 +33,7 @@ angular.module("cp")
   }
 
   var getAssets = function(){
-
+    
     $scope.filter.from = lastUpdatedInLocalRepo();
     
     dataService.getAssets($scope.filter)
@@ -54,10 +54,10 @@ angular.module("cp")
   };
   
   var lastUpdatedInLocalRepo = function(){
-    var last = Date(1,1,2015);
+    var last =  new Date(2015,1,1);
     var localRepo = storageService.get($scope.filter.groupId);
     if(localRepo && localRepo.lastUpdated){
-      last = Date(localRepo.lastUpdated);
+      last = new Date(localRepo.lastUpdated);
     }
     return last;
   }  
