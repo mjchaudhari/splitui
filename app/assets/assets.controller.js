@@ -19,10 +19,13 @@ angular.module("cp")
     count:100,
   }
   var init = function(){
-    //$scope.refreshRepo();
-    var localRepo = storageService.get($scope.filter.groupId);
-
-    if(localRepo && localRepo.list == null){
+    if(localRepo == null){
+      localRepo = {
+        "lastUpdated" : null,
+        "list" : []
+      };
+    }
+    else if(localRepo.list == null){
       localRepo.list = [];
     }
 
