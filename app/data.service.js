@@ -110,5 +110,10 @@ function($http,$q, $log, $timeout, CacheFactory){
       return $http.get(url);
     },
 
+    saveAsset : function(data){
+      var url = config.apiBaseUrl + "/v1/asset";
+      return $http.post(url,data);
+    },
+
   };
 });

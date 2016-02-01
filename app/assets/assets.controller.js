@@ -1,9 +1,9 @@
 angular.module("cp")
 .controller("assetsCtrl", function($scope, $log, $stateParams, storageService, dataService){
-  $scope.title = "Asset List"
-  $scope.assetTree = null;
+  $scope.title = "Asset"
+  $scope.mode = "Create";
   $scope.breadcrumb = [];
-  $scope.selected = {
+    $scope.selected = {
     parent:null
   };
   
@@ -19,6 +19,7 @@ angular.module("cp")
     count:100,
   }
   var init = function(){
+    var localRepo = storageService.get($scope.filter.groupId);
     if(localRepo == null){
       localRepo = {
         "lastUpdated" : null,
