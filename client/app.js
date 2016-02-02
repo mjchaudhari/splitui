@@ -1,8 +1,96 @@
+this.config = {
+  //apiBaseUrl : "https://ezco.azurewebsites.net"  // "https://splitapi-mjchaudhari-1.c9.io" //"
+  apiBaseUrl :  "http://localhost:8085" ,
+}
+
+this.utils = {
+
+  /**
+  * Walk through each node of the tree
+  *
+  * `node` may be either an actual tree node object which is being traversed
+  *
+  * `finNodeHandler(node,parent)` function which is called when not in found during tree traversal with params node and its parent
+  *          
+  * `opts` options describing the ChindrenNode property of the node`.
+  *
+  * @param {Object|Array} node The tree node whcich has be iterated traversed
+  * @param {Object|String} method which will be invoked when node is found .
+  * @param {Object} opts [optional] describing the ChindrenNode property of the node`.
+     * @param {opts.parent} parent node [optional]  the current node (if any)
+  * @return {Object} Returns the ivhTreeviewMgr instance for chaining
+  */
+  treeWalker: function (node, findNodeHandler, opt) {
+      var childrenAttribute = "Children";
+      if (opt) {
+          if (opt.childrenAttribute && opt.childrenAttribute != "") {
+              childrenAttribute = opt.childrenAttribute;
+          }
+      }
+
+      if (findNodeHandler) {
+          findNodeHandler(node, parent);
+      }
+      if (node[childrenAttribute]) {
+          for (var i = 0; i < node[childrenAttribute].length; i++) {
+              if (opt == undefined) {
+                  opt = {}
+                  opt.parent = node;
+              }
+              utils.treeWalker(node[childrenAttribute][i], findNodeHandler, opt);
+          }
+      }
+
+  },
+
+  /**
+   * Get the Path of given node 
+   *
+   * `opts` will default to an empty object, `isSelected` defaults to `true`.
+   *
+   * @param {Object|Array} node The tree node
+   * @return {Array} Returns the array of parents
+   */
+  getTreeNodePath: function (tree, node, opt) {
+      var childrenAttribute = "Children";
+      if (opt) {
+          if (opt.childrenAttribute && opt.childrenAttribute != "") {
+              childrenAttribute = opt.childrenAttribute;
+          }
+      }
+
+      var flatNodes = [];
+      utils.treeWalker(tree, function (node) {
+          flatNodes.push(node);
+      });
+
+      var result = [];
+      var n = _.findWhere(flatNodes, { "Id": node.Id });
+      result.push(n);
+      //find the nodes which containt this node
+      var findParentNode = function (nodeToFind) {
+          for (var i = 0; i < flatNodes.length; i++) {
+              var parent = flatNodes[i];
+              if (parent[childrenAttribute]) {
+                  var foundParent = _.findWhere(parent[childrenAttribute], { "Id": nodeToFind.Id });
+                  if (foundParent) {
+                      var p = foundParent[0];
+                      result.push(parent);
+                      findParentNode(parent);
+                  }
+              }
+          }
+      };
+
+      findParentNode(node);
+      return result.reverse();
+  }
+}
 /// <reference path="../typings/angularjs/angular.d.ts"/>
 // Code goes here
  //module = angular.module('ezDirectives', ['ngFileUpload']);
  var app = angular.module('cp', ['ngMaterial','ngMdIcons', 'ngAnimate', 'ngSanitize', 'ui.router',
-      ,'ngStorage','ngFileUpload', 'ezDirectives','angular-cache']);
+      ,'ngStorage','ngFileUpload', 'ezDirectives','angular-cache','ngImgCrop',]);
  
  app.config([ "$httpProvider","$urlRouterProvider", '$stateProvider','$mdThemingProvider', 'CacheFactoryProvider',
  function($httpProvider, $urlRouterProvider, $stateProvider, $mdThemingProvider, CacheFactoryProvider ){
@@ -31,7 +119,7 @@
     .primaryPalette('cyan')
     .accentPalette('red');
 
-   $mdThemingProvider.theme('yellow')
+   $mdThemingProvider.theme('dark-blue')
     .primaryPalette('yellow')
     .accentPalette('red');
 //light-green
@@ -158,7 +246,9 @@ function($http,$q, $log, $timeout, CacheFactory){
     
   return {
     apiPrefix : config.apiBaseUrl,  
-    
+    clearCache:function(){
+      CacheFactory.clearAll();
+    },
     getUser : function( ){
       
     },
@@ -174,18 +264,16 @@ function($http,$q, $log, $timeout, CacheFactory){
       }
     },
     
-    getChildren  :function(id){
-      if(!id)
-      {
-        id = 0;
-      }
-      var url = config.apiBaseUrl + "/v1/artifact/tree/" + id;
-      return $http.post(url, data);   
-    },
     getGroups : function(){
-      
+      var defered = $q.defer();
       var url = config.apiBaseUrl + "/v1/groups?status=active";
-      return $http.get(url, requestOpts);
+      $http.get(url, requestOpts)
+      .then(function(d){
+        defered.resolve(d);
+      }, function(e){
+        defered.reject(e);
+      });
+      return defered.promise;
     },
     getGroup : function(id){
       
@@ -220,11 +308,51 @@ function($http,$q, $log, $timeout, CacheFactory){
       return $http.post(url, data);
     },
 
+    /**
+    * @param data : {groupId: 1, members:"1,2,3" }
+    **/
+    getAssets : function(filter){
+      var qryString = "";
+
+      if(filter.parentId)
+      {
+        if(qryString.length > 0){
+          qryString+="&";
+        }
+        qryString+="parentId="+filter.parentId
+      }
+      if(filter.count)
+      {
+        if(qryString.length > 0){
+          qryString+="&";
+        }
+        qryString+="count="+filter.count
+      }
+      if(filter.from)
+      {
+        if(qryString.length > 0){
+          qryString+="&";
+        }
+        qryString+="from="+filter.from
+      }
+
+      var url = config.apiBaseUrl + "/v1/"+ filter.groupId +"/assets";
+      if(qryString.length > 0){
+        url+="?"+qryString;
+      }
+      return $http.get(url);
+    },
+
+    saveAsset : function(data){
+      var url = config.apiBaseUrl + "/v1/asset";
+      return $http.post(url,data);
+    },
+
   };
 });
 
-angular.module('cp').factory('authService', ['$http','$log','$q', 'storageService', 
-	function ($http, $log, $q, storageService) {
+angular.module('cp').factory('authService', ['$http','$log','$q', 'storageService', 'CacheFactory','dataService',
+	function ($http, $log, $q, storageService, CacheFactory,dataService) {
 
     var authServiceFactory = {};
 
@@ -252,6 +380,7 @@ angular.module('cp').factory('authService', ['$http','$log','$q', 'storageServic
         var url = config.apiBaseUrl + "/v1/authenticate";
         $http.post(url, model).then(
         function(d){
+        	dataService.clearCache();
             storageService.add('__splituser',d.data.data);
             storageService.add('__splituserat',d.data.data.AccessToken);
             deferred.resolve(d.data.data);
@@ -268,7 +397,9 @@ angular.module('cp').factory('authService', ['$http','$log','$q', 'storageServic
     	$q.all(
 			storageService.remove('__splituser'),
 			storageService.remove('__splituserat')
+
     	).then(function(){
+    		dataService.clearCache();
     		deferred.resolve();
     	});
 		return deferred.promise;
@@ -347,101 +478,13 @@ function ($q, $location, $injector , storageService, $log) {
 
     return authInterceptorServiceFactory;
 }]);
-this.config = {
-  apiBaseUrl : "https://ez-split.azurewebsites.net" // "http://localhost:8085" // "https://splitapi-mjchaudhari-1.c9.io" //"
-  //apiBaseUrl :  "http://localhost:8085" 
-}
-
-this.utils = {
-
-  /**
-  * Walk through each node of the tree
-  *
-  * `node` may be either an actual tree node object which is being traversed
-  *
-  * `finNodeHandler(node,parent)` function which is called when not in found during tree traversal with params node and its parent
-  *          
-  * `opts` options describing the ChindrenNode property of the node`.
-  *
-  * @param {Object|Array} node The tree node whcich has be iterated traversed
-  * @param {Object|String} method which will be invoked when node is found .
-  * @param {Object} opts [optional] describing the ChindrenNode property of the node`.
-     * @param {opts.parent} parent node [optional]  the current node (if any)
-  * @return {Object} Returns the ivhTreeviewMgr instance for chaining
-  */
-  treeWalker: function (node, findNodeHandler, opt) {
-      var childrenAttribute = "Children";
-      if (opt) {
-          if (opt.childrenAttribute && opt.childrenAttribute != "") {
-              childrenAttribute = opt.childrenAttribute;
-          }
-      }
-
-      if (findNodeHandler) {
-          findNodeHandler(node, parent);
-      }
-      if (node[childrenAttribute]) {
-          for (var i = 0; i < node[childrenAttribute].length; i++) {
-              if (opt == undefined) {
-                  opt = {}
-                  opt.parent = node;
-              }
-              utils.treeWalker(node[childrenAttribute][i], findNodeHandler, opt);
-          }
-      }
-
-  },
-
-  /**
-   * Get the Path of given node 
-   *
-   * `opts` will default to an empty object, `isSelected` defaults to `true`.
-   *
-   * @param {Object|Array} node The tree node
-   * @return {Array} Returns the array of parents
-   */
-  getTreeNodePath: function (tree, node, opt) {
-      var childrenAttribute = "Children";
-      if (opt) {
-          if (opt.childrenAttribute && opt.childrenAttribute != "") {
-              childrenAttribute = opt.childrenAttribute;
-          }
-      }
-
-      var flatNodes = [];
-      utils.treeWalker(tree, function (node) {
-          flatNodes.push(node);
-      });
-
-      var result = [];
-      var n = _.findWhere(flatNodes, { "Id": node.Id });
-      result.push(n);
-      //find the nodes which containt this node
-      var findParentNode = function (nodeToFind) {
-          for (var i = 0; i < flatNodes.length; i++) {
-              var parent = flatNodes[i];
-              if (parent[childrenAttribute]) {
-                  var foundParent = _.findWhere(parent[childrenAttribute], { "Id": nodeToFind.Id });
-                  if (foundParent) {
-                      var p = foundParent[0];
-                      result.push(parent);
-                      findParentNode(parent);
-                  }
-              }
-          }
-      };
-
-      findParentNode(node);
-      return result.reverse();
-  }
-}
-angular.module('cp').controller('mainController', function($scope, $log, $state, storageService, authService) {
+angular.module('cp').controller('mainController', function($scope, $log, $state, storageService, authService, CacheFactory) {
   $scope.AUTHDATA = null;
   $scope.appOptions = {
     "showMenubar": true
     ,alerts: []
   };
-  $scope.title = "-split-"
+  $scope._appName = "::collaborate"
     //$scope.alerts = [];
   $scope.routeChange = function(tabName) {
     $scope.currentViewName = tabName;
@@ -467,10 +510,13 @@ angular.module('cp').controller('mainController', function($scope, $log, $state,
   $scope.$on('evtLoggedIn',function(data) 
   { 
       $scope.AUTHDATA = storageService.get('__splituser');
+      
+
   });
   $scope.logoff = function(){
 		authService.logOut().then(function(){
 			$scope.AUTHDATA = null;
+	
 			$state.go("home")
 		});
   }
@@ -595,6 +641,7 @@ angular.module("cp")
               .content("Authenticated")
               .hideDelay(3000)
         );
+        dataService.clearCache();
         $timeout(function(){$state.go('index.groups');},1000);
         
       },
@@ -624,7 +671,6 @@ angular.module("cp")
   
   $scope.saveRegistration = function(){
     
-    
     var model = {
         FirstName: $scope.registerModel.fn
       , LastName: $scope.registerModel.ln
@@ -635,6 +681,10 @@ angular.module("cp")
     
     authService.register(model).then(
       function(d){
+        if(d.data.isError){
+
+          return;
+        }
         //toaster.pop('success', 'Registration successful', 'You will shortly recieve the authentication code via SMS.');
         var message = " Please enter your authorization code'";
         
@@ -839,6 +889,7 @@ angular.module("cp")
   $scope.groupList = [];
   $scope.fabIsOpen = false;
   $scope.groupsLoading = false;
+  $scope.assetsLoading = false;
   
   var init = function(){
     $scope.groupList = [];
@@ -856,6 +907,8 @@ angular.module("cp")
       }
       $scope.groupsLoading = false;
       
+    }, function(e){
+      //console.error(e);
     });
 
   };
@@ -900,6 +953,7 @@ angular.module("cp").controller("addEditGroupCtrl",
 ['$scope', '$log', '$q','$state', '$stateParams', '$mdToast', 'storageService','$timeout', 'Upload', 'dataService', '$mdMedia','$mdDialog', '$window',
 function ($scope, $log, $q, $state, $stateParams, $mdToast,  storageService, $timeout, Upload, dataService,$mdMedia, $mdDialog, $window){
 	$scope.$parent.currentViewName = "Edit Group";
+	
 	$scope.isLoading = false;
 	$scope.defaultImage = "./content/images/group-default3.png"
 	$scope.toastPosition = 'top';
@@ -1234,16 +1288,29 @@ function ($scope, $log, $q, $state, $stateParams, $mdToast,  storageService, $ti
 }]);
 
 angular.module("cp").controller("groupDetailCtrl", 
-['$scope', '$log', '$q','$state', '$stateParams', 'storageService', 'dataService',
-function ($scope, $log, $q, $state, $stateParams,   storageService, dataService){
+['$scope', '$log', '$q','$state', '$stateParams','$timeout', 'storageService', 'dataService','$mdToast','$mdDialog',
+function ($scope, $log, $q, $state, $stateParams, $timeout, storageService, dataService, $mdToast, $mdDialog){
 	$scope.$parent.currentViewName = "Group Detail" 
 	$scope.isLoading = false;
+	$scope.isSaving = false;
+	$scope.view = "list";
 	$scope.current = {
 		action:"View",
-	    id:0,
-	    
+	    id:0,    
 	};
+
 	$scope.group = null;
+
+	$scope.filter = {
+		from:null,
+		groupId:$stateParams.id,
+		topicId:null,
+		count:100,
+	}
+	
+	$scope.assets = [];
+  	$scope.selectedTopic = null;
+
 
 	if($stateParams.id){
 		$scope.current.id = $stateParams.id;
@@ -1263,12 +1330,26 @@ function ($scope, $log, $q, $state, $stateParams,   storageService, dataService)
 			tasks
   		])
   		.then(function(){
-
   			init()
   		});
   	}
   	
 	var init = function(){
+		var localRepo = storageService.get($scope.filter.groupId);
+		if(localRepo == null){
+		  localRepo = {
+			"lastUpdated" : null,
+			"list" : []
+		  };
+		}
+		else if(localRepo.list == null){
+		  localRepo.list = [];
+		}
+
+		var localAssets = localRepo.list;
+		angular.copy(localAssets, $scope.assets);
+		
+		$timeout(getAssets(),100);
 		
 	};
 
@@ -1292,12 +1373,194 @@ function ($scope, $log, $q, $state, $stateParams,   storageService, dataService)
 
 	}
 	
-	var getGroupActivities = function(id){
-		
-		
+	var getAssets = function(){
+		$scope.filter.from = lastUpdatedInLocalRepo();
+		dataService.getAssets($scope.filter)
+		.then(function(d){
+		  //append the local list
+		  d.data.data.forEach(function(a){
+			$scope.assets.push(a)
+		  });
+
+		  //addd this to local storageService
+		  var store = {
+			"lastUpdated":new Date(),
+			"list":$scope.assets,
+		  }
+
+		  storageService.add($scope.filter.groupId,store);
+		});
+	};
+
+	var lastUpdatedInLocalRepo = function(){
+		var last =  new Date(2015,1,1);
+		var localRepo = storageService.get($scope.filter.groupId);
+		if(localRepo && localRepo.lastUpdated){
+		  last = new Date(localRepo.lastUpdated);
+		}
+		return last;
+	}  
+
+	$scope.refreshRepo = function(){    
+		var lastUpdated = new Date(1,1,2015);
+		storageService.add($scope.filter.groupId,{
+		  "list":[],
+		  "lastUpdated"  : lastUpdated,
+		});
+	}
+
+	$scope.createAsset= function(){
+		$scope.view = "item";
 
 	}
-  	
+
+
+	$scope.backToList= function(){
+		$scope.view = "list";
+
+	}
+
+//----------------------------------------------------------------------------------------------//
+//				ASSET 
+//----------------------------------------------------------------------------------------------//
+	
+	$scope.parent = $scope.current.id;
+// 	if($stateParam.parent){
+
+// 	}
+	$scope.categories = [
+		{"_id": "cat_Comment", "Name":"Comment", "icon" : "announcement"},
+// 		{"_id": "cat_Event", "Name":"Event", "icon" : "event"},
+// 		{"_id": "cat_Topic", "Name":"Topic", "icon" : "folder"},
+// 		{"_id": "cat_Issue", "Name":"Issue", "icon" : "report_problem"},
+// 		{"_id": "cat_Task", "Name":"Task", "icon" : "assignment"},
+// 		{"_id": "cat_Questionnaire", "Name":"Questions", "icon" : "questionnaire"},
+		
+	]
+	
+
+
+	$scope.selectedCategory = $scope.categories[0];
+	
+
+	$scope.asset = {
+		"CategoryId" : $scope.selectedCategory._id,
+		"Name":"",
+		"Description":"",
+		"Thumbnail":"",
+		"Urls":"",
+		"GroupId":$scope.current.id,
+		"ParentId":$scope.parent
+	}
+	$scope.openCategoryMenu = function($mdOpenMenu, ev) {
+      originatorEv = ev;
+      $mdOpenMenu(ev);
+    };
+
+	$scope.setCategory = function(category, ev) {
+      originatorEv = ev;
+      $scope.selectedCategory = category;
+      
+    };
+	
+	$scope.saveAsset = function() {
+		$scope.isSaving = true;
+		var isValid = validate();     
+		dataService.saveAsset($scope.asset)
+		.then(function(d){
+			if(d.data.isError){
+				$scope.showToast("Error occured,", "error");
+			}
+			else{
+				updateLocalRepo(d.data.data);
+				//getAssets();
+				$scope.showToast("Created!", "success");
+				
+				//change to list view
+				$scope.view = "list";
+
+			}
+			$scope.isSaving = false;
+		}, function(e){
+			$scope.showToast("Error occured,", "error");
+			$scope.isSaving = false;
+		}); 
+    };
+	var updateLocalRepo = function(asset){
+		var localRepo = storageService.get($scope.filter.groupId);
+		
+		var localAsset = _.where(localRepo.list, {"_id":asset._id});
+		
+		if(localAsset == null){
+			localAsset = asset;
+		}else{
+			localRepo.list.push(asset);
+		}
+
+		var localRepo = storageService.get($scope.filter.groupId);
+	}
+	var validate = function(){
+		var isValid = true;
+		if($scope.asset == null){
+			isValid = false;
+		}
+
+		if($scope.asset.Name == "" && $scope.Description == ""){
+			isValid = false;
+		}
+		return true;
+	}
+
+	$scope.showToast = function(msg, type) {
+		var toast = $mdToast.simple()
+			  .content(msg)
+			  .action('OK')
+			  .highlightAction(true)
+			  .position('top');
+
+		$mdToast.show(toast).then(function(response) {
+		  if ( response == 'ok' ) {
+				
+		  }
+		});
+	};
+//-------------------------------------
+	$scope.height = "96px";
+	$scope.width = "96px";
+	$scope.uploadUrl = "";
+	
+	if($scope.thumbnail==""){
+		$scope.thumbnail = "https://placehold.it/96x96"
+	}
+	$scope.openThumbnailDialog = function($event){
+		var parentEl = angular.element(document.body);
+	   $mdDialog.show({
+		 parent: parentEl,
+		 targetEvent: $event,
+		 templateUrl:"thumbnailDialogTemplate.html",
+		 locals: {
+		   items: $scope.items
+		 },
+		 controller: DialogController
+	  });
+	  function DialogController($scope, $mdDialog, items, Upload) {
+		$scope.items = items;
+		$scope.sourceFile = "";
+		$scope.openSelectFile = function(dataUrl ){
+			console.info(dataUrl);
+		}
+
+
+		$scope.closeDialog = function() {
+		  $mdDialog.hide();
+		}
+
+
+
+	  }
+    }
+
+
 
 	preInit();
 }]);

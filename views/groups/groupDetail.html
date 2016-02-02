@@ -8,7 +8,7 @@
     
     <div ng-switch-when="list">
         
-        <div ng-if="!isLoading" layout="column" style="min-height:600px" class="toolbarScrollShrink">
+        <div ng-if="!isLoading" layout="column" style="height:90vh" class="toolbarScrollShrink">
             <md-button class="md-fab md-fab-bottom-right" aria-label="Add" ng-click="createAsset()">
                 <ng-md-icon icon="add"></ng-md-icon>
             </md-button>
@@ -45,12 +45,32 @@
                         <md-tab label="Assets">
                             <md-content class="md-padding">
                                 <md-list>
-                                    <md-list-item class="md-3-line" ng-repeat="item in assets">
-                                        <div  layout="row">
+                                    
+                                    
+                                    <md-list-item class="md-3-line md-long-text" ng-repeat="item in assets">
+                                        
+                                        <img ng-src="{{item.Thumbnail}}" class="md-avatar" />
+                                        <div class="md-list-item-text">
+                                          <h3>{{ item.Name }}</h3>
+                                          <p>{{item.Description}}</p>
+                                          <p>
+                                            <span class="md-caption">{{ item.AuditTrail[0].UpdatedBy.FirstName}} {{item.AuditTrail[0].UpdatedBy.LastName}}</span> 
+                                            <span class="md-caption"> on {{item.AuditTrail[0].UpdatedOn | date:'d MM yy'}}</span>
+                                          </p>
+                                          <div layout="row">
+                                            <div flex></div>
+                                            <md-button class="md-icon-button" ui-sref="index.groups" aria-label="goups">
+                                              <ng-md-icon icon="thumb_up"></ng-md-icon> 
+                                            </md-button>
+                                          </div>
+                                        </div>
+
+                                        <md-divider></md-divider>
+                                    </md-list-item>
+<!--                                         
                                             <img ng-src="{{item.Thumbnail}}" class="md-avatar" />
-                                            <div class="md-list-item-text" layout="column">
+                                            <div class="md-list-item-text" flex layout="column" style="border:1px solid black;">
                                                 <h3>{{ item.Name }}</h3>
-                                                <p>{{ item.Description }}</p>
                                                 <p>
                                                     <span class="md-caption">{{ item.AuditTrail[0].UpdatedBy.FirstName}} {{item.AuditTrail[0].UpdatedBy.LastName}}</span> 
                                                     <span class="md-caption"> on {{item.AuditTrail[0].UpdatedOn | date:'MM/dd/yyyy'}}</span>
@@ -62,11 +82,9 @@
                                                     </md-button>
                                                 </div>
                                             </div>
-
-                                            </div>
-
-                                        <md-divider></md-divider>
-                                    </md-list-item>
+ -->
+                                    
+<!--                                     </md-list-item> -->
                                 </md-list>
                             <md-content>
                         </md-tab>
@@ -88,48 +106,100 @@
                 </md-button>
                 <span flex>{{group.Name}}</span>
                 <div ng-show="isSaving" class="" layout="row" layout-align="end">
-                    <img style="height:50px;width:50px" class="rotating" src="./content/images/cp.png" />
+                    <img style="height:40px;width:40px" class="rotating" src="./content/images/cp.png" />
                 </div>
                 <span><img ng-src="{{group.Thumbnail}}"  class="avatar-small" alt="{{group.Name}}"></span>
             </div>
         </md-toolbar>
         
         <md-content flex layout-padding class="content-height">
-
-            <md-menu>
-              <md-button class="md-button" ng-click="openCategoryMenu($mdOpenMenu, $event)"  aria-label="category">
-                  <ng-md-icon icon="{{selectedCategory.icon}}"></ng-md-icon>{{selectedCategory.Name}}
-              </md-button>
-              <md-menu-content >
-                <md-menu-item ng-repeat="m in categories">
-                  <md-button class="md-button" ng-click="setCategory(m,$event)"  aria-label="{{m.Name}}">
-                    <ng-md-icon icon="{{m.icon}}"></ng-md-icon> {{m.Name}}
+            <form name="assetForm">
+                <md-menu>
+                  <md-button class="md-button" ng-click="openCategoryMenu($mdOpenMenu, $event)"  aria-label="category">
+<!--                       <ng-md-icon icon="{{selectedCategory.icon}}"></ng-md-icon>{{selectedCategory.Name}} -->
+                        <i class="material-icons">{{selectedCategory.icon}}</i>{{selectedCategory.Name}} 
                   </md-button>
-                </md-menu-item>
-              </md-menu-content>
-            </md-menu>
-            <div layout="row">
+                  <md-menu-content >
+                    <md-menu-item  ng-repeat="m in categories">
+                      <md-button ng-click="setCategory(m,$event)">
+                        <ng-md-icon icon="{{m.icon}}" md-menu-align-target></ng-md-icon>
+                        {{m.Name}}
+                      </md-button>
+                    </md-menu-item>
+                  </md-menu-content>
+                </md-menu>
                 <div layout="row">
 <!--                     <ez-image-upload img="asset.Thumbnail"><ez-image-upload> -->
-                    <img src="https://placehold.it/50x50" class="circle" />
-                </div>
-                <div layout="row">
-                    <md-input-container class="md-block" >
-                        <label>Asset title (optional)</label>
-                    <input ng-model="asset.Name">
-                </div>
-            </md-input-container >    
-            </div>
-            
-            <md-input-container class="md-block">
-              <label>Message</label>
-              <textarea ng-model="asset.Description" columns="1" md-maxlength="1000" rows="5"></textarea>
-            </md-input-container>
+<!--                     <img src="https://placehold.it/50x50" class="circle" /> -->
+                    <div class="thumbnail-card">
+                        <img src ng-src="{{thumbnail}}" class="md-avatar" md-click="openThumbnailDialog($event)" /> 
+                    
+                        <md-button class="md-icon-button" ng-click="openThumbnailDialog($event)">
+                            <i class="material-icons">edit</i>
+                        </md-button>
+                    </div>
 
-            
-            <md-button class="md-button md-button-raised  md-button-primary" ng-click="saveAsset()"  aria-label="{save">
-                <ng-md-icon icon="save"></ng-md-icon> Save
-            </md-button>
+
+
+
+                    <md-input-container class="md-block" flex>
+                        <label>Title </label>
+                        <textarea ng-model="asset.Name" ng-required="true" columns="1" md-maxlength="150" rows="2"></textarea>
+                    </md-input-container>
+                </div>
+                <md-input-container class="md-block">
+                  <label>Message</label>
+                  <textarea columns="1"  ng-model="asset.Description" rows="5" md-maxlength="1000" ></textarea>
+                </md-input-container>
+                
+                <div layout="row" flex>
+                    <md-button class="md-primary md-raised md-icon-button accent" aria-label="Settings"
+                        ngf-select="uploadFiles($file, $invalidFiles)"  ngf-max-size="500MB">
+                      <i class="material-icons">file_upload</i>
+                    </md-button>    
+                    <div flex></div>
+                    <md-button class="md-primary md-raised md-icon-button accent" ng-click="saveAsset()"  aria-label="save">
+                      <i class="material-icons">send</i>
+                    </md-button>
+                </div>
+            </form>
         </md-content>
     </div>
 </div>
+ <script type="text/ng-template" id="thumbnailDialogTemplate.html"> 
+    <md-dialog flex="100" style="height:100vh" aria-label="List dialog">
+       <md-dialog-content>
+          <md-toolbar md-scroll-shrink="false">
+            <div class="md-toolbar-tools">
+                <md-button class="md-icon-button" ng-click="closeDialog()"  aria-label="close">
+                  <ng-md-icon icon="cancel"></ng-md-icon> 
+                </md-button>
+                <span flex>{{title}}</span>
+                <div ng-show="uploading" class="" layout="row" layout-align="end">
+                    <img style="height:40px;width:40px" class="rotating" src="./content/images/cp.png" />
+                </div>
+                <md-button class="md-icon-button" ng-click="openSelectFile()"  aria-label="camera"
+                    ngf-select ng-model="sourceFile" accept="image/*">
+                  <ng-md-icon icon="camera_alt"></ng-md-icon> 
+                </md-button>
+            </div>
+          </md-toolbar>
+          <div class="crop-area">
+              src file: {{sourceFile}}
+              <img-crop image="sourceFile|ngfDataUrl" result-image="croppedDataUrl" ng-init="croppedDataUrl=''">
+              </img-crop>
+            
+            <div>
+              <img ng-src="{{croppedDataUrl}}" />
+            </div>
+
+          <div>
+       </md-dialog-content>
+        <md-dialog-actions>
+           <md-button ng-click="closeDialog()" class="md-primary">
+             Close Dialog
+           </md-button>
+     </md-dialog-actions>
+   </md-dialog>
+
+</script>

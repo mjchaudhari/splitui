@@ -1,6 +1,6 @@
 angular.module("cp").controller("groupDetailCtrl", 
-['$scope', '$log', '$q','$state', '$stateParams', 'storageService', 'dataService','$mdToast',
-function ($scope, $log, $q, $state, $stateParams,   storageService, dataService, $mdToast){
+['$scope', '$log', '$q','$state', '$stateParams','$timeout', 'storageService', 'dataService','$mdToast','$mdDialog',
+function ($scope, $log, $q, $state, $stateParams, $timeout, storageService, dataService, $mdToast, $mdDialog){
 	$scope.$parent.currentViewName = "Group Detail" 
 	$scope.isLoading = false;
 	$scope.isSaving = false;
@@ -57,10 +57,11 @@ function ($scope, $log, $q, $state, $stateParams,   storageService, dataService,
 		  localRepo.list = [];
 		}
 
-		var localAssets = _.where(localRepo.list, {"GroupId":$scope.filter.groupId});
+		var localAssets = localRepo.list;
 		angular.copy(localAssets, $scope.assets);
-
-		getAssets();
+		
+		$timeout(getAssets(),100);
+		
 	};
 
 	var getGroupDetail = function(id){
@@ -147,6 +148,9 @@ function ($scope, $log, $q, $state, $stateParams,   storageService, dataService,
 // 		{"_id": "cat_Questionnaire", "Name":"Questions", "icon" : "questionnaire"},
 		
 	]
+	
+
+
 	$scope.selectedCategory = $scope.categories[0];
 	
 
@@ -179,7 +183,8 @@ function ($scope, $log, $q, $state, $stateParams,   storageService, dataService,
 				$scope.showToast("Error occured,", "error");
 			}
 			else{
-				getAssets();
+				updateLocalRepo(d.data.data);
+				//getAssets();
 				$scope.showToast("Created!", "success");
 				
 				//change to list view
@@ -192,7 +197,19 @@ function ($scope, $log, $q, $state, $stateParams,   storageService, dataService,
 			$scope.isSaving = false;
 		}); 
     };
-	
+	var updateLocalRepo = function(asset){
+		var localRepo = storageService.get($scope.filter.groupId);
+		
+		var localAsset = _.where(localRepo.list, {"_id":asset._id});
+		
+		if(localAsset == null){
+			localAsset = asset;
+		}else{
+			localRepo.list.push(asset);
+		}
+
+		var localRepo = storageService.get($scope.filter.groupId);
+	}
 	var validate = function(){
 		var isValid = true;
 		if($scope.asset == null){
@@ -218,6 +235,43 @@ function ($scope, $log, $q, $state, $stateParams,   storageService, dataService,
 		  }
 		});
 	};
+//-------------------------------------
+	$scope.height = "96px";
+	$scope.width = "96px";
+	$scope.uploadUrl = "";
+	
+	if($scope.thumbnail==""){
+		$scope.thumbnail = "https://placehold.it/96x96"
+	}
+	$scope.openThumbnailDialog = function($event){
+		var parentEl = angular.element(document.body);
+	   $mdDialog.show({
+		 parent: parentEl,
+		 targetEvent: $event,
+		 templateUrl:"thumbnailDialogTemplate.html",
+		 locals: {
+		   items: $scope.items
+		 },
+		 controller: DialogController
+	  });
+	  function DialogController($scope, $mdDialog, items, Upload) {
+		$scope.items = items;
+		$scope.sourceFile = "";
+		$scope.openSelectFile = function(dataUrl ){
+			console.info(dataUrl);
+		}
+
+
+		$scope.closeDialog = function() {
+		  $mdDialog.hide();
+		}
+
+
+
+	  }
+    }
+
+
 
 	preInit();
 }]);

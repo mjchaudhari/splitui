@@ -2,7 +2,7 @@
 // Code goes here
  //module = angular.module('ezDirectives', ['ngFileUpload']);
  var app = angular.module('cp', ['ngMaterial','ngMdIcons', 'ngAnimate', 'ngSanitize', 'ui.router',
-      ,'ngStorage','ngFileUpload', 'ezDirectives','angular-cache']);
+      ,'ngStorage','ngFileUpload', 'ezDirectives','angular-cache','ngImgCrop',]);
  
  app.config([ "$httpProvider","$urlRouterProvider", '$stateProvider','$mdThemingProvider', 'CacheFactoryProvider',
  function($httpProvider, $urlRouterProvider, $stateProvider, $mdThemingProvider, CacheFactoryProvider ){
@@ -31,7 +31,7 @@
     .primaryPalette('cyan')
     .accentPalette('red');
 
-   $mdThemingProvider.theme('yellow')
+   $mdThemingProvider.theme('dark-blue')
     .primaryPalette('yellow')
     .accentPalette('red');
 //light-green

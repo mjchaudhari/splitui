@@ -29,7 +29,28 @@
 
     
     ].join('\n');
+    this.ezImageUploadTemplateNew = [
+      '<md-card>',
+        '<md-card-content layout="row" layout-align="space-between">',
+          '<img ng-if="img != null" ng-src="{{img}}" style="border:4;align-self:center;height:auto; width:auto;max-height:150px; max-width:150px;" class="md-card-image" alt="No image">',
+          '<img ng-if="img == null" ng-src="{{defaultImage}}" style="border:4;align-self:center;height:auto; width:auto;max-height:150px; max-width:150px;" class="md-card-image" alt="Default">',
+
+          '<md-card-actions layout="column" layout-align="end center">',
+            '<md-button class="md-primary md-raised md-icon-button accent" aria-label="Settings"',
+             'ngf-select="uploadFiles($file, $invalidFiles)" accept="image/*" ngf-max-height="1000" ngf-max-size="1MB">',
+              '<i class="material-icons">add_a_photo</i>',
+            '</md-button>',
+
+            '<md-button class="md-primary md-icon-button md-raised accent" aria-label="reset" ng-click="alert();resetImage()">',
+              '<i class="material-icons">restore</i>',
+            '</md-button>',
+          '</md-card-actions>',
+        '</md-card-content>',
+      '</md-card>',
+
+
     
+    ].join('\n');
   module.directive('ezImageUpload', [
     '$timeout', function($timeout) {
       return {

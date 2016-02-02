@@ -12,11 +12,12 @@ var config = {
         , "./../scripts/angular/angular-animate.min.js"
         , "./../scripts/angular/angular-aria.min.js"
         , "./../scripts/angular/angular-sanitize.min.js"
-        , "./../scripts/angular-material-0.11.4.min.js"
+        , "./../scripts/angular-material-1.0.4/angular-material.min.js"
         , "./../scripts/angular-material-icons.min.js"
         , "./../scripts/angular-cache.min.js"
         , "./../scripts/angular-ui-router.js"
         , "./../scripts/ng-file-upload.js"  
+        , "./../scripts/ng-img-crop.min.js"  
         , "./../scripts/underscore-min.js"
         , "./../scripts/ngStorage.min.js"
     ]
@@ -48,10 +49,12 @@ var config = {
         , "./../app/groups/groupDetail.controller.js"
     ]
     , css : [
-        , "./../content/angular.material-1.0.0.min.css"
+        , "./../content/angular.material-1.0.4/angular.material.min.css"
+        , "./../content/angular.material-1.0.4/angular.material.layouts.min.css"
         , "./../content/robotodraft.css"
         , "./../content/icon.css"
         , "./../content/eztree.css"
+        , "./../content/ng-img-crop.css"
         , "./../content/style.css"
     ]
     ,dependencies: []
