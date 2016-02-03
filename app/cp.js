@@ -2,7 +2,7 @@
 // Code goes here
  //module = angular.module('ezDirectives', ['ngFileUpload']);
  var app = angular.module('cp', ['ngMaterial','ngMdIcons', 'ngAnimate', 'ngSanitize', 'ui.router',
-      ,'ngStorage','ngFileUpload', 'ezDirectives','angular-cache','ngImgCrop',]);
+      ,'ngStorage','ngFileUpload', 'ezDirectives','angular-cache','ngImgCrop','angularMoment']);
  
  app.config([ "$httpProvider","$urlRouterProvider", '$stateProvider','$mdThemingProvider', 'CacheFactoryProvider',
  function($httpProvider, $urlRouterProvider, $stateProvider, $mdThemingProvider, CacheFactoryProvider ){

@@ -19,7 +19,11 @@ var config = {
         , "./../scripts/ng-file-upload.js"  
         , "./../scripts/ng-img-crop.min.js"  
         , "./../scripts/underscore-min.js"
+        , "./../scripts/moment.min.js"
+        , "./../scripts/angular-moment.min.js"
         , "./../scripts/ngStorage.min.js"
+        , "./../scripts/angular-ellipsis.min.js"
+        
     ]
     ,directives:[
 

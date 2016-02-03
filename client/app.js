@@ -90,7 +90,7 @@ this.utils = {
 // Code goes here
  //module = angular.module('ezDirectives', ['ngFileUpload']);
  var app = angular.module('cp', ['ngMaterial','ngMdIcons', 'ngAnimate', 'ngSanitize', 'ui.router',
-      ,'ngStorage','ngFileUpload', 'ezDirectives','angular-cache','ngImgCrop',]);
+      ,'ngStorage','ngFileUpload', 'ezDirectives','angular-cache','ngImgCrop','angularMoment']);
  
  app.config([ "$httpProvider","$urlRouterProvider", '$stateProvider','$mdThemingProvider', 'CacheFactoryProvider',
  function($httpProvider, $urlRouterProvider, $stateProvider, $mdThemingProvider, CacheFactoryProvider ){
@@ -1379,12 +1379,19 @@ function ($scope, $log, $q, $state, $stateParams, $timeout, storageService, data
 		.then(function(d){
 		  //append the local list
 		  d.data.data.forEach(function(a){
-			$scope.assets.push(a)
+		  	var existing  = _.where($scope.assets, {"_id":a._id});
+		  	if(existing){
+		  		existing = a; //Reassign it its self as this asset might have been modified
+		  	}
+		  	else{
+		  		$scope.assets.push(a)	
+		  	}
+			
 		  });
 
 		  //addd this to local storageService
 		  var store = {
-			"lastUpdated":new Date(),
+			"lastUpdated":new Date().toISOString(),
 			"list":$scope.assets,
 		  }
 
@@ -1396,7 +1403,7 @@ function ($scope, $log, $q, $state, $stateParams, $timeout, storageService, data
 		var last =  new Date(2015,1,1);
 		var localRepo = storageService.get($scope.filter.groupId);
 		if(localRepo && localRepo.lastUpdated){
-		  last = new Date(localRepo.lastUpdated);
+		  last = new Date(localRepo.lastUpdated).toISOString();
 		}
 		return last;
 	}  

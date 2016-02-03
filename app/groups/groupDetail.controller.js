@@ -90,12 +90,19 @@ function ($scope, $log, $q, $state, $stateParams, $timeout, storageService, data
 		.then(function(d){
 		  //append the local list
 		  d.data.data.forEach(function(a){
-			$scope.assets.push(a)
+		  	var existing  = _.where($scope.assets, {"_id":a._id});
+		  	if(existing){
+		  		existing = a; //Reassign it its self as this asset might have been modified
+		  	}
+		  	else{
+		  		$scope.assets.push(a)	
+		  	}
+			
 		  });
 
 		  //addd this to local storageService
 		  var store = {
-			"lastUpdated":new Date(),
+			"lastUpdated":new Date().toISOString(),
 			"list":$scope.assets,
 		  }
 
@@ -107,7 +114,7 @@ function ($scope, $log, $q, $state, $stateParams, $timeout, storageService, data
 		var last =  new Date(2015,1,1);
 		var localRepo = storageService.get($scope.filter.groupId);
 		if(localRepo && localRepo.lastUpdated){
-		  last = new Date(localRepo.lastUpdated);
+		  last = new Date(localRepo.lastUpdated).toISOString();
 		}
 		return last;
 	}  

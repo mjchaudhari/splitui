@@ -55,7 +55,9 @@
                                           <p>{{item.Description}}</p>
                                           <p>
                                             <span class="md-caption">{{ item.AuditTrail[0].UpdatedBy.FirstName}} {{item.AuditTrail[0].UpdatedBy.LastName}}</span> 
-                                            <span class="md-caption"> on {{item.AuditTrail[0].UpdatedOn | date:'d MM yy'}}</span>
+                                            <span class="md-caption">  
+                                                
+                                                <time title="{{ item.AuditTrail[0].UpdatedOn | amDateFormat: 'dddd, MMMM Do YYYY, h:mm a' }}">{{ item.AuditTrail[0].UpdatedOn  | amCalendar }}</time>
                                           </p>
                                           <div layout="row">
                                             <div flex></div>
