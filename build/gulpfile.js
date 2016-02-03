@@ -23,6 +23,7 @@ var config = {
         , "./../scripts/angular-moment.min.js"
         , "./../scripts/ngStorage.min.js"
         , "./../scripts/angular-ellipsis.min.js"
+        , "./../scripts/angular-md-pull-to-refresh.js"
         
     ]
     ,directives:[
@@ -60,6 +61,7 @@ var config = {
         , "./../content/eztree.css"
         , "./../content/ng-img-crop.css"
         , "./../content/style.css"
+        
     ]
     ,dependencies: []
 }

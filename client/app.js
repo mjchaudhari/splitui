@@ -90,7 +90,7 @@ this.utils = {
 // Code goes here
  //module = angular.module('ezDirectives', ['ngFileUpload']);
  var app = angular.module('cp', ['ngMaterial','ngMdIcons', 'ngAnimate', 'ngSanitize', 'ui.router',
-      ,'ngStorage','ngFileUpload', 'ezDirectives','angular-cache','ngImgCrop','angularMoment']);
+      ,'ngStorage','ngFileUpload', 'ezDirectives','angular-cache','ngImgCrop','angularMoment','infomofo.angularMdPullToRefresh']);
  
  app.config([ "$httpProvider","$urlRouterProvider", '$stateProvider','$mdThemingProvider', 'CacheFactoryProvider',
  function($httpProvider, $urlRouterProvider, $stateProvider, $mdThemingProvider, CacheFactoryProvider ){
@@ -1294,10 +1294,13 @@ function ($scope, $log, $q, $state, $stateParams, $timeout, storageService, data
 	$scope.isLoading = false;
 	$scope.isSaving = false;
 	$scope.view = "list";
+	$scope.lastUpdated = null;
 	$scope.current = {
 		action:"View",
 	    id:0,    
 	};
+	$scope.searchTerm = "";
+	$scope.showSearch = false;
 
 	$scope.group = null;
 
@@ -1375,7 +1378,7 @@ function ($scope, $log, $q, $state, $stateParams, $timeout, storageService, data
 	
 	var getAssets = function(){
 		$scope.filter.from = lastUpdatedInLocalRepo();
-		dataService.getAssets($scope.filter)
+		return dataService.getAssets($scope.filter)
 		.then(function(d){
 		  //append the local list
 		  d.data.data.forEach(function(a){
@@ -1404,7 +1407,9 @@ function ($scope, $log, $q, $state, $stateParams, $timeout, storageService, data
 		var localRepo = storageService.get($scope.filter.groupId);
 		if(localRepo && localRepo.lastUpdated){
 		  last = new Date(localRepo.lastUpdated).toISOString();
+		  $scope.lastUpdated = last;
 		}
+
 		return last;
 	}  
 
@@ -1426,7 +1431,42 @@ function ($scope, $log, $q, $state, $stateParams, $timeout, storageService, data
 		$scope.view = "list";
 
 	}
+	$scope.refresh = function(){
+		return getAssets();
+	}
+	$scope.hideSearch = function(){
+		
+		$scope.searchTerm = "";
+		$scope.showSearch = false;
+	}
+	
+	$scope.searchAssets = function(item){
+		var t = $scope.searchTerm
+		if(t == null){
+			return true;
+		}
+		if(t == ""){
+			return true;
+		}
 
+		var createdBy = "";
+		if(angular.isArray(item.Audit)){
+			var a = item.Audit[0];
+			if(a.FirstName){
+				createdBy += item.Audit[0].FirstName ;	
+			}
+			if(a.LastName){
+				createdBy += item.Audit[0].LastName ;	
+			}
+		}
+
+		return item.Name.indexOf(t) > -1 ||
+				(item.Description && item.Description.indexOf(t)) ||	
+				(createdBy != "" && createdBy.indexOf(t) > -1)
+	}
+
+	
+	
 //----------------------------------------------------------------------------------------------//
 //				ASSET 
 //----------------------------------------------------------------------------------------------//

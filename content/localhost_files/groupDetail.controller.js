@@ -10,8 +10,6 @@ function ($scope, $log, $q, $state, $stateParams, $timeout, storageService, data
 		action:"View",
 	    id:0,    
 	};
-	$scope.searchTerm = "";
-	$scope.showSearch = false;
 
 	$scope.group = null;
 
@@ -145,39 +143,7 @@ function ($scope, $log, $q, $state, $stateParams, $timeout, storageService, data
 	$scope.refresh = function(){
 		return getAssets();
 	}
-	$scope.hideSearch = function(){
-		
-		$scope.searchTerm = "";
-		$scope.showSearch = false;
-	}
-	
-	$scope.searchAssets = function(item){
-		var t = $scope.searchTerm
-		if(t == null){
-			return true;
-		}
-		if(t == ""){
-			return true;
-		}
 
-		var createdBy = "";
-		if(angular.isArray(item.Audit)){
-			var a = item.Audit[0];
-			if(a.FirstName){
-				createdBy += item.Audit[0].FirstName ;	
-			}
-			if(a.LastName){
-				createdBy += item.Audit[0].LastName ;	
-			}
-		}
-
-		return item.Name.indexOf(t) > -1 ||
-				(item.Description && item.Description.indexOf(t)) ||	
-				(createdBy != "" && createdBy.indexOf(t) > -1)
-	}
-
-	
-	
 //----------------------------------------------------------------------------------------------//
 //				ASSET 
 //----------------------------------------------------------------------------------------------//

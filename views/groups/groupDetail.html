@@ -24,40 +24,58 @@
                     <span><img ng-src="{{group.Thumbnail}}"  class="avatar-small" alt="{{group.Name}}"></span>
                 </div>
             </md-toolbar>
-            <md-content flex layout-padding class="content-height">
-                <md-card md-scroll-shrink="true">
-                    <div class="" layout="row" >
-                        <img ng-src="{{group.Thumbnail}}" class="avatar" alt="{{group.Name}}">
-                        <div class="inset md-list-item-text">
-                          <b>{{group.Name}}</b>
-                          <p>{{group.Description}}</p>
-                        </div>
-                    </div>
+            <!--search-->
+            <md-card md-scroll-shrink="true" style="margin:2px;" ng-show="showSearch">
+                <md-card-actions layout="row" layout-align="end center" >
+                    <ng-md-icon icon="search"></ng-md-icon>
+                    <md-input-container md-theme="input" flex>
+                        <label></label>
+                        <input ng-model="searchTerm" placeholder="Enter search">
+                    </md-input-container>
+                    <md-button class="md-icon-button " aria-label="off" ng-click="searchTerm = '';showSearch=false">
+                        <ng-md-icon icon="clear"></ng-md-icon>
+                    </md-button>
+                </md-card-actions>
+            </md-card>
+            <!--group stats-->
+            <md-card md-scroll-shrink="true" style="margin:2px;" ng-show="!showSearch">
+                <md-card-actions layout="row" layout-align="end center" >
+                    <md-button class="md-icon-button " ng-click="showSearch=true">
+                        <ng-md-icon icon="search"></ng-md-icon>
+                    </md-button>
+                        
+                    
+                    <div flex></div>
+                    <ng-md-icon icon="message"></ng-md-icon><div class="inset">{{assets.length||'--'}}</div>
+                    <ng-md-icon icon="people"></ng-md-icon><div class="inset">{{group.Members.length}}</div>
 
-                    <md-card-actions layout="row" layout-align="end center">
-                        <ng-md-icon icon="message"></ng-md-icon><div class="inset">{{group.unreadMessages.length||'--'}}</div>
-                        <ng-md-icon icon="people"></ng-md-icon><div class="inset">{{group.Members.length}}</div>
-                    </md-card-actions>
-                </md-card>
+                </md-card-actions>
+            </md-card>
+            <md-content flex layout-padding class="content-height" im-pull-to-refresh refresh-function="refresh()">
+                <span class="md-caption" ng-show="lastUpdated!=null">
+                    <small>   
+                        Last updated
+                         <time title="{{ lastUpdated | amDateFormat: 'dddd, MMMM Do YYYY, h:mm a' }}">{{ lastUpdated | amCalendar}}</time>
+                    </small>
+                </span>
                 <!-- Tabls for messages | topics |  -->
                 <div >
                     <md-tabs md-dynamic-height md-border-bottom>
                         <md-tab label="Assets">
-                            <md-content class="md-padding">
+                            <md-content class="md-padding" >
                                 <md-list>
                                     
-                                    
-                                    <md-list-item class="md-3-line md-long-text" ng-repeat="item in assets">
-                                        
+                                    <md-list-item class="md-3-line md-long-text" 
+                                        ng-repeat="item in assets|filter:searchTerm ">
                                         <img ng-src="{{item.Thumbnail}}" class="md-avatar" />
                                         <div class="md-list-item-text">
                                           <h3>{{ item.Name }}</h3>
                                           <p>{{item.Description}}</p>
                                           <p>
-                                            <span class="md-caption">{{ item.AuditTrail[0].UpdatedBy.FirstName}} {{item.AuditTrail[0].UpdatedBy.LastName}}</span> 
-                                            <span class="md-caption">  
-                                                
-                                                <time title="{{ item.AuditTrail[0].UpdatedOn | amDateFormat: 'dddd, MMMM Do YYYY, h:mm a' }}">{{ item.AuditTrail[0].UpdatedOn  | amCalendar }}</time>
+                                            <span class="md-caption"><small>   
+                                                {{ item.AuditTrail[0].UpdatedBy.FirstName}} {{item.AuditTrail[0].UpdatedBy.LastName}}
+                                                | <time title="{{ item.AuditTrail[0].UpdatedOn | amDateFormat: 'dddd, MMMM Do YYYY, h:mm a' }}">{{ item.AuditTrail[0].UpdatedOn  | amCalendar }}</time>
+                                            </small>
                                           </p>
                                           <div layout="row">
                                             <div flex></div>
@@ -69,24 +87,6 @@
 
                                         <md-divider></md-divider>
                                     </md-list-item>
-<!--                                         
-                                            <img ng-src="{{item.Thumbnail}}" class="md-avatar" />
-                                            <div class="md-list-item-text" flex layout="column" style="border:1px solid black;">
-                                                <h3>{{ item.Name }}</h3>
-                                                <p>
-                                                    <span class="md-caption">{{ item.AuditTrail[0].UpdatedBy.FirstName}} {{item.AuditTrail[0].UpdatedBy.LastName}}</span> 
-                                                    <span class="md-caption"> on {{item.AuditTrail[0].UpdatedOn | date:'MM/dd/yyyy'}}</span>
-                                                </p>
-                                                <div layout="row">
-                                                    <div flex></div>
-                                                    <md-button class="md-icon-button" ui-sref="index.groups" aria-label="goups">
-                                                      <ng-md-icon icon="thumb_up"></ng-md-icon> 
-                                                    </md-button>
-                                                </div>
-                                            </div>
- -->
-                                    
-<!--                                     </md-list-item> -->
                                 </md-list>
                             <md-content>
                         </md-tab>
@@ -118,14 +118,13 @@
             <form name="assetForm">
                 <md-menu>
                   <md-button class="md-button" ng-click="openCategoryMenu($mdOpenMenu, $event)"  aria-label="category">
-<!--                       <ng-md-icon icon="{{selectedCategory.icon}}"></ng-md-icon>{{selectedCategory.Name}} -->
-                        <i class="material-icons">{{selectedCategory.icon}}</i>{{selectedCategory.Name}} 
+                        <i class="material-icons">{{selectedCategory.icon}}</i><span class="inset">{{selectedCategory.Name}} </span>
                   </md-button>
                   <md-menu-content >
                     <md-menu-item  ng-repeat="m in categories">
                       <md-button ng-click="setCategory(m,$event)">
                         <ng-md-icon icon="{{m.icon}}" md-menu-align-target></ng-md-icon>
-                        {{m.Name}}
+                        <span class="inset">{{m.Name}}</span>
                       </md-button>
                     </md-menu-item>
                   </md-menu-content>
@@ -140,10 +139,6 @@
                             <i class="material-icons">edit</i>
                         </md-button>
                     </div>
-
-
-
-
                     <md-input-container class="md-block" flex>
                         <label>Title </label>
                         <textarea ng-model="asset.Name" ng-required="true" columns="1" md-maxlength="150" rows="2"></textarea>
