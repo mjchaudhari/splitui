@@ -1382,7 +1382,7 @@ function ($scope, $log, $q, $state, $stateParams, $timeout, storageService, data
 		.then(function(d){
 		  //append the local list
 		  d.data.data.forEach(function(a){
-		  	var existing  = _.where($scope.assets, {"_id":a._id});
+		  	var existing  = _.findWhere($scope.assets, {"_id":a._id});
 		  	if(existing){
 		  		existing = a; //Reassign it its self as this asset might have been modified
 		  	}
