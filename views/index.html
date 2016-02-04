@@ -1,4 +1,4 @@
-<!-- Side nav, main container -->
+  <!-- Side nav, main container -->
 <div  ng-controller="indexCtrl" md-theme="{{themes[theme]}}" md-theme-watch="true">
   <section layout="column" flex>
     <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" >
@@ -11,6 +11,10 @@
             
             <md-icon-button class="md-icon-button md-accent" aria-label="Favorite" ng-click="logoff()">
                 <i class="material-icons">exit_to_app</i>
+            </md-icon-button>
+            <div flex></div>
+            <md-icon-button class="md-icon-button md-accent" aria-label="Favorite" ui-sref="test">
+                <i class="material-icons">settings</i>
             </md-icon-button>
           </div>
         </md-toolbar>

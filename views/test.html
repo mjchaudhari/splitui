@@ -1,0 +1,37 @@
+<div ng-controller="testCtrl">
+hhihihih
+    {{ title}}
+<!--     <md-dialog flex="100" style="height:100vh" aria-label="List dialog"> -->
+<!--        <md-dialog-content> -->
+          <md-toolbar md-scroll-shrink="false">
+            <div class="md-toolbar-tools">
+                <md-button class="md-icon-button" ng-click="closeDialog()"  aria-label="close">
+                  <ng-md-icon icon="cancel"></ng-md-icon> 
+                <span flex>{{title}}</span>
+                <div ng-show="uploading" class="" layout="row" layout-align="end">
+                    <img style="height:40px;width:40px" class="rotating" src="./content/images/cp.png" />
+                </div>
+                <md-button class="md-icon-button" ng-click="openSelectFile()"  aria-label="camera"
+                    ngf-select ng-model="sourceFile" accept="image/*">
+                  <ng-md-icon icon="camera_alt"></ng-md-icon> 
+                </md-button>
+            </div>
+          </md-toolbar>
+          <div class="crop-area">
+              src file: {{sourceFile}}
+              <img-crop image="sourceFile|ngfDataUrl" result-image="croppedDataUrl" ng-init="croppedDataUrl=''">
+              </img-crop>
+            
+            <div>
+              <img ng-src="{{croppedDataUrl}}" />
+            </div>
+
+          <div>
+<!--        </md-dialog-content>
+        <md-dialog-actions>
+           <md-button ng-click="closeDialog()" class="md-primary">
+             Close Dialog
+           </md-button>
+     </md-dialog-actions> -->
+<!--    </md-dialog> -->
+</div>

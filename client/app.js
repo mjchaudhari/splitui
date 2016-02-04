@@ -90,7 +90,7 @@ this.utils = {
 // Code goes here
  //module = angular.module('ezDirectives', ['ngFileUpload']);
  var app = angular.module('cp', ['ngMaterial','ngMdIcons', 'ngAnimate', 'ngSanitize', 'ui.router',
-      ,'ngStorage','ngFileUpload', 'ezDirectives','angular-cache','ngImgCrop','angularMoment','infomofo.angularMdPullToRefresh']);
+      ,'ngStorage','ngFileUpload','ngImgCrop', 'ezDirectives','angular-cache','angularMoment','infomofo.angularMdPullToRefresh']);
  
  app.config([ "$httpProvider","$urlRouterProvider", '$stateProvider','$mdThemingProvider', 'CacheFactoryProvider',
  function($httpProvider, $urlRouterProvider, $stateProvider, $mdThemingProvider, CacheFactoryProvider ){
@@ -154,6 +154,7 @@ this.utils = {
       .state('index.groups',{url:"/groups", templateUrl: '/views/groups/groups.html'})
       .state('index.editgroup',{url:"/group/e/:id?", templateUrl: '/views/groups/addEditGroup.html'})
       .state('index.group',{url:"/group/v/:id", templateUrl: '/views/groups/GroupDetail.html'})
+
       ;
       
        
@@ -1392,6 +1393,9 @@ function ($scope, $log, $q, $state, $stateParams, $timeout, storageService, data
 			
 		  });
 
+		  //sort on date
+		  $scope.assets = _.sortBy($scope.assets, 'UpdatedOn').reverse();
+		
 		  //addd this to local storageService
 		  var store = {
 			"lastUpdated":new Date().toISOString(),
@@ -1413,13 +1417,7 @@ function ($scope, $log, $q, $state, $stateParams, $timeout, storageService, data
 		return last;
 	}  
 
-	$scope.refreshRepo = function(){    
-		var lastUpdated = new Date(1,1,2015);
-		storageService.add($scope.filter.groupId,{
-		  "list":[],
-		  "lastUpdated"  : lastUpdated,
-		});
-	}
+	
 
 	$scope.createAsset= function(){
 		$scope.view = "item";
@@ -1434,12 +1432,16 @@ function ($scope, $log, $q, $state, $stateParams, $timeout, storageService, data
 	$scope.refresh = function(){
 		return getAssets();
 	}
-	$scope.hideSearch = function(){
-		
-		$scope.searchTerm = "";
-		$scope.showSearch = false;
+
+	$scope.hardRefresh = function(){
+		var lastUpdated = new Date(1,1,2015);
+		storageService.add($scope.filter.groupId,{
+		  "list":[],
+		  "lastUpdated"  : lastUpdated,
+		});
+		$scope.assets = [];
+		return getAssets();
 	}
-	
 	$scope.searchAssets = function(item){
 		var t = $scope.searchTerm
 		if(t == null){
@@ -1571,43 +1573,5 @@ function ($scope, $log, $q, $state, $stateParams, $timeout, storageService, data
 		  }
 		});
 	};
-//-------------------------------------
-	$scope.height = "96px";
-	$scope.width = "96px";
-	$scope.uploadUrl = "";
-	
-	if($scope.thumbnail==""){
-		$scope.thumbnail = "https://placehold.it/96x96"
-	}
-	$scope.openThumbnailDialog = function($event){
-		var parentEl = angular.element(document.body);
-	   $mdDialog.show({
-		 parent: parentEl,
-		 targetEvent: $event,
-		 templateUrl:"thumbnailDialogTemplate.html",
-		 locals: {
-		   items: $scope.items
-		 },
-		 controller: DialogController
-	  });
-	  function DialogController($scope, $mdDialog, items, Upload) {
-		$scope.items = items;
-		$scope.sourceFile = "";
-		$scope.openSelectFile = function(dataUrl ){
-			console.info(dataUrl);
-		}
-
-
-		$scope.closeDialog = function() {
-		  $mdDialog.hide();
-		}
-
-
-
-	  }
-    }
-
-
-
 	preInit();
 }]);

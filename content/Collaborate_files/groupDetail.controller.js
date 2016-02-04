@@ -62,7 +62,7 @@ function ($scope, $log, $q, $state, $stateParams, $timeout, storageService, data
 
 		var localAssets = localRepo.list;
 		angular.copy(localAssets, $scope.assets);
-		$scope.assets = _.sortBy($scope.assets, 'UpdatedOn').reverse();
+		
 		$timeout(getAssets(),100);
 		
 	};
@@ -103,9 +103,6 @@ function ($scope, $log, $q, $state, $stateParams, $timeout, storageService, data
 			
 		  });
 
-		  //sort on date
-		  $scope.assets = _.sortBy($scope.assets, 'UpdatedOn').reverse();
-		
 		  //addd this to local storageService
 		  var store = {
 			"lastUpdated":new Date().toISOString(),
@@ -127,7 +124,13 @@ function ($scope, $log, $q, $state, $stateParams, $timeout, storageService, data
 		return last;
 	}  
 
-	
+	$scope.refreshRepo = function(){    
+		var lastUpdated = new Date(1,1,2015);
+		storageService.add($scope.filter.groupId,{
+		  "list":[],
+		  "lastUpdated"  : lastUpdated,
+		});
+	}
 
 	$scope.createAsset= function(){
 		$scope.view = "item";
@@ -142,16 +145,12 @@ function ($scope, $log, $q, $state, $stateParams, $timeout, storageService, data
 	$scope.refresh = function(){
 		return getAssets();
 	}
+	$scope.hideSearch = function(){
 
-	$scope.hardRefresh = function(){
-		var lastUpdated = new Date(1,1,2015);
-		storageService.add($scope.filter.groupId,{
-		  "list":[],
-		  "lastUpdated"  : lastUpdated,
-		});
-		$scope.assets = [];
-		return getAssets();
+		$scope.searchTerm = "";
+		$scope.showSearch = false;
 	}
+	
 	$scope.searchAssets = function(item){
 		var t = $scope.searchTerm
 		if(t == null){
@@ -283,5 +282,49 @@ function ($scope, $log, $q, $state, $stateParams, $timeout, storageService, data
 		  }
 		});
 	};
+//-------------------------------------
+	$scope.height = "96px";
+	$scope.width = "96px";
+	$scope.uploadUrl = "";
+	$scope.thumb = {
+		sourceFile:'',
+		croppedDataUrl:'',
+		cropperMinSize : 80,
+		resultSize : 100,
+		cropperGuide : 'circle'
+	}
+	if($scope.thumbnail==""){
+		$scope.thumbnail = "https://placehold.it/96x96"
+	}
+	$scope.openThumbnailDialog = function($event){
+		var parentEl = angular.element(document.body);
+	   $mdDialog.show({
+		 parent: parentEl,
+		 targetEvent: $event,
+		 templateUrl:"thumbnailDialogTemplate.html",
+		 locals: {
+		   items: $scope.items
+		 },
+		 controller: DialogController
+	  });
+	  function DialogController($scope, $mdDialog, items, Upload) {
+		$scope.items = items;
+		$scope.sourceFile = "";
+		$scope.openSelectFile = function(dataUrl ){
+			console.info(dataUrl);
+		}
+
+
+		$scope.closeDialog = function() {
+		  $mdDialog.hide();
+		}
+
+
+
+	  }
+    }
+
+
+
 	preInit();
 }]);
