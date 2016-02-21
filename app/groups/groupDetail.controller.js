@@ -147,26 +147,43 @@ function ($scope, $log, $q, $state, $stateParams, $timeout, $repository, dataSer
 	$scope.saveAsset = function() {
 		$scope.isSaving = true;
 		var isValid = validate();     
-		
-		if(isBase64DataUrl($scope.asset.Thumbnail)){
-			$scope.asset.base64Thumbnail = $scope.asset.Thumbnail;
-		}
-
-		$repository.saveAsset($scope.asset)
+		saveAssetData()
 		.then(function(d){
-			
-			$scope.showToast("Created!", "success");	
-			$scope.group = _.findWhere($repository.groups,{"_id":$scope.filter.groupId});			
-			//change to list view
-			$scope.view = "list";
-
-			$scope.isSaving = false;
+			saveThumbnail(d.data.data._id,$scope.asset.Thumbnail)
+			.then(function(){
+				$scope.showToast("Created!", "success");	
+				$scope.group = _.findWhere($repository.groups,{"_id":$scope.filter.groupId});			
+				//change to list view
+				$scope.view = "list";
+				$scope.isSaving = false;
+			});
 		}, function(e){
 			$scope.showToast("Error occured,", "error");
 			$scope.isSaving = false;
 		}); 
     };
-	
+    
+    var saveAssetData = function() {
+		$scope.isSaving = true;
+		var isValid = validate();     
+		var defered = $q.defer();
+		$repository.saveAsset($scope.asset)
+		.then(function(d){
+			defered.resolve(d);
+		}, function(e){
+			defered.reject(e);
+		});
+		return defered.promise;
+    };
+    $scope.uploadThumb = function(){
+    	saveThumbnail ("4JXamxmje", $scope.asset.Thumbnail);
+    }
+    var saveThumbnail = function(assetId,thumbnail){
+    	if(isBase64DataUrl(thumbnail)){
+    		return $repository.saveAssetThumbnail(assetId,thumbnail);
+    	}
+    }
+   
 	var validate = function(){
 		var isValid = true;
 		if($scope.asset == null){

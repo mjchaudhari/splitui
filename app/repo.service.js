@@ -238,10 +238,13 @@ function($q, $log, $localStorage, storageService, dataService){
 	*/
 	var _saveAsset = function(asset) {
 		var isValid = validate(asset);     
-		return dataService.saveAsset(asset)
+		var defered = $q.defer();
+		dataService.saveAsset(asset)
 		.then(function(d){
 			if(d.data.isError){
-				$scope.showToast("Error occured,", "error");
+				$scope.showToast("Error occured,", "error");		
+				defered.resolve(d);
+		
 			}
 			else{
 			
@@ -258,12 +261,40 @@ function($q, $log, $localStorage, storageService, dataService){
 					g.list.push(d.data.data);
 				}
 				storageService.add(asset.GroupId,g);
+				defered.resolve(d);
 			}
 		}, function(e){
-			$scope.showToast("Error occured,", "error");
-			$scope.isSaving = false;
+				defered.reject(e);	
+		}); 
+		return defered.promise;
+    };
+    /**
+	* Save the asset to the given group to DB as well as update repo.groups
+	* return promise
+	*/
+	var _saveAssetThumbnail = function(assetId, base64thumbnail) {
+		return dataService.saveAssetThumbnail(assetId, base64thumbnail)
+		.then(function(d){
+			if(d.data.isError){
+				//$scope.showToast("Error occured,", "error");
+			}
+			else{
+			
+				//Get group from local
+				var g = _.findWhere(_groups, {"_id":asset.GroupId});
+				if(g.list == undefined){
+					g.list = [];
+				}
+				var a = _.findWhere(g.list,{"_id":d.data.data._id});
+				if(a){
+					a.Thumbnail = d.data;
+				}
+			}
+		}, function(e){
+			
 		}); 
     };
+    
 	if(!isInitialized){
 		_initialize()
 		isInitialized = true;
@@ -279,6 +310,7 @@ function($q, $log, $localStorage, storageService, dataService){
 	  refreshGroups : _refreshGroups,
 	  groups : _groups,
 	  saveAsset : _saveAsset,
+	  saveAssetThumbnail : _saveAssetThumbnail,
 	  saveGroup : _saveGroup,
   }
   return svc;

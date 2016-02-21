@@ -113,9 +113,11 @@ function($http,$q, $log, $timeout, CacheFactory){
     saveAsset : function(data){
       var url = config.apiBaseUrl + "/v1/asset";
       return $http.post(url,data);
-    
     },
-
+    saveAssetThumbnail : function(assetId, base64thumbnail){
+        var url = config.apiBaseUrl + "/v1/asset/thumbnail/binary";
+        return $http.post(url,{"assetId" : assetId, "base64ImgUrl" : base64thumbnail});
+    },
     uploadThumbnail : function(fileName, base64Image){
         var url = config.apiBaseUrl + "/v1/thumbnail/binary";
         var data = {"fileName" : fileName, "imgUrl": base64Image};
