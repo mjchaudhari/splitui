@@ -39,14 +39,23 @@ function($q, $log, $localStorage){
     
     get : function(key)
     {
-      return $localStorage["cp-data"][key];
-    },
-    
+      if(key){
+
+        return $localStorage["cp-data"][key];
+      }
+      else{
+        return $localStorage["cp-data"];
+      }
+    },    
     remove : function(key)
     {
-      if($localStorage["cp-data"][key] != undefined)
-      {
-        $localStorage["cp-data"][key] = undefined;  
+      if(key){
+        if($localStorage["cp-data"][key] != undefined)
+        {
+          $localStorage["cp-data"][key] = undefined;  
+        }
+      } else{
+        $localStorage["cp-data"] = {};
       }
 
     }

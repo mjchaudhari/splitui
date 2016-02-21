@@ -1,11 +1,10 @@
 angular.module("cp").controller("groupDetailCtrl", 
-['$scope', '$log', '$q','$state', '$stateParams','$timeout', 'storageService', 'dataService','$mdToast','$mdDialog',
-function ($scope, $log, $q, $state, $stateParams, $timeout, storageService, dataService, $mdToast, $mdDialog){
+['$scope', '$log', '$q','$state', '$stateParams','$timeout', '$repository', 'dataService','$mdToast','$mdDialog',
+function ($scope, $log, $q, $state, $stateParams, $timeout, $repository, dataService, $mdToast, $mdDialog){
 	$scope.$parent.currentViewName = "Group Detail" 
 	$scope.isLoading = false;
 	$scope.isSaving = false;
 	$scope.view = "list";
-	$scope.lastUpdated = null;
 	$scope.current = {
 		action:"View",
 	    id:0,    
@@ -22,7 +21,7 @@ function ($scope, $log, $q, $state, $stateParams, $timeout, storageService, data
 		count:100,
 	}
 	
-	$scope.assets = [];
+	//$scope.assets = [];
   	$scope.selectedTopic = null;
 
 
@@ -35,10 +34,10 @@ function ($scope, $log, $q, $state, $stateParams, $timeout, storageService, data
 
 	var preInit = function(){
 		var tasks = [];
-		$scope.isLoading = true;
+		//$scope.isLoading = true;
   			
 		if($scope.current.id != ''){
-			tasks.push(getGroupDetail($scope.current.id));
+			//tasks.push(getGroupDetail($scope.current.id));
 		}
   		$q.all([
 			tasks
@@ -49,85 +48,12 @@ function ($scope, $log, $q, $state, $stateParams, $timeout, storageService, data
   	}
   	
 	var init = function(){
-		var localRepo = storageService.get($scope.filter.groupId);
-		if(localRepo == null){
-		  localRepo = {
-			"lastUpdated" : null,
-			"list" : []
-		  };
-		}
-		else if(localRepo.list == null){
-		  localRepo.list = [];
-		}
-
-		var localAssets = localRepo.list;
-		angular.copy(localAssets, $scope.assets);
-		$scope.assets = _.sortBy($scope.assets, 'UpdatedOn').reverse();
-		$timeout(getAssets(),100);
+		//var localRepo = storageService.get($scope.filter.groupId);
+		$scope.group = _.findWhere($repository.groups,{"_id":$scope.filter.groupId});
+		//angular.copy($scope.group.list, $scope.assets);
+		$timeout($scope.refresh(),100);
 		
 	};
-
-	var getGroupDetail = function(id){
-		$scope.isLoading = true;
-		return dataService.getGroup(id).then(function(d){
-			if(d.data.isError){
-				//toaster.pop("error","",d.Message)
-			}
-			else{
-				//angular.copy(d.data.data,$scope.myGroups);  
-				d.data.data.forEach(function(obj){
-					  obj.DateCreated = new Date(obj.DateCreated);
-			   	});
-			   	$scope.group = d.data.data[0];
-			   	
-			}
-		}).finally(function(){
-			$scope.isLoading = false;
-		});
-
-	}
-	
-	var getAssets = function(){
-		$scope.filter.from = lastUpdatedInLocalRepo();
-		return dataService.getAssets($scope.filter)
-		.then(function(d){
-		  //append the local list
-		  d.data.data.forEach(function(a){
-		  	var existing  = _.findWhere($scope.assets, {"_id":a._id});
-		  	if(existing){
-		  		existing = a; //Reassign it its self as this asset might have been modified
-		  	}
-		  	else{
-		  		$scope.assets.push(a)	
-		  	}
-			
-		  });
-
-		  //sort on date
-		  $scope.assets = _.sortBy($scope.assets, 'UpdatedOn').reverse();
-		
-		  //addd this to local storageService
-		  var store = {
-			"lastUpdated":new Date().toISOString(),
-			"list":$scope.assets,
-		  }
-
-		  storageService.add($scope.filter.groupId,store);
-		});
-	};
-
-	var lastUpdatedInLocalRepo = function(){
-		var last =  new Date(2015,1,1);
-		var localRepo = storageService.get($scope.filter.groupId);
-		if(localRepo && localRepo.lastUpdated){
-		  last = new Date(localRepo.lastUpdated).toISOString();
-		  $scope.lastUpdated = last;
-		}
-
-		return last;
-	}  
-
-	
 
 	$scope.createAsset= function(){
 		$scope.view = "item";
@@ -140,17 +66,11 @@ function ($scope, $log, $q, $state, $stateParams, $timeout, storageService, data
 
 	}
 	$scope.refresh = function(){
-		return getAssets();
+		return $repository.refreshGroup($scope.current.id);
 	}
 
 	$scope.hardRefresh = function(){
-		var lastUpdated = new Date(1,1,2015);
-		storageService.add($scope.filter.groupId,{
-		  "list":[],
-		  "lastUpdated"  : lastUpdated,
-		});
-		$scope.assets = [];
-		return getAssets();
+		$repository.refreshGroup($scope.current.id);
 	}
 	$scope.searchAssets = function(item){
 		var t = $scope.searchTerm
@@ -221,43 +141,32 @@ function ($scope, $log, $q, $state, $stateParams, $timeout, storageService, data
       $scope.selectedCategory = category;
       
     };
-	
+	$scope.uploadThumb = function(){
+		dataService.uploadThumbnail("test",$scope.asset.Thumbnail)
+	}
 	$scope.saveAsset = function() {
 		$scope.isSaving = true;
 		var isValid = validate();     
-		dataService.saveAsset($scope.asset)
-		.then(function(d){
-			if(d.data.isError){
-				$scope.showToast("Error occured,", "error");
-			}
-			else{
-				updateLocalRepo(d.data.data);
-				//getAssets();
-				$scope.showToast("Created!", "success");
-				
-				//change to list view
-				$scope.view = "list";
+		
+		if(isBase64DataUrl($scope.asset.Thumbnail)){
+			$scope.asset.base64Thumbnail = $scope.asset.Thumbnail;
+		}
 
-			}
+		$repository.saveAsset($scope.asset)
+		.then(function(d){
+			
+			$scope.showToast("Created!", "success");	
+			$scope.group = _.findWhere($repository.groups,{"_id":$scope.filter.groupId});			
+			//change to list view
+			$scope.view = "list";
+
 			$scope.isSaving = false;
 		}, function(e){
 			$scope.showToast("Error occured,", "error");
 			$scope.isSaving = false;
 		}); 
     };
-	var updateLocalRepo = function(asset){
-		var localRepo = storageService.get($scope.filter.groupId);
-		
-		var localAsset = _.where(localRepo.list, {"_id":asset._id});
-		
-		if(localAsset == null){
-			localAsset = asset;
-		}else{
-			localRepo.list.push(asset);
-		}
-
-		var localRepo = storageService.get($scope.filter.groupId);
-	}
+	
 	var validate = function(){
 		var isValid = true;
 		if($scope.asset == null){
@@ -268,6 +177,13 @@ function ($scope, $log, $q, $state, $stateParams, $timeout, storageService, data
 			isValid = false;
 		}
 		return true;
+	}
+	var isBase64DataUrl = function(img){
+		if(img && 
+			img.indexOf("data:image/png;base64") > -1){
+				return true;
+		}
+		return false;
 	}
 
 	$scope.showToast = function(msg, type) {

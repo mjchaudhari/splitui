@@ -1,6 +1,6 @@
 angular.module("cp")
 .controller("groupsCtrl", function($scope, $log, $state, $stateParams, 
-    storageService, dataService){
+    storageService, $repository, dataService, $timeout){
   $scope.currentViewName = "Groups";
   $scope.id = $stateParams.id;
   $scope.infoSlideOpen = false;
@@ -14,22 +14,28 @@ angular.module("cp")
   var init = function(){
     $scope.groupList = [];
     $scope.groupsLoading = true;
-    dataService.getGroups().then(function(d){
-     if(d.data.isError){
-        //toaster.pop("error","",d.Message)
-      }
-      else{
-        angular.copy(d.data.data,$scope.groupList);  
-        $scope.groupList.forEach(function(obj){
+    var g = $repository.groups;
+    angular.copy(g,$scope.groupList);  
+    
+    $timeout($scope.refresh(),100);
+    $scope.groupsLoading = false;
+    
+//     dataService.getGroups().then(function(d){
+//      if(d.data.isError){
+//         //toaster.pop("error","",d.Message)
+//       }
+//       else{
+//         angular.copy(d.data.data,$scope.groupList);  
+//         $scope.groupList.forEach(function(obj){
               
-              obj.DateCreated = new Date(obj.DateCreated);
-         });
-      }
-      $scope.groupsLoading = false;
+//               obj.DateCreated = new Date(obj.DateCreated);
+//          });
+//       }
+//       $scope.groupsLoading = false;
       
-    }, function(e){
-      //console.error(e);
-    });
+//     }, function(e){
+//       //console.error(e);
+//     });
 
   };
   var originatorEv;
@@ -38,7 +44,10 @@ angular.module("cp")
       $mdOpenMenu(ev);
     };
   $scope.refresh = function(){
-      angularGridInstance.gallery.refresh();
+      $repository.refreshGroups().then(function(){
+      angular.copy($repository.groups,$scope.groupList);  
+      
+    })
   } 
     
   

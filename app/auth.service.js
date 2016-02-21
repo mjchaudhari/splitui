@@ -44,8 +44,8 @@ angular.module('cp').factory('authService', ['$http','$log','$q', 'storageServic
     	var deferred = $q.defer();
     	$q.all(
 			storageService.remove('__splituser'),
-			storageService.remove('__splituserat')
-
+			storageService.remove('__splituserat'),
+			storageService.remove()
     	).then(function(){
     		dataService.clearCache();
     		deferred.resolve();

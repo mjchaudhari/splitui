@@ -46,7 +46,7 @@
                         
                     
                     <div flex></div>
-                    <ng-md-icon icon="message"></ng-md-icon><div class="inset">{{assets.length||'--'}}</div>
+                    <ng-md-icon icon="message"></ng-md-icon><div class="inset">{{group.list.length||'--'}}</div>
                     <ng-md-icon icon="people"></ng-md-icon><div class="inset">{{group.Members.length}}</div>
                     <ng-md-icon icon="restore" ng-click="hardRefresh()"></ng-md-icon>
                     
@@ -57,7 +57,7 @@
                 <span class="md-caption" ng-show="lastUpdated!=null">
                     <small>   
                         Last updated
-                         <time title="{{ lastUpdated | amDateFormat: 'dddd, MMMM Do YYYY, h:mm a' }}">{{ lastUpdated | amCalendar}}</time>
+                         <time title="{{ group.UpdatedOn | amDateFormat: 'dddd, MMMM Do YYYY, h:mm a' }}">{{ lastUpdated | amCalendar}}</time>
                     </small>
                 </span>
                 <!-- Tabls for messages | topics |  -->
@@ -68,20 +68,24 @@
                                 <md-list>
                                     
                                     <md-list-item class="md-3-line md-long-text" 
-                                        ng-repeat="item in assets|filter:searchTerm ">
+                                        ng-repeat="item in group.list|filter:searchTerm ">
                                         <img ng-src="{{item.Thumbnail}}" class="md-avatar" />
                                         <div class="md-list-item-text">
                                           <h3>{{ item.Name }}</h3>
                                           <p>{{item.Description}}</p>
                                           <p>
-                                            <span class="md-caption"><small>   
+                                            <span class="md-caption" ng-show="!item.isMine"><small>   
                                                 {{ item.AuditTrail[0].UpdatedBy.FirstName}} {{item.AuditTrail[0].UpdatedBy.LastName}}
+                                                | <time title="{{ item.AuditTrail[0].UpdatedOn | amDateFormat: 'dddd, MMMM Do YYYY, h:mm a' }}">{{ item.AuditTrail[0].UpdatedOn  | amCalendar }}</time>
+                                            </small>
+                                            <span class="md-caption" ng-show="item.isMine"><small>   
+                                                You 
                                                 | <time title="{{ item.AuditTrail[0].UpdatedOn | amDateFormat: 'dddd, MMMM Do YYYY, h:mm a' }}">{{ item.AuditTrail[0].UpdatedOn  | amCalendar }}</time>
                                             </small>
                                           </p>
                                           <div layout="row">
                                             <div flex></div>
-                                            <md-button class="md-icon-button" ui-sref="index.groups" aria-label="goups">
+                                            <md-button ng-show="!item.isMine" class="md-icon-button" ui-sref="index.groups" aria-label="goups">
                                               <ng-md-icon icon="thumb_up"></ng-md-icon> 
                                             </md-button>
                                           </div>
@@ -152,7 +156,7 @@
                 
                 <div layout="row" flex>
                     <md-button class="md-primary md-raised md-icon-button accent" aria-label="Settings"
-                        ngf-select="uploadFiles($file, $invalidFiles)"  ngf-max-size="500MB">
+                        ngf-select="uploadFiles($file, $invalidFiles)"  ngf-max-size="100MB">
                       <i class="material-icons">file_upload</i>
                     </md-button>    
                     <div flex></div>

@@ -4,7 +4,7 @@
   try {
         module = angular.module('ezDirectives');;
     } catch (e) {
-        module = angular.module('ezDirectives', ['ngFileUpload']);
+        module = angular.module('ezDirectives', ['ngFileUpload','ngImgCrop']);
     }
     
   this.ezTreeTemplate = [

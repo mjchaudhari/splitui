@@ -231,7 +231,7 @@ md-icon {
 
 .thumbnail-card{
   border:1px solid silver;
-  height:100px;
-  width:100px;
+  height: 110px;
+  width: 110px;
   padding:5px;
 }

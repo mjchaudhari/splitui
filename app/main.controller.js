@@ -36,7 +36,7 @@ angular.module('cp').controller('mainController', function($scope, $log, $state,
   $scope.logoff = function(){
 		authService.logOut().then(function(){
 			$scope.AUTHDATA = null;
-	
+			storageService.remove();
 			$state.go("home")
 		});
   }
