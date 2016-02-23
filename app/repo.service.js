@@ -279,16 +279,12 @@ function($q, $log, $localStorage, storageService, dataService){
 				//$scope.showToast("Error occured,", "error");
 			}
 			else{
-			
-				//Get group from local
-				var g = _.findWhere(_groups, {"_id":asset.GroupId});
-				if(g.list == undefined){
-					g.list = [];
-				}
-				var a = _.findWhere(g.list,{"_id":d.data.data._id});
-				if(a){
-					a.Thumbnail = d.data;
-				}
+				_groups.forEach(function(g){
+					var a = _.findWhere(g.list,{"_id":assetId});
+					if(a){
+						a.Thumbnail = d.data.data.imageUrl;
+					}	
+				});
 			}
 		}, function(e){
 			

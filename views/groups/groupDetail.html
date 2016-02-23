@@ -155,13 +155,13 @@
                 </md-input-container>
                 
                 <div layout="row" flex>
-                    <md-button class="md-primary md-raised md-icon-button accent" aria-label="Settings"
+                    <md-button ng-show="!isSaving" class="md-primary md-raised md-icon-button accent" aria-label="Settings"
                         ngf-select="uploadFiles($file, $invalidFiles)"  ngf-max-size="100MB">
                       <i class="material-icons">file_upload</i>
                     </md-button>    
                     
                     <div flex></div>
-                    <md-button class="md-primary md-raised md-icon-button accent" ng-click="saveAsset()"  aria-label="save">
+                    <md-button  ng-show="!isSaving" class="md-primary md-raised md-icon-button accent" ng-click="saveAsset()"  aria-label="save">
                       <i class="material-icons">send</i>
                     </md-button>
                 </div>

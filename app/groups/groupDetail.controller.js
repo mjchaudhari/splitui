@@ -131,6 +131,8 @@ function ($scope, $log, $q, $state, $stateParams, $timeout, $repository, dataSer
 		"GroupId":$scope.current.id,
 		"ParentId":$scope.parent
 	}
+	$scope.uploadedFiles=null;
+	
 	$scope.openCategoryMenu = function($mdOpenMenu, ev) {
       originatorEv = ev;
       $mdOpenMenu(ev);
@@ -142,21 +144,27 @@ function ($scope, $log, $q, $state, $stateParams, $timeout, $repository, dataSer
       
     };
 	$scope.uploadThumb = function(){
-		dataService.uploadThumbnail("test",$scope.asset.Thumbnail)
+		dataService.uploadThumbnail($scope.asset._id,$scope.asset.Thumbnail);
 	}
 	$scope.saveAsset = function() {
 		$scope.isSaving = true;
 		var isValid = validate();     
 		saveAssetData()
 		.then(function(d){
-			saveThumbnail(d.data.data._id,$scope.asset.Thumbnail)
-			.then(function(){
-				$scope.showToast("Created!", "success");	
-				$scope.group = _.findWhere($repository.groups,{"_id":$scope.filter.groupId});			
-				//change to list view
-				$scope.view = "list";
-				$scope.isSaving = false;
-			});
+				$q.all([
+					saveThumbnail(d.data.data._id,$scope.asset.Thumbnail),
+					saveAssetArtifact(d.data.data._id)
+				])
+				.then(function(){
+					$scope.showToast("Created!", "success");	
+					$scope.group = _.findWhere($repository.groups,{"_id":$scope.filter.groupId});			
+					//change to list view
+					$scope.view = "list";
+					$scope.isSaving = false;
+				});
+			
+			
+			
 		}, function(e){
 			$scope.showToast("Error occured,", "error");
 			$scope.isSaving = false;
@@ -179,9 +187,27 @@ function ($scope, $log, $q, $state, $stateParams, $timeout, $repository, dataSer
     	saveThumbnail ("4JXamxmje", $scope.asset.Thumbnail);
     }
     var saveThumbnail = function(assetId,thumbnail){
+    	var def;
     	if(isBase64DataUrl(thumbnail)){
-    		return $repository.saveAssetThumbnail(assetId,thumbnail);
+    		def = $repository.saveAssetThumbnail(assetId,thumbnail);
     	}
+    	else{
+			var def =  $q.defer();
+			$timeout(def.resolve(),10);
+    	}
+    	return def;
+    }
+
+    var saveAssetArtifact = function(assetId){
+    	var def;
+    	if($scope.uploadedFiles){
+    		def = $repository.uploadFiles(assetId);
+    	}
+    	else{
+			var def =  $q.defer();
+			$timeout(def.resolve(),10);
+    	}
+    	return def;
     }
    
 	var validate = function(){
