@@ -128,7 +128,7 @@ function($q, $log, $localStorage, storageService, dataService){
 					var updatedBy = "";
 					if(a.AuditTrail){
 						var audit = _.last(a.AuditTrail);
-						if(audit){
+						if(audit && audit.UpdatedBy){
 							updatedBy = audit.UpdatedBy._id;
 						}
 					}

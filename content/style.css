@@ -235,3 +235,8 @@ md-icon {
   width: 110px;
   padding:5px;
 }
+
+.thumbnail-img{
+  height:100px;
+  width:100px;
+}

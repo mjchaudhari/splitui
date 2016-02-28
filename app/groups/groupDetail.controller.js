@@ -152,7 +152,7 @@ function ($scope, $log, $q, $state, $stateParams, $timeout, $repository, dataSer
 		saveAssetData()
 		.then(function(d){
 				$q.all([
-					saveThumbnail(d.data.data._id,$scope.asset.Thumbnail),
+					//saveThumbnail(d.data.data._id,$scope.asset.Thumbnail),
 					saveAssetArtifact(d.data.data._id)
 				])
 				.then(function(){
