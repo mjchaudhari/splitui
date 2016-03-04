@@ -234,9 +234,11 @@ md-icon {
   height: 110px;
   width: 110px;
   padding:5px;
+  border-radius: 50%;
 }
 
 .thumbnail-img{
   height:100px;
   width:100px;
+  /* border-radius: 50px; */
 }

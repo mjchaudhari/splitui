@@ -162,36 +162,63 @@
             </form>
         </md-content>
     </div>
-</div>
- <script type="text/ng-template" id="thumbnailDialogTemplate.html"> 
-    <md-dialog flex="100" style="height:100vh" aria-label="List dialog">
-       <md-dialog-content>
-          <md-toolbar md-scroll-shrink="false">
+    <!--View-->
+    <div ng-switch-when="item">
+        <md-toolbar md-scroll-shrink="false">
             <div class="md-toolbar-tools">
-                <md-button class="md-icon-button" ng-click="closeDialog()"  aria-label="close">
+                <md-button class="md-icon-button" ng-click="backToList()"  aria-label="goups">
                   <ng-md-icon icon="cancel"></ng-md-icon> 
                 </md-button>
-                <span flex>{{title}}</span>
-                <div ng-show="uploading" class="" layout="row" layout-align="end">
+                <span flex>{{group.Name}}</span>
+                <div ng-show="isSaving" class="" layout="row" layout-align="end">
                     <img style="height:40px;width:40px" class="rotating" src="./content/images/cp.png" />
                 </div>
-                <md-button class="md-icon-button" ng-click="closeDialog()"  aria-label="close">
-                  <ng-md-icon icon="save"></ng-md-icon> 
-                </md-button>
+                <span><img ng-src="{{group.Thumbnail}}"  class="avatar-small" alt="{{group.Name}}"></span>
             </div>
-          </md-toolbar>
-          <div layout-padding>    
-            <md-switch ng-model="thumb.cropperGuide" aria-label="Use circular cropper area:" ng-true-value="'circle'" ng-false-value="'square'" class="md-warn">
-                 Use square cropper area
-            </md-switch>
-            <div layout="column" layout-align="center center" class="crop-area md-whiteframe-1dp">
-                <ng-md-icon icon="camera_alt" size="64" ngf-select ng-model="thumb.sourceFile" accept="image/*"></ng-md-icon> 
-                <img-crop image="thumb.sourceFile | ngfDataUrl" area-type="{{thumb.cropperGuide}}"
-                    area-min-size="thumb.cropperMinSize" result-image-size="thumb.resusdfsdfsfltSize" 
-                    result-image="thumb.croppedDataUrl" ng-init="thumb.croppedDataUrl=''">
-                </img-crop>
-            </div>
-        </div>
-       </md-dialog-content>
-   </md-dialog>
+        </md-toolbar>
+        
+        <md-content flex layout-padding class="content-height">
+            <form name="assetForm">
+                <md-menu>
+                  <md-button class="md-button" ng-click="openCategoryMenu($mdOpenMenu, $event)"  aria-label="category">
+                        <i class="material-icons">{{selectedCategory.icon}}</i><span class="inset">{{selectedCategory.Name}} </span>
+                  </md-button>
+                  <md-menu-content >
+                    <md-menu-item  ng-repeat="m in categories">
+                      <md-button ng-click="setCategory(m,$event)">
+                        <ng-md-icon icon="{{m.icon}}" md-menu-align-target></ng-md-icon>
+                        <span class="inset">{{m.Name}}</span>
+                      </md-button>
+                    </md-menu-item>
+                  </md-menu-content>
+                </md-menu>
+                <div layout="row">
+                    <ez-image-upload img="asset.Thumbnail"></ez-image-upload>
+                    <md-input-container class="md-block" flex>
+                        <label>Title </label>
+                        <textarea ng-model="asset.Name" ng-required="true" columns="1" md-maxlength="150" rows="2"></textarea>
+                    </md-input-container>
+                    
+                </div>
+                <md-input-container class="md-block">
+                  <label>Message</label>
+                  <textarea columns="1"  ng-model="asset.Description" rows="5" md-maxlength="1000" ></textarea>
+                </md-input-container>
+                
+                <div layout="row" flex>
+                    <md-button ng-show="!isSaving" class="md-primary md-raised md-icon-button accent" aria-label="Settings"
+                        ngf-select="uploadFiles($file, $invalidFiles)"  ngf-max-size="100MB">
+                      <i class="material-icons">file_upload</i>
+                    </md-button>    
+                    
+                    <div flex></div>
+                    <md-button  ng-show="!isSaving" class="md-primary md-raised md-icon-button accent" ng-click="saveAsset()"  aria-label="save">
+                      <i class="material-icons">send</i>
+                    </md-button>
+                </div>
+            </form>
+        </md-content>
+    </div>
+</div>
+<script type="text/ng-template" id="thumbnailDialogTemplate.html"> 
 </script>

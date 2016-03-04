@@ -33,12 +33,29 @@ angular.module('cp').controller('mainController', function($scope, $log, $state,
       
 
   });
+
+  $scope.$on('profileUpdated',function(data) 
+  { 
+      $scope.AUTHDATA = storageService.get('__splituser');
+      
+
+  });
+  
+  $scope.$on('profileUpdated',function(data) 
+  { 
+      $scope.AUTHDATA = storageService.get('__splituser');
+      
+
+  });
   $scope.logoff = function(){
 		authService.logOut().then(function(){
 			$scope.AUTHDATA = null;
 			storageService.remove();
 			$state.go("home")
 		});
+  }
+  $scope.editProfile = function(){
+  	$state.go("account.profile");
   }
   init();
   

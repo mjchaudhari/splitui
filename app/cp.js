@@ -56,7 +56,7 @@
       .state("account.login",{url:"/login", templateUrl:"/views/account/login.html"}) 
       .state("account.register",{url:"/register", templateUrl:"/views/account/register.html"}) 
       .state("account.registrationSuccess",{url:"/registrationSuccess", templateUrl:"/views/account/registrationSuccess.html"}) 
-      
+      .state("account.profile",{url:"/profile", templateUrl:"/views/account/profile.html"}) 
       .state('account.resendpin',{url:"/resendpin", templateUrl: 'views/account/resendPin.html'})
 
       .state('help',{url:"/help", templateUrl: '/views/help.html'})

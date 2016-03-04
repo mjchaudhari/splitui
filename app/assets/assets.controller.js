@@ -66,12 +66,6 @@ angular.module("cp")
     return last;
   }  
   
-  $scope.refreshRepo = function(){    
-    var lastUpdated = new Date(1,1,2015);
-    storageService.add($scope.filter.groupId,{
-      "list":[],
-      "lastUpdated"  : lastUpdated,
-    });
-  }
+  
   init();  
 });

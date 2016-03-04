@@ -5,17 +5,18 @@
         <md-toolbar class="md-tall md-hue-2">
           <span flex></span>
           <div layout="column" class="md-toolbar-tools-bottom inset">
-            <user-avatar></user-avatar>
+            <img class="md-avatar thumbnail-img"  style="height:70px;:70px" ng-src="{{AUTHDATA.Picture}}"></img>
             <span></span>
             <div>{{AUTHDATA.FirstName}} {{AUTHDATA.LastName}}</div>
-            
-            <md-icon-button class="md-icon-button md-accent" aria-label="Favorite" ng-click="logoff()">
-                <i class="material-icons">exit_to_app</i>
-            </md-icon-button>
-            <div flex></div>
-            <md-icon-button class="md-icon-button md-accent" aria-label="Favorite" ui-sref="test">
-                <i class="material-icons">settings</i>
-            </md-icon-button>
+            <div layout="row">
+              <md-icon-button class="md-icon-button md-accent" aria-label="Favorite" ng-click="logoff()">
+                  <i class="material-icons">exit_to_app</i>
+              </md-icon-button>
+              <div flex></div>
+              <md-icon-button class="md-icon-button md-accent" aria-label="Favorite" ng-click="editProfile()">
+                  <i class="material-icons">settings</i>
+              </md-icon-button>
+            </div>    
           </div>
         </md-toolbar>
         <md-list>

@@ -31,6 +31,7 @@ angular.module('cp').factory('authService', ['$http','$log','$q', 'storageServic
         	dataService.clearCache();
             storageService.add('__splituser',d.data.data);
             storageService.add('__splituserat',d.data.data.AccessToken);
+            _UserDetail = d.data.data;
             deferred.resolve(d.data.data);
         },
         function (e){

@@ -10,7 +10,7 @@
     
   
   this.ezImageUploadTemplate = [
-      '<div layout="column" layout-align="center center">',
+      '<div layout="column" layout-align="center center" ng-click="openThumbnailDialog($event)">',
       '  <div class="thumbnail-card" >',
       '    <img src ng-src="{{img}}" class="md-avatar thumbnail-img"  md-click="openThumbnailDialog($event)" /> ',
       '  </div>',

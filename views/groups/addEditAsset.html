@@ -1,0 +1,41 @@
+    <div ng-controller="addEditCtrl">
+        <form name="assetForm">
+            <md-menu>
+              <md-button class="md-button" ng-click="openCategoryMenu($mdOpenMenu, $event)"  aria-label="category">
+                    <i class="material-icons">{{selectedCategory.icon}}</i><span class="inset">{{selectedCategory.Name}} </span>
+              </md-button>
+              <md-menu-content >
+                <md-menu-item  ng-repeat="m in categories">
+                  <md-button ng-click="setCategory(m,$event)">
+                    <ng-md-icon icon="{{m.icon}}" md-menu-align-target></ng-md-icon>
+                    <span class="inset">{{m.Name}}</span>
+                  </md-button>
+                </md-menu-item>
+              </md-menu-content>
+            </md-menu>
+            <div layout="row">
+                <ez-image-upload img="asset.Thumbnail"></ez-image-upload>
+                <md-input-container class="md-block" flex>
+                    <label>Title </label>
+                    <textarea ng-model="asset.Name" ng-required="true" columns="1" md-maxlength="150" rows="2"></textarea>
+                </md-input-container>
+
+            </div>
+            <md-input-container class="md-block">
+              <label>Message</label>
+              <textarea columns="1"  ng-model="asset.Description" rows="5" md-maxlength="1000" ></textarea>
+            </md-input-container>
+
+            <div layout="row" flex>
+                <md-button ng-show="!isSaving" class="md-primary md-raised md-icon-button accent" aria-label="Settings"
+                    ngf-select="uploadFiles($file, $invalidFiles)"  ngf-max-size="100MB">
+                  <i class="material-icons">file_upload</i>
+                </md-button>    
+
+                <div flex></div>
+                <md-button  ng-show="!isSaving" class="md-primary md-raised md-icon-button accent" ng-click="saveAsset()"  aria-label="save">
+                  <i class="material-icons">send</i>
+                </md-button>
+            </div>
+        </form>
+    </div>

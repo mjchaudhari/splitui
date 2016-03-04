@@ -183,9 +183,7 @@ function ($scope, $log, $q, $state, $stateParams, $timeout, $repository, dataSer
 		});
 		return defered.promise;
     };
-    $scope.uploadThumb = function(){
-    	saveThumbnail ("4JXamxmje", $scope.asset.Thumbnail);
-    }
+    
     var saveThumbnail = function(assetId,thumbnail){
     	var def;
     	if(isBase64DataUrl(thumbnail)){

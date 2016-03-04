@@ -1,1 +1,28 @@
-Profile
+<div ng-controller="profileController">
+	<img class="bgImage blur5"  src="" alt="" style="	">
+	
+	<md-content  layout-padding class="transperent-bg">
+		<a href="" ui-sref="home" style="color:white;text-decoration:none;" >
+			<b class="md-title">{{_appName}}</b></a>	
+	
+        <div layout="column">
+			
+	          <ez-image-upload img="registerModel.Thumbnail" default-img=""></ez-image-upload>
+			  
+				<label>{{registerModel.fn}} {{registerModel.ln}}</label>
+				<label>{{registerModel.mobileno}} </label>
+				
+		</div>
+        
+        <div layout layout-sm="row">
+          <md-button class="md-raised md-primary" ng-click="saveProfile()">Save</md-button>
+          
+          <md-button  ui-sref="home" class="md-raised md-primary" >Cancel</md-button>
+        </div>
+	</md-content>
+	<md-footer layout-padding class="">
+	</md-footer>			
+      
+      
+  
+</div>

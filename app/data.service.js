@@ -19,7 +19,13 @@ function($http,$q, $log, $timeout, CacheFactory){
     getUser : function( ){
       
     },
-    
+    /**
+    Register yourself
+    */
+    saveProfile : function( model){
+      var url = config.apiBaseUrl + "/v1/profile";
+      return $http.post(url, model);
+    },
     getUsers : function(searchTerm ){
       if(searchTerm)
       {
