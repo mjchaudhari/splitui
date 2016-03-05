@@ -1,4 +1,4 @@
-angular.module('cp').controller('mainController', function($scope, $log, $state, storageService, authService, CacheFactory) {
+angular.module('cp').controller('mainController', function($scope, $log, $state, storageService, authService, $repository, CacheFactory) {
   $scope.AUTHDATA = null;
   $scope.appOptions = {
     "showMenubar": true
@@ -34,17 +34,13 @@ angular.module('cp').controller('mainController', function($scope, $log, $state,
 
   });
 
-  $scope.$on('profileUpdated',function(data) 
-  { 
-      $scope.AUTHDATA = storageService.get('__splituser');
-      
-
-  });
   
   $scope.$on('profileUpdated',function(data) 
   { 
-      $scope.AUTHDATA = storageService.get('__splituser');
+      var user = storageService.set('__splituser', user);
+      user.Picture = data.Picture;
       
+      $scope.AUTHDATA = storageService.get('__splituser');
 
   });
   $scope.logoff = function(){
@@ -56,6 +52,11 @@ angular.module('cp').controller('mainController', function($scope, $log, $state,
   }
   $scope.editProfile = function(){
   	$state.go("account.profile");
+  }
+  $scope.refreshAllData = function(){
+  	//clear groups from local storageService
+
+	$repository.refreshGroups();  	
   }
   init();
   

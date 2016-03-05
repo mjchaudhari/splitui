@@ -56,11 +56,25 @@ function($q, $log, $localStorage, storageService, dataService){
     storageService.remove(groupId);
   }
 
+   /**
+   * clean all groups
+   * @param {string} groupId - groupId for which repository is to be initialized if provided.
+  */
+  var _cleanGroup = function(groupId){
+    storageService.remove(groupId);
+  }
+
   /***
   * Refresh Groups
   * 
   */
   var _refreshGroups = function(){
+  	var grps = _getlocalGroups();
+  	if(grps){
+		grps.forEach(function(g){
+			storageService.remove(g._id);	
+		});
+  	}
   	return getGroups();
   }
 	
@@ -101,7 +115,7 @@ function($q, $log, $localStorage, storageService, dataService){
 			groupId : g._id,
 			from : lastUpdated
 		}
-		getAssets(filter)
+		getAssets(filter);
 
 
 	  });

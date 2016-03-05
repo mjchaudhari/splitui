@@ -12,11 +12,12 @@
   this.ezImageUploadTemplate = [
       '<div layout="column" layout-align="center center" ng-click="openThumbnailDialog($event)">',
       '  <div class="thumbnail-card" >',
-      '    <img src ng-src="{{img}}" class="md-avatar thumbnail-img"  md-click="openThumbnailDialog($event)" /> ',
+      '    <img ng-show="{{img==null}}" src ng-src="{{defaultImage}}" class="md-avatar thumbnail-img"  md-click="openThumbnailDialog($event)" /> ',
+      '    <img  ng-show="{{img!=null}}"  src ng-src="{{img}}" class="md-avatar thumbnail-img"  md-click="openThumbnailDialog($event)" /> ',
       '  </div>',
-      '  <md-button class="md-icon-button" ng-click="openThumbnailDialog($event)">',
-      '     <i class="material-icons">edit</i>',
-      '  </md-button>',
+//       '  <md-button ng-hide class="md-icon-button" ng-click="openThumbnailDialog($event)">',
+//       '     <i class="material-icons">edit</i>',
+//       '  </md-button>',
       '</div>'
         
     ].join('\n');
@@ -45,7 +46,7 @@
                        'Use square cropper area',
                   '</md-switch>',
                   '<div layout="column" layout-align="center center" class="crop-area md-whiteframe-1dp">',
-                      '<ng-md-icon icon="camera_alt" size="64" ngf-select ', 
+                      '<ng-md-icon icon="camera_alt" size="64" ngf-select ngf-capture="\'camera\'"', 
                           'ng-model="thumb.sourceFile" accept="image/*"></ng-md-icon> ',
                       '<img-crop image="thumb.sourceFile | ngfDataUrl" area-type="{{thumb.cropperGuide}}"',
                       '    area-min-size="thumb.cropperMinSize" result-image-size="thumb.resultSize" ',

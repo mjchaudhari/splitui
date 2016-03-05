@@ -5,18 +5,16 @@
         <md-toolbar class="md-tall md-hue-2">
           <span flex></span>
           <div layout="column" class="md-toolbar-tools-bottom inset">
-            <img class="md-avatar thumbnail-img"  style="height:70px;:70px" ng-src="{{AUTHDATA.Picture}}"></img>
-            <span></span>
-            <div>{{AUTHDATA.FirstName}} {{AUTHDATA.LastName}}</div>
             <div layout="row">
-              <md-icon-button class="md-icon-button md-accent" aria-label="Favorite" ng-click="logoff()">
-                  <i class="material-icons">exit_to_app</i>
-              </md-icon-button>
+              <img src ng-src="{{AUTHDATA.Picture}}" class="md-avatar thumbnail-img"  md-click="editProfile()" /> 
+              <div>{{AUTHDATA.FirstName}} {{AUTHDATA.LastName}}</div>
+            </div>
+            <h2 class="md-toolbar-tools md-toolbar-tools-bottom">
               <div flex></div>
               <md-icon-button class="md-icon-button md-accent" aria-label="Favorite" ng-click="editProfile()">
                   <i class="material-icons">settings</i>
               </md-icon-button>
-            </div>    
+            </h2>
           </div>
         </md-toolbar>
         <md-list>
@@ -53,7 +51,7 @@
               </md-item-content>
           </md-list-item >
           <md-divider></md-divider>
-          <md-item>
+          <md-list-item>
             <md-button ng-click="nextTheme()">
               <md-item-content md-ink-ripple layout="row" layout-align="start center">
                 <div class="inset">
@@ -64,7 +62,28 @@
                 </div>
               </md-item-content>
             </md-button>
-          </md-item>
+          </md-list-item>
+          <md-list-item>
+            <md-button ng-click="logOff()">
+              <md-item-content md-ink-ripple layout="row" layout-align="start center">
+                <div class="inset">
+                  <ng-md-icon icon="exit_to_app"></ng-md-icon>
+                </div>
+                <div class="">Log off
+                </div>
+              </md-item-content>
+            </md-button>
+          </md-list-item>
+          <md-button ng-click="refreshAllData()">
+              <md-item-content md-ink-ripple layout="row" layout-align="start center">
+                <div class="inset">
+                  <ng-md-icon icon="exit_to_app"></ng-md-icon>
+                </div>
+                <div class="">Refresh all data
+                </div>
+              </md-item-content>
+            </md-button>
+          </md-list-item>
         </md-list>
     </md-sidenav>
     

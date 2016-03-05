@@ -230,7 +230,7 @@ md-icon {
 
 
 .thumbnail-card{
-  border:1px solid silver;
+  border: 1px solid silver;
   height: 110px;
   width: 110px;
   padding:5px;
@@ -240,5 +240,6 @@ md-icon {
 .thumbnail-img{
   height:100px;
   width:100px;
-  /* border-radius: 50px; */
+  border-radius: 50px;
+  margin:;
 }

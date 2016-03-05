@@ -42,8 +42,11 @@ angular.module("cp")
         }
         //toaster.pop('success', 'Registration successful', 'You will shortly recieve the authentication code via SMS.');
         var message = " Please enter your authorization code'";
-        
+        var user = storageService.get('__splituser')
+        user.Picture = d.data.Picture;
         storageService.add('__splituser',model);
+        $scope.AUTHDATA = storageService.get('__splituser');
+
         $scope.$emit('profileUpdated', { data: d.data });
       },
       function (e){
