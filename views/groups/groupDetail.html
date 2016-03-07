@@ -9,6 +9,7 @@
     <div ng-switch-when="list">
         
         <div ng-if="!isLoading" layout="column" style="height:90vh" class="toolbarScrollShrink">
+            
             <md-button class="md-fab md-fab-bottom-right" aria-label="Add" ng-click="createAsset()">
                 <ng-md-icon icon="add"></ng-md-icon>
             </md-button>
@@ -43,14 +44,10 @@
                     <md-button class="md-icon-button " ng-click="showSearch=true">
                         <ng-md-icon icon="search"></ng-md-icon>
                     </md-button>
-                        
-                    
                     <div flex></div>
                     <ng-md-icon icon="message"></ng-md-icon><div class="inset">{{group.list.length||'--'}}</div>
                     <ng-md-icon icon="people"></ng-md-icon><div class="inset">{{group.Members.length}}</div>
                     <ng-md-icon icon="restore" ng-click="hardRefresh()"></ng-md-icon>
-                    
-								
                 </md-card-actions>
             </md-card>
             <md-content flex layout-padding class="content-height" im-pull-to-refresh refresh-function="refresh()">
@@ -67,11 +64,11 @@
                             <md-content class="md-padding" >
                                 <md-list>
                                     
-                                    <md-list-item class="md-3-line md-long-text" 
+                                    <md-list-item class="md-3-line md-long-text margin5" 
                                         ng-repeat="item in group.list|filter:searchTerm ">
-                                        <img ng-src="{{item.Thumbnail}}" class="md-avatar" />
+                                        <img ng-show="item.Thumbnail != null"  ng-src="{{item.Thumbnail}}" class="md-avatar" />
                                         <div class="md-list-item-text">
-                                          <h3>{{ item.Name }}</h3>
+                                          <span>{{ item.Name }}</span>
                                           <p>{{item.Description}}</p>
                                           <p>
                                             <span class="md-caption" ng-show="!item.isMine"><small>   
@@ -163,7 +160,7 @@
         </md-content>
     </div>
     <!--View-->
-    <div ng-switch-when="item">
+    <div ng-switch-when="view">
         <md-toolbar md-scroll-shrink="false">
             <div class="md-toolbar-tools">
                 <md-button class="md-icon-button" ng-click="backToList()"  aria-label="goups">
@@ -222,3 +219,5 @@
 </div>
 <script type="text/ng-template" id="thumbnailDialogTemplate.html"> 
 </script>
+
+<!--TEMPLATES-->

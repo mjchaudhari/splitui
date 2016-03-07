@@ -331,3 +331,7 @@ md-icon {
   height:100px;
   width:100px;
 }
+
+.margin5{
+  margin:5px !important;
+}

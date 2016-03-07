@@ -1,4 +1,12 @@
-    <div ng-controller="addEditCtrl">
+    <div style="height:80vh" >
+        <md-toolbar md-scroll-shrink="false">
+            <div class="md-toolbar-tools">
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancelAddEdit()"  aria-label="groups">
+                  <ng-md-icon icon="cancel"></ng-md-icon> 
+                </md-button>
+            </div>
+        </md-toolbar>
         <form name="assetForm">
             <md-menu>
               <md-button class="md-button" ng-click="openCategoryMenu($mdOpenMenu, $event)"  aria-label="category">

@@ -43,7 +43,7 @@ angular.module('cp').controller('mainController', function($scope, $log, $state,
       $scope.AUTHDATA = storageService.get('__splituser');
 
   });
-  $scope.logoff = function(){
+  $scope.logOff = function(){
 		authService.logOut().then(function(){
 			$scope.AUTHDATA = null;
 			storageService.remove();

@@ -66,6 +66,8 @@
       .state('index.groups',{url:"/groups", templateUrl: '/views/groups/groups.html'})
       .state('index.editgroup',{url:"/group/e/:id?", templateUrl: '/views/groups/addEditGroup.html'})
       .state('index.group',{url:"/group/v/:id", templateUrl: '/views/groups/GroupDetail.html'})
+      .state('asset1',{url:"/asset", templateUrl: '/views/groups/AddEditAsset.html'})
+      .state('asset',{url:"/:groupId/:parentId?/asset/:id?", templateUrl: '/views/groups/AddEditAsset.html'})
 
       ;
       

@@ -243,3 +243,7 @@ md-icon {
   border-radius: 50px;
   margin:;
 }
+
+.margin5{
+  margin:5px !important;
+}
