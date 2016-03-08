@@ -25,12 +25,17 @@ angular.module('cp').controller('mainController', function($scope, $log, $state,
   var init = function() {
     //TODO Check auth
     $scope.AUTHDATA = storageService.get('__splituser');
-    
+    if($scope.AUTHDATA){
+    	$repository.initialize();
+    }
   }
   $scope.$on('evtLoggedIn',function(data) 
   { 
       $scope.AUTHDATA = storageService.get('__splituser');
-      
+      $repository.initialize();
+      if($repository.groups){
+      	$repository.refreshGroups();
+      }
 
   });
 

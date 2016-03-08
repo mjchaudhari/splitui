@@ -21,7 +21,8 @@ angular.module('cp').factory('$repository',
 function($q, $log, $localStorage, storageService, dataService){
 	var isInitialized = false;
 	var me = {};
-  var _groups = []
+  	var _groups = []
+
   /**
    * Check if the local repo is created. Create if not already created 
    * @param {string} groupId - groupId for which repository is to be initialized if provided.
@@ -29,6 +30,9 @@ function($q, $log, $localStorage, storageService, dataService){
   var _initialize = function(){
   	me = storageService.get("__splituser");
   	_getlocalGroups ();
+  	if(_groups.length <=0){
+
+  	}
   }
   /**
   * get local groups
@@ -168,7 +172,8 @@ function($q, $log, $localStorage, storageService, dataService){
 	};
 	
 	var getGroups = function(){
-	  return dataService.getGroups()
+	  var defer = $q.defer();
+	  dataService.getGroups()
 	  .then(function(d){
 			//getGroups from local storage and sync
 			d.data.data.forEach(function(g){
@@ -200,8 +205,14 @@ function($q, $log, $localStorage, storageService, dataService){
 					from : lastUpdated
 				}
 				getAssets(filter)
+
 			});
+			defer.resolve();
+		},function(e){
+			defer.reject(e);
 		});
+
+		return defer.promise;
 	};
 	
 	var createLocalGroup = function (groupId){
@@ -306,8 +317,10 @@ function($q, $log, $localStorage, storageService, dataService){
     };
     
 	if(!isInitialized){
+		$log.info("initializeig repo");
 		_initialize()
 		isInitialized = true;
+
 	}
 
 	var _saveGroup = function(){
@@ -318,10 +331,12 @@ function($q, $log, $localStorage, storageService, dataService){
 	  initialize : _initialize,
 	  refreshGroup : _refreshGroup,
 	  refreshGroups : _refreshGroups,
-	  groups : _groups,
 	  saveAsset : _saveAsset,
 	  saveAssetThumbnail : _saveAssetThumbnail,
 	  saveGroup : _saveGroup,
+	  get groups() { 
+	  	return _groups;
+	  },
   }
   return svc;
 

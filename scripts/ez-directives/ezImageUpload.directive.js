@@ -12,8 +12,8 @@
   this.ezImageUploadTemplate = [
       '<div layout="column" layout-align="center center" ng-click="openThumbnailDialog($event)">',
       '  <div class="thumbnail-card" >',
-      '    <img ng-show="{{img==null}}" src ng-src="{{defaultImage}}" class="md-avatar thumbnail-img"  md-click="openThumbnailDialog($event)" /> ',
-      '    <img  ng-show="{{img!=null}}"  src ng-src="{{img}}" class="md-avatar thumbnail-img"  md-click="openThumbnailDialog($event)" /> ',
+      //'    <img ng-hide="{{img!=null}}" src ng-src="{{defaultImage}}" class="md-avatar thumbnail-img"  md-click="openThumbnailDialog($event)" /> ',
+      '    <img   src ng-src="{{img||defaultImage}}" class="md-avatar thumbnail-img"  md-click="openThumbnailDialog($event)" /> ',
       '  </div>',
 //       '  <md-button ng-hide class="md-icon-button" ng-click="openThumbnailDialog($event)">',
 //       '     <i class="material-icons">edit</i>',
@@ -83,7 +83,7 @@
               resultSize : 100,
               cropperGuide : 'circle'
           }
-          //$scope.defaultImage = "./content/images/group-default3.png";
+          $scope.defaultImage = "./content/images/group-default3.png";
           
           var init = function(){
             

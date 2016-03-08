@@ -18,18 +18,20 @@
 
 angular.module('cp').factory('storageService', 
 function($q, $log, $localStorage){
-  if($localStorage["cp-data"] === undefined)
+  
+  var createStorageIfNotExist = function(){
+    if($localStorage["cp-data"] === undefined)
       {
         $localStorage["cp-data"] = {};  
+      }
   }
-  
+  createStorageIfNotExist();
   return {
     apiPrefix : config.apiBaseURL,  
     appName : "cp-data",
     add : function(key, val)
     {
-      
-      
+      createStorageIfNotExist();      
       if($localStorage["cp-data"][key] === undefined)
       {
         $localStorage["cp-data"][key] = {};  
@@ -39,7 +41,11 @@ function($q, $log, $localStorage){
     
     get : function(key)
     {
-      if(key){
+      if($localStorage["cp-data"] == null){
+
+        return null;
+      }
+      if($localStorage["cp-data"] && key){
 
         return $localStorage["cp-data"][key];
       }
@@ -49,6 +55,7 @@ function($q, $log, $localStorage){
     },    
     remove : function(key)
     {
+      createStorageIfNotExist();
       if(key){
         if($localStorage["cp-data"][key] != undefined)
         {

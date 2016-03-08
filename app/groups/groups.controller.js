@@ -13,13 +13,29 @@ angular.module("cp")
   
   var init = function(){
     $scope.groupList = [];
-    $scope.groupsLoading = true;
+    $scope.groupsLoading = true; 
     var g = $repository.groups;
     angular.copy(g,$scope.groupList);  
     
-    $timeout($scope.refresh(),100);
-    $scope.groupsLoading = false;
-    
+    if(g.length <=0){
+      $repository.refreshGroups().then(function(){
+        var g = $repository.groups;
+        angular.copy(g,$scope.groupList);  
+
+        $timeout($scope.refresh(),100);
+        $scope.groupsLoading = false;
+      },
+      function(){
+        $timeout($scope.refresh(),100);
+        $scope.groupsLoading = false;
+
+      });
+    }
+    else{
+      $timeout($scope.refresh(),100);
+      $scope.groupsLoading = false;
+      
+    }
 //     dataService.getGroups().then(function(d){
 //      if(d.data.isError){
 //         //toaster.pop("error","",d.Message)
